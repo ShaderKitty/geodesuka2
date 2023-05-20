@@ -1,5 +1,4 @@
-
-#GLFW = -lglfw -lGL -lXrandr -lXxf86vm -lXi -lXinerama -lX11 -lrt -ldl
+# GLFW = -lglfw -lGL -lXrandr -lXxf86vm -lXi -lXinerama -lX11 -lrt -ldl
 
 # System Libraries
 X11_LIB = -lXrandr -lXxf86vm -lXi -lXinerama -lX11 -lrt -ldl
@@ -27,12 +26,41 @@ SYSTEM_LIB = $(ALSA_LIB) $(X11_LIB) $(GLSLANG_LIB) $(SPIRV_LIB) $(VULKAN_LIB) $(
 THIRDPARTY_INC = $(FREEIMAGE_INC) $(FREETYPE_INC) $(ASSIMP_INC) $(PORTAUDIO_INC) $(GLFW_INC)
 THIRDPARTY_LIB = $(FREEIMAGE_LIB) $(FREETYPE_LIB) $(ASSIMP_LIB) $(PORTAUDIO_LIB) $(GLFW_LIB)
 
+OS = Linux
+
+DEB_DIR := $(OS)/Debug
+REL_DIR := $(OS)/Release
+
 CXX = g++
 FLG = -std=c++17 -pthread
 INC = -Iinc $(THIRDPARTY_INC)
-LIB = $(THIRDPARTY_LIB) $(SYSTEM_LIB)
-SRC = src/*.cpp
-OBJ = obj/*.o
+EXTERNAL_LIB = $(THIRDPARTY_LIB) $(SYSTEM_LIB)
+
+# Source Paths
+SRC_DIR := src
+SRC := $(wildcard $(SRC_DIR)/*.cpp)
+
+# Generate Directory strings for object compilation.
+OBJ_DEB_DIR := obj/$(DEB_DIR)
+OBJ_REL_DIR := obj/$(REL_DIR)
+
+# Path to geodesuka output library.
+GEODESUKA_LIB_DEB := lib/$(DEB_DIR)/geodesuka.a
+GEODESUKA_LIB_REL := lib/$(REL_DIR)/geodesuka.a
+
+# Path to unit tests
+UNIT_TEST_DEB := bin/$(DEB_DIR)/unit-test
+UNIT_TEST_REL := bin/$(REL_DIR)/unit-test
+
+# Path substitution for all compiled objects.
+OBJ_DEB := $(patsubst $(SRC_DIR)/%.cpp,$(OBJ_DEB_DIR)/%.o,$(SRC))
+OBJ_REL := $(patsubst $(SRC_DIR)/%.cpp,$(OBJ_REL_DIR)/%.o,$(SRC))
+
+$(OBJ_DEB): $(OBJ_DEB_DIR)/%.o: $(SRC_DIR)/%.cpp
+	$(CXX) $(FLG) -g -c $< $(INC) -o $@
+
+$(OBJ_REL): $(OBJ_REL_DIR)/%.o: $(SRC_DIR)/%.cpp
+	$(CXX) $(FLG) -c $< $(INC) -o $@
 
 dirs: 
 	mkdir bin/
@@ -55,20 +83,27 @@ dependencies:
 	(cd dep/freetype/bld/linux/ && make)
 	(cd dep/freeimage/ && make)
 
-geodesuka-debug:
-	$(CXX) $(FLG) -g -c $(SRC) $(INC) $(LIB)
-	ar -crs geodesuka.a *.o
-	mv *.o obj/Linux/Debug/
-	mv geodesuka.a lib/Linux/Debug/
+geodesuka-debug: $(OBJ_DEB)
+	ar -crs $(GEODESUKA_LIB_DEB) $(OBJ_DEB)
 
-geodesuka-release:
-	$(CXX) $(FLG) -c $(SRC) $(INC) $(LIB)
-	ar -crs geodesuka.a *.o
-	mv *.o obj/Linux/Release
-	mv geodesuka.a lib/Linux/Release
+geodesuka-release: $(OBJ_REL)
+	ar -crs $(GEODESUKA_LIB_REL) $(OBJ_REL)
 
 unit-test-debug: geodesuka-debug
-	$(CXX) $(FLG) -g -o bin/Linux/Debug/unit-test main.cpp $(INC) lib/Linux/Debug/geodesuka.a $(LIB)
+	$(CXX) $(FLG) -g -o $(UNIT_TEST_DEB) main.cpp $(INC) $(GEODESUKA_LIB_DEB) $(EXTERNAL_LIB)
 
 unit-test-release: geodesuka-release
-	$(CXX) $(FLG) -o bin/Linux/Release/unit-test main.cpp $(INC) lib/Linux/Debug/geodesuka.a $(LIB)
+	$(CXX) $(FLG) -o $(UNIT_TEST_REL) main.cpp $(INC) $(GEODESUKA_LIB_REL) $(EXTERNAL_LIB)
+
+clean-debug:
+	rm $(UNIT_TEST_DEB)
+	rm $(GEODESUKA_LIB_DEB)
+	rm $(OBJ_DEB)
+
+clean-release:
+	rm $(UNIT_TEST_REL)
+	rm $(GEODESUKA_LIB_REL)
+	rm $(OBJ_REL)
+
+clean-all: clean-debug clean-release	
+

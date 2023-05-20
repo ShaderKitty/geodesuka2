@@ -354,6 +354,7 @@ namespace geodesuka::core::graphics {
 			std::cout << Linear[i].Name.ptr() << std::endl;
 		}
 
+		std::cout << "Hell0 World!" << std::endl;
 
 		ModelImporter->FreeScene();
 		return false;
