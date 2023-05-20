@@ -1,28 +1,21 @@
 {
     "configurations": [
         {
-            "name": "Linux",
+            "name": "Win32",
             "includePath": [
                 "${workspaceFolder}/inc",
-                "${workspaceFolder}/dep/assimp/include",
-                "${workspaceFolder}/dep/assimp/bld/linux/include",
-                "${workspaceFolder}/dep/freeimage/Source",
-                "${workspaceFolder}/dep/freetype/include",
-                "${workspaceFolder}/dep/freetype/bld/linux/include",
-                "${workspaceFolder}/dep/glfw/include",
-                "${workspaceFolder}/dep/portaudio/include"
+                "C:/Program Files/VulkanSDK/1.3.236.0/Include"
             ],
-            "defines": [],
-            "compilerPath": "/usr/bin/gcc",
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE"
+            ],
+            "windowsSdkVersion": "10.0.22000.0",
+            "compilerPath": "cl.exe",
             "cStandard": "c17",
-            "cppStandard": "gnu++17",
-            "intelliSenseMode": "linux-gcc-x64",
-            "configurationProvider": "ms-vscode.makefile-tools",
-            "compilerArgs": [
-                "-std=c++17",
-                "-pthread",
-                "-g"
-            ]
+            "cppStandard": "c++17",
+            "intelliSenseMode": "windows-msvc-x64"
         }
     ],
     "version": 4
