@@ -15,12 +15,20 @@
             "compilerPath": "cl.exe",
             "cStandard": "c17",
             "cppStandard": "c++17",
-            "intelliSenseMode": "windows-msvc-x64"
+            "intelliSenseMode": "windows-msvc-x64",
+            "configurationProvider": "ms-vscode.makefile-tools"
         },
         {
             "name": "Linux",
             "includePath": [
-                "${workspaceFolder}/inc"
+                "${workspaceFolder}/inc",
+                "${workspaceFolder}/dep/assimp/include",
+                "${workspaceFolder}/dep/assimp/bld/linux/include",
+                "${workspaceFolder}/dep/freeimage/Source",
+                "${workspaceFolder}/dep/freetype/include",
+                "${workspaceFolder}/dep/freetype/bld/linux/include",
+                "${workspaceFolder}/dep/glfw/include",
+                "${workspaceFolder}/dep/portaudio/include"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",
