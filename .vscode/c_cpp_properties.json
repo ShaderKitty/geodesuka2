@@ -1,0 +1,29 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/inc",
+                "${workspaceFolder}/dep/assimp/include",
+                "${workspaceFolder}/dep/assimp/bld/linux/include",
+                "${workspaceFolder}/dep/freeimage/Source",
+                "${workspaceFolder}/dep/freetype/include",
+                "${workspaceFolder}/dep/freetype/bld/linux/include",
+                "${workspaceFolder}/dep/glfw/include",
+                "${workspaceFolder}/dep/portaudio/include"
+            ],
+            "defines": [],
+            "compilerPath": "/usr/bin/gcc",
+            "cStandard": "c17",
+            "cppStandard": "gnu++17",
+            "intelliSenseMode": "linux-gcc-x64",
+            "configurationProvider": "ms-vscode.makefile-tools",
+            "compilerArgs": [
+                "-std=c++17",
+                "-pthread",
+                "-g"
+            ]
+        }
+    ],
+    "version": 4
+}
