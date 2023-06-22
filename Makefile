@@ -5,8 +5,36 @@
 ifeq ($(OS),Windows_NT)
 	PLATFORM_OS = Windows
 	CXX = cl
-	CCFLAGS = -std=c++17 -pthread
-    CCFLAGS += -D WIN32
+	LNK = link
+	FLG = -std=c++17 -pthread
+
+#	----- System Libraries -----
+
+	VULKAN_LIB = -lvulkan
+	GLSLANG_LIB = -lGenericCodeGen -lglslang -lglslang-default-resource-limits -lHLSL -lMachineIndependent -lOGLCompiler -lOSDependent -lshaderc -lshaderc_combined
+	SPIRV_LIB = -lSPIRV -lspirv-cross-c -lspirv-cross-core -lspirv-cross-cpp -lspirv-cross-glsl -lspirv-cross-hlsl -lspirv-cross-msl -lspirv-cross-reflect -lspirv-cross-util -lSPIRV-Tools -lSPIRV-Tools-diff -lSPIRV-Tools-link -lSPIRV-Tools-lint -lSPIRV-Tools-opt -lSPIRV-Tools-reduce -lSPVRemapper
+
+#	----- Third Party Libraries -----
+
+	GLFW_INC = -Idep/glfw/include/
+	PORTAUDIO_INC = -Idep/portaudio/include/
+	ASSIMP_INC = -Idep/assimp/bld/linux/include/ -Idep/assimp/include/
+	FREETYPE_INC = -Idep/freetype/bld/linux/include/ -Idep/freetype/include/
+	FREEIMAGE_INC = -Idep/freeimage/Source/
+
+	GLFW_LIB = dep/glfw/bld/linux/src/libglfw3.a
+	PORTAUDIO_LIB = dep/portaudio/bld/linux/libportaudio.a
+	ASSIMP_LIB = dep/assimp/bld/linux/lib/libassimp.a
+	FREETYPE_LIB = dep/freetype/bld/linux/libfreetype.a
+	FREEIMAGE_LIB = dep/freeimage/libfreeimage.a
+
+	SYSTEM_INC = C:/Program Files/VulkanSDK/1.3.250.0/Include/
+	SYSTEM_LIB = $(GLSLANG_LIB) $(SPIRV_LIB) $(VULKAN_LIB) $(OPENGL_LIB)
+
+	THIRDPARTY_INC = $(FREEIMAGE_INC) $(FREETYPE_INC) $(ASSIMP_INC) $(PORTAUDIO_INC) $(GLFW_INC)
+	THIRDPARTY_LIB = $(FREEIMAGE_LIB) $(FREETYPE_LIB) $(ASSIMP_LIB) $(PORTAUDIO_LIB) $(GLFW_LIB)
+
+    #CCFLAGS += -D WIN32
     #ifeq ($(PROCESSOR_ARCHITEW6432),AMD64)
     #    CCFLAGS += -D AMD64
     #else
@@ -17,9 +45,6 @@ ifeq ($(OS),Windows_NT)
     #        CCFLAGS += -D IA32
     #    endif
     #endif
-
-	DEB_DIR := Windows/Debug
-	REL_DIR := Windows/Release
 else
     UNAME_S := $(shell uname -s)
     ifeq ($(UNAME_S),Linux)
@@ -105,15 +130,15 @@ dirs:
 	mkdir bin/
 	mkdir obj/
 	mkdir lib/
-	mkdir bin/Linux/
-	mkdir obj/Linux/
-	mkdir lib/Linux/
-	mkdir bin/Linux/Debug/
-	mkdir obj/Linux/Debug/
-	mkdir lib/Linux/Debug/
-	mkdir bin/Linux/Release/
-	mkdir obj/Linux/Release/
-	mkdir lib/Linux/Release/
+	mkdir bin/$(PLATFORM_OS)/
+	mkdir obj/$(PLATFORM_OS)/
+	mkdir lib/$(PLATFORM_OS)/
+	mkdir bin/$(PLATFORM_OS)/Debug/
+	mkdir obj/$(PLATFORM_OS)/Debug/
+	mkdir lib/$(PLATFORM_OS)/Debug/
+	mkdir bin/$(PLATFORM_OS)/Release/
+	mkdir obj/$(PLATFORM_OS)/Release/
+	mkdir lib/$(PLATFORM_OS)/Release/
 
 dependencies:
 	(cd dep/glfw/bld/linux/ && make)
