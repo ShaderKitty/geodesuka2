@@ -1,35 +1,74 @@
 # GLFW = -lglfw -lGL -lXrandr -lXxf86vm -lXi -lXinerama -lX11 -lrt -ldl
 
-# System Libraries
-X11_LIB = -lXrandr -lXxf86vm -lXi -lXinerama -lX11 -lrt -ldl
-ALSA_LIB = -lrt -lm -lasound
-OPENGL_LIB = -lGL
-VULKAN_LIB = -lvulkan
-GLSLANG_LIB = -lGenericCodeGen -lglslang -lglslang-default-resource-limits -lHLSL -lMachineIndependent -lOGLCompiler -lOSDependent -lshaderc -lshaderc_combined
-SPIRV_LIB = -lSPIRV -lspirv-cross-c -lspirv-cross-core -lspirv-cross-cpp -lspirv-cross-glsl -lspirv-cross-hlsl -lspirv-cross-msl -lspirv-cross-reflect -lspirv-cross-util -lSPIRV-Tools -lSPIRV-Tools-diff -lSPIRV-Tools-link -lSPIRV-Tools-lint -lSPIRV-Tools-opt -lSPIRV-Tools-reduce -lSPVRemapper
 
-# Third Party 
-GLFW_INC = -Idep/glfw/include/
-PORTAUDIO_INC = -Idep/portaudio/include/
-ASSIMP_INC = -Idep/assimp/bld/linux/include/ -Idep/assimp/include/
-FREETYPE_INC = -Idep/freetype/bld/linux/include/ -Idep/freetype/include/
-FREEIMAGE_INC = -Idep/freeimage/Source/
 
-GLFW_LIB = dep/glfw/bld/linux/src/libglfw3.a
-PORTAUDIO_LIB = dep/portaudio/bld/linux/libportaudio.a
-ASSIMP_LIB = dep/assimp/bld/linux/lib/libassimp.a
-FREETYPE_LIB = dep/freetype/bld/linux/libfreetype.a
-FREEIMAGE_LIB = dep/freeimage/libfreeimage.a
+ifeq ($(OS),Windows_NT)
+	PLATFORM_OS = Windows
+	CXX = cl
+	CCFLAGS = -std=c++17 -pthread
+    CCFLAGS += -D WIN32
+    #ifeq ($(PROCESSOR_ARCHITEW6432),AMD64)
+    #    CCFLAGS += -D AMD64
+    #else
+    #    ifeq ($(PROCESSOR_ARCHITECTURE),AMD64)
+    #        CCFLAGS += -D AMD64
+    #    endif
+    #    ifeq ($(PROCESSOR_ARCHITECTURE),x86)
+    #        CCFLAGS += -D IA32
+    #    endif
+    #endif
 
-SYSTEM_LIB = $(ALSA_LIB) $(X11_LIB) $(GLSLANG_LIB) $(SPIRV_LIB) $(VULKAN_LIB) $(OPENGL_LIB)
+	DEB_DIR := Windows/Debug
+	REL_DIR := Windows/Release
+else
+    UNAME_S := $(shell uname -s)
+    ifeq ($(UNAME_S),Linux)
+		PLATFORM_OS = Linux
+		CCFLAGS += -D LINUX
 
-THIRDPARTY_INC = $(FREEIMAGE_INC) $(FREETYPE_INC) $(ASSIMP_INC) $(PORTAUDIO_INC) $(GLFW_INC)
-THIRDPARTY_LIB = $(FREEIMAGE_LIB) $(FREETYPE_LIB) $(ASSIMP_LIB) $(PORTAUDIO_LIB) $(GLFW_LIB)
+		X11_LIB = -lXrandr -lXxf86vm -lXi -lXinerama -lX11 -lrt -ldl
+		ALSA_LIB = -lrt -lm -lasound
+		OPENGL_LIB = -lGL
+		VULKAN_LIB = -lvulkan
+		GLSLANG_LIB = -lGenericCodeGen -lglslang -lglslang-default-resource-limits -lHLSL -lMachineIndependent -lOGLCompiler -lOSDependent -lshaderc -lshaderc_combined
+		SPIRV_LIB = -lSPIRV -lspirv-cross-c -lspirv-cross-core -lspirv-cross-cpp -lspirv-cross-glsl -lspirv-cross-hlsl -lspirv-cross-msl -lspirv-cross-reflect -lspirv-cross-util -lSPIRV-Tools -lSPIRV-Tools-diff -lSPIRV-Tools-link -lSPIRV-Tools-lint -lSPIRV-Tools-opt -lSPIRV-Tools-reduce -lSPVRemapper
 
-OS = Linux
+		GLFW_INC = -Idep/glfw/include/
+		PORTAUDIO_INC = -Idep/portaudio/include/
+		ASSIMP_INC = -Idep/assimp/bld/linux/include/ -Idep/assimp/include/
+		FREETYPE_INC = -Idep/freetype/bld/linux/include/ -Idep/freetype/include/
+		FREEIMAGE_INC = -Idep/freeimage/Source/
 
-DEB_DIR := $(OS)/Debug
-REL_DIR := $(OS)/Release
+		GLFW_LIB = dep/glfw/bld/linux/src/libglfw3.a
+		PORTAUDIO_LIB = dep/portaudio/bld/linux/libportaudio.a
+		ASSIMP_LIB = dep/assimp/bld/linux/lib/libassimp.a
+		FREETYPE_LIB = dep/freetype/bld/linux/libfreetype.a
+		FREEIMAGE_LIB = dep/freeimage/libfreeimage.a
+
+		SYSTEM_LIB = $(ALSA_LIB) $(X11_LIB) $(GLSLANG_LIB) $(SPIRV_LIB) $(VULKAN_LIB) $(OPENGL_LIB)
+
+		THIRDPARTY_INC = $(FREEIMAGE_INC) $(FREETYPE_INC) $(ASSIMP_INC) $(PORTAUDIO_INC) $(GLFW_INC)
+		THIRDPARTY_LIB = $(FREEIMAGE_LIB) $(FREETYPE_LIB) $(ASSIMP_LIB) $(PORTAUDIO_LIB) $(GLFW_LIB)
+    endif
+    ifeq ($(UNAME_S),Darwin)
+		PLATFORM_OS = MacOS
+        CCFLAGS += -D OSX
+    endif
+    #UNAME_P := $(shell uname -p)
+    #ifeq ($(UNAME_P),x86_64)
+    #    CCFLAGS += -D AMD64
+    #endif
+    #ifneq ($(filter %86,$(UNAME_P)),)
+    #    CCFLAGS += -D IA32
+    #endif
+    #ifneq ($(filter arm%,$(UNAME_P)),)
+    #    CCFLAGS += -D ARM
+    #endif
+
+endif
+
+DEB_DIR := $(PLATFORM_OS)/Debug
+REL_DIR := $(PLATFORM_OS)/Release
 
 CXX = g++
 FLG = -std=c++17 -pthread
