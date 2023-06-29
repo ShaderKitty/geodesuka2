@@ -131,11 +131,13 @@ ifeq ($(PLATFORM_OS),Windows)
 		FREETYPE_LIB = /LIBPATH:"dep/freetype/bld/win32/"
 	endif
 
-	PROJECT_TYPE = "NMake Makefiles"
+	PROJECT_TYPE = "Visual Studio 17 2022"
 
 	PORTAUDIO_CMAKE_OPTION = -DPA_BUILD_SHARED=OFF -DPA_DLL_LINK_WITH_STATIC_RUNTIME=OFF
 	ASSIMP_CMAKE_OPTION = -DBUILD_SHARED_LIBS=OFF -DASSIMP_BUILD_TESTS=OFF
 	FREETYPE_CMAKE_OPTION = -DFT_DISABLE_ZLIB=TRUE -DFT_REQUIRE_ZLIB=FALSE
+
+	BUILD_PROJECTS = dep/setup-win32.bat
 
 	ENV_SETUP := C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvarsall.bat amd64
 
@@ -238,7 +240,7 @@ dirs:
 	mkdir obj/$(PLATFORM_OS)/Release/
 	mkdir lib/$(PLATFORM_OS)/Release/
 
-clone:
+dependency-clones:
 	git clone https://github.com/glfw/glfw.git dep/glfw
 	git clone https://github.com/PortAudio/portaudio.git dep/portaudio
 	git clone https://github.com/assimp/assimp.git dep/assimp
@@ -249,14 +251,14 @@ clone:
 	(cd dep/assimp && git checkout v5.2.5)
 	(cd dep/freetype && git checkout VER-2-12-1)
 
-builds:
-	C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvarsall.bat amd64
+dependency-projects:
 	cmake -S dep/glfw/ -B dep/glfw/bld/$(PLATFORM_OS)/ -G $(PROJECT_TYPE)
 	cmake -S dep/portaudio/ -B dep/portaudio/bld/$(PLATFORM_OS)/ -G $(PROJECT_TYPE) $(PORTAUDIO_CMAKE_OPTION)
 	cmake -S dep/assimp/ -B dep/assimp/bld/$(PLATFORM_OS)/ -G $(PROJECT_TYPE) $(ASSIMP_CMAKE_OPTION)
 	cmake -S dep/freetype/ -B dep/freetype/bld/$(PLATFORM_OS)/ -G $(PROJECT_TYPE) $(FREETYPE_CMAKE_OPTION)
 
-dependencies:
+# Unfortunately, for the time being, dependencies will have to be compiled with VS IDE on Windows.
+dependency-compile:
 	(cd dep/glfw/bld/$(PLATFORM_OS)/ && make)
 	(cd dep/portaudio/bld/$(PLATFORM_OS)/ && make)
 	(cd dep/assimp/bld/$(PLATFORM_OS)/ && make)
