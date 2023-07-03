@@ -3,12 +3,12 @@
 PLAT = Linux
 PROJECT_TYPE = "Unix Makefiles"
 
-CFLAGS = std=c++17 -pthread
-LFLAGS = std=c++17 -pthread
+CFLGS = -std=c++17 -pthread
+LFLGS = -std=c++17 -pthread
 
 ifeq ($(MODE),Debug)
-CFLAGS += -g
-LFLAGS += -g
+CFLGS += -g
+LFLGS += -g
 endif
 
 # This is used to discriminate between compile types.
