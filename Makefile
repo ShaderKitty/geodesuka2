@@ -1,5 +1,4 @@
 # make -e ARCH=x64 MODE=Release [RECIPE]
-# test
 
 PLAT = Linux
 PROJECT_TYPE = "Unix Makefiles"
@@ -26,12 +25,6 @@ PORTAUDIO_LIB = -Ldep/portaudio/bld/$(DISC) -lportaudio
 ASSIMP_LIB = -Ldep/assimp/bld/$(DISC)/lib -lassimp
 FREETYPE_LIB = -Ldep/bld/freetype/$(DISC) -lfreetype
 FREEIMAGE_LIB = -Ldep/freeimage/Dist -lfreeimage
-
-# GLFW_LIB = dep/glfw/bld/$(DISC)/src/libglfw3.a
-# PORTAUDIO_LIB = -Ldep/portaudio/bld/$(DISC)/libportaudio.a
-# ASSIMP_LIB = -Ldep/assimp/bld/$(DISC)/lib/libassimp.a
-# FREETYPE_LIB = -Ldep/bld/freetype/$(DISC)/libfreetypea
-# FREEIMAGE_LIB = -Ldep/freeimage/Dist/libfreeimage.a
 
 X11_LIB = \
 -lXrandr \
