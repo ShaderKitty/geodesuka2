@@ -22,12 +22,12 @@
             "includePath": [
                 "${workspaceFolder}/inc",
                 "${workspaceFolder}/dep/assimp/include",
-                "${workspaceFolder}/dep/assimp/bld/linux/include",
                 "${workspaceFolder}/dep/freeimage/Source",
                 "${workspaceFolder}/dep/freetype/include",
-                "${workspaceFolder}/dep/freetype/bld/linux/include",
                 "${workspaceFolder}/dep/glfw/include",
-                "${workspaceFolder}/dep/portaudio/include"
+                "${workspaceFolder}/dep/portaudio/include",
+                "${workspaceFolder}/dep/assimp/bld/Linux/x64/Debug/include",
+                "${workspaceFolder}/dep/freetype/bld/Linux/x64/Debug/include"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",
