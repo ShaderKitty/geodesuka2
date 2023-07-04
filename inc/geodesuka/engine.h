@@ -133,6 +133,9 @@ namespace geodesuka {
 		const int										Date = GEODESUKA_ENGINE_VERSION_BIRTH_DATE;
 		std::vector<const char*>						Layer;
 		std::vector<const char*>						Extension;
+		// vk::ApplicationInfo								AppInfo;
+		// vk::InstanceCreateInfo							CreateInfo;
+		// vk::Instance									Handle;
 		vk_application_info								AppInfo{};
 		vk_instance_create_info							CreateInfo{};
 		vk_instance										Handle;

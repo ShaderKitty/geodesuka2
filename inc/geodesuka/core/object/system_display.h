@@ -55,20 +55,20 @@ namespace geodesuka::core::object {
 		const glfw_vidmode* CurrentVideoMode;
 
 		// Used internally to interact with OS size and positioning.
-		int2 PositionVSC;
-		int2 SizeVSC;
+		glm::ivec2 PositionVSC;
+		glm::ivec2 SizeVSC;
 
-		float3 convert_to_physical_position(int2 aPosition);
-		float2 convert_to_physical_size(int2 aSize);
-		int2 convert_to_vsc_position(float3 aPosition);
-		int2 convert_to_vsc_size(float2 aSize);
+		glm::vec3 convert_to_physical_position(glm::ivec2 aPosition);
+		glm::vec2 convert_to_physical_size(glm::ivec2 aSize);
+		glm::ivec2 convert_to_vsc_position(glm::vec3 aPosition);
+		glm::ivec2 convert_to_vsc_size(glm::vec2 aSize);
 
-		float2 convert_to_physical(int2 aVector);
-		int2 convert_to_screen(float2 aVector);
+		glm::vec2 convert_to_physical(glm::ivec2 aVector);
+		glm::ivec2 convert_to_screen(glm::vec2 aVector);
 
 		// Converts GLFW screen coordinates to local display coordinates.
-		int2 convert_to_display_position(int2 aPosition, int2 aSize);
-		int2 convert_to_global_position(int2 aPosition, int2 aSize);
+		glm::ivec2 convert_to_display_position(glm::ivec2 aPosition, glm::ivec2 aSize);
+		glm::ivec2 convert_to_global_position(glm::ivec2 aPosition, glm::ivec2 aSize);
 
 	};
 

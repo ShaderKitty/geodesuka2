@@ -82,17 +82,17 @@ namespace geodesuka::core::object {
 		~window();
 
 		virtual void set_title(util::string aTitle);
-		virtual void set_size(float2 aSize);
-		float2 get_size();
-		virtual void set_resolution(uint2 aResolution);
-		uint2 get_resolution();
+		virtual void set_size(glm::vec2 aSize);
+		glm::vec2 get_size();
+		virtual void set_resolution(glm::uvec2 aResolution);
+		glm::uvec2 get_resolution();
 		virtual bool should_close();
 		void set_input_target(object_t* aObject);
 
 	protected:
 
 		util::string 						Title;
-		float2 								Size;
+		glm::vec2 								Size;
 		setting 							Setting;
 		object_t* 							InputTarget;
 		size_t 								DesignatedTargetAttachment;
@@ -101,7 +101,7 @@ namespace geodesuka::core::object {
 		gcl::buffer							WindowUniformBuffer;
 		gcl::pipeline::rasterizer 			Rasterizer;
 
-		window(gcl::context* aContext, stage_t* aStage, const char* aName, uint3 aFrameResolution, double aFrameRate, uint32_t aFrameCount, uint32_t aAttachmentCount);
+		window(gcl::context* aContext, stage_t* aStage, const char* aName, glm::uvec3 aFrameResolution, double aFrameRate, uint32_t aFrameCount, uint32_t aAttachmentCount);
 
 	};
 

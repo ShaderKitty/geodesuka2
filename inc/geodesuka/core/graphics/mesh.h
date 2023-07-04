@@ -26,14 +26,14 @@ namespace geodesuka::core::graphics {
 		};
 
 		struct vertex {
-			float3					Position;
-			float2					TextureCoordinate;
-			float4					Color;
-			float3					Normal;
-			float3					Tangent;
-			float3					Bitangent;
-			uint4					BoneID;
-			float4					BoneWeight;
+			glm::vec3					Position;
+			glm::vec2					TextureCoordinate;
+			glm::vec4					Color;
+			glm::vec3					Normal;
+			glm::vec3					Tangent;
+			glm::vec3					Bitangent;
+			glm::uvec4					BoneID;
+			glm::vec4					BoneWeight;
 			vertex();
 		};
 

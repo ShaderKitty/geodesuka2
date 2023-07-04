@@ -22,7 +22,7 @@ namespace geodesuka::core::object {
 
 	//void camera::draw(object_t* aObject) {}
 
-	camera::camera(gcl::context* aContext, stage_t* aStage, const char* aName, uint3 aFrameResolution, double aFrameRate, uint32_t aFrameCount, uint32_t aAttachmentCount) : 
+	camera::camera(gcl::context* aContext, stage_t* aStage, const char* aName, glm::uvec3 aFrameResolution, double aFrameRate, uint32_t aFrameCount, uint32_t aAttachmentCount) : 
 		render_target(aContext, aStage, aName, aFrameResolution, aFrameRate, aFrameCount, aAttachmentCount) 
 	{
 

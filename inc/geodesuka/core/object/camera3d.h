@@ -25,7 +25,7 @@ namespace geodesuka::core::object {
 			gcl::image PixelPosition;
 			gcl::image PixelNormal;
 			gcl::image PixelSpecular;
-			geometry_buffer(gcl::context* aContext, uint2 aResolution);
+			geometry_buffer(gcl::context* aContext, glm::uvec2 aResolution);
 		};
 
 		static constexpr int				ID = 5;
@@ -43,7 +43,7 @@ namespace geodesuka::core::object {
 
 		// ----- camera3d methods ----- //
 
-		camera3d(gcl::context* aContext, stage::scene3d* aScene3D, const char* aName, float3 aPosition, int2 aResolution, double aFrameRate, uint32_t aFrameCount);
+		camera3d(gcl::context* aContext, stage::scene3d* aScene3D, const char* aName, glm::vec3 aPosition, glm::ivec2 aResolution, double aFrameRate, uint32_t aFrameCount);
 		//~camera3d();
 
 	protected:
@@ -71,10 +71,10 @@ namespace geodesuka::core::object {
 		float					Phi;
 
 		// Camera Transform Info.
-		float4x4				PRT;
-		float4x4				Projection;
-		float4x4				Rotation;
-		float4x4				Translation;
+		glm::mat4				PRT;
+		glm::mat4				Projection;
+		glm::mat4				Rotation;
+		glm::mat4				Translation;
 
 		gcl::buffer 			CameraUniformBuffer;
 

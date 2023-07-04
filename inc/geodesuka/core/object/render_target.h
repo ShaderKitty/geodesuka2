@@ -54,7 +54,7 @@ namespace geodesuka::core::object {
 
 		gcl::command_pool							CommandPool;
 		double										FrameRate;
-		uint3										FrameResolution; 
+		glm::uvec3										FrameResolution; 
 		uint32_t									FrameReadIndex;
 		uint32_t									FrameDrawIndex;
 		std::vector<frame>							Frame;
@@ -73,8 +73,8 @@ namespace geodesuka::core::object {
 		// ----- Render Target Canvas Variables ----- ///
 
 		// Used for Canvas Rendering of Render Target Contents
-		float2										ScreenPosition;
-		float2										ScreenSize;
+		glm::vec2										ScreenPosition;
+		glm::vec2										ScreenSize;
 		gcl::buffer 								RenderTargetUniformBuffer;
 
 		~render_target();
@@ -128,7 +128,7 @@ namespace geodesuka::core::object {
 		// Used to back store aggregated draw commands.
 		logic::timer FrameRateTimer;
 
-		render_target(gcl::context* aContext, stage_t* aStage, const char* aName, uint3 aFrameResolution, double aFrameRate, uint32_t aFrameCount, uint32_t aAttachmentCount);
+		render_target(gcl::context* aContext, stage_t* aStage, const char* aName, glm::uvec3 aFrameResolution, double aFrameRate, uint32_t aFrameCount, uint32_t aAttachmentCount);
 
 		vk_result create_framebuffers();
 		

@@ -93,8 +93,8 @@ namespace geodesuka::core {
 
 		virtual ~object_t();
 
-		virtual void set_position(float3 aPosition);
-		float3 get_position() const;
+		virtual void set_position(glm::vec3 aPosition);
+		glm::vec3 get_position() const;
 
 		virtual void set_name(const char* aName);
 		const char* get_name() const;
@@ -108,8 +108,8 @@ namespace geodesuka::core {
 	protected:
 
 		struct object_ubo {
-			float4x4 Translation;
-			float4x4 Orientation;
+			glm::mat4 Translation;
+			glm::mat4 Orientation;
 		};
 
 		// Used for shared usage between Engine & App.
@@ -120,17 +120,17 @@ namespace geodesuka::core {
 		stage_t*					Stage;
 		util::string				Name;
 
-		float3						InputVelocity;
-		float3						InputForce;
+		glm::vec3						InputVelocity;
+		glm::vec3						InputForce;
 		float						Mass;				// Kilogram			[kg]
 		float						Time;				// Second 			[s]
-		float3						Position;			// Meter			[m]
-		float3						Momentum;			// Linear Momentum	[kg*m/s]
-		float3						AngularMomentum;	// Angular Momentum [kg*m/s]
-		float3						Force;				// Newton			[kg*m^2/s^2]
-		float3						DirectionX;			// Right			[Normalized]
-		float3						DirectionY;			// Up				[Normalized]
-		float3						DirectionZ;			// Forward			[Normalized]
+		glm::vec3						Position;			// Meter			[m]
+		glm::vec3						Momentum;			// Linear Momentum	[kg*m/s]
+		glm::vec3						AngularMomentum;	// Angular Momentum [kg*m/s]
+		glm::vec3						Force;				// Newton			[kg*m^2/s^2]
+		glm::vec3						DirectionX;			// Right			[Normalized]
+		glm::vec3						DirectionY;			// Up				[Normalized]
+		glm::vec3						DirectionZ;			// Forward			[Normalized]
 
 		blending					Blending;
 		graphics::model*			Model;

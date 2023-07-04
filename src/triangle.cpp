@@ -7,7 +7,6 @@
 using namespace geodesuka::core;
 using namespace object;
 using namespace hid;
-using namespace math;
 using namespace gcl;
 using namespace util;
 

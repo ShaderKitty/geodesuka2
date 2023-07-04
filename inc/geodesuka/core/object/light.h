@@ -17,12 +17,12 @@ namespace geodesuka::core::object {
 		};
 
 		struct color {
-			float3 Ambient;
-			float3 Diffuse;
-			float3 Specular;
+			glm::vec3 Ambient;
+			glm::vec3 Diffuse;
+			glm::vec3 Specular;
 		};
 
-		float3 Direction;
+		glm::vec3 Direction;
 		color Color;
 		float a0, a1, a2;
 

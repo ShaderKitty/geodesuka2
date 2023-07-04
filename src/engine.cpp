@@ -24,7 +24,6 @@ namespace geodesuka {
 
 	using namespace core;
 
-	using namespace math;
 	using namespace util;
 	using namespace logic;
 	using namespace io;

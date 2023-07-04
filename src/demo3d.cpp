@@ -9,7 +9,7 @@ namespace geodesuka::builtin::stage {
 
 
 	demo3d::demo3d(core::gcl::context* aContext) : scene3d(aContext) {
-		//this->RenderTarget		|= new camera3d(aEngine, aContext, this, "Camera3D", 3, 60.0, float3(0, 0, 0), int2(640, 480));
+		//this->RenderTarget		|= new camera3d(aEngine, aContext, this, "Camera3D", 3, 60.0, glm::vec3(0, 0, 0), glm::ivec2(640, 480));
 
 		//this->Object			|= new object::triangle(Engine, aContext, this, "Triangle");
 

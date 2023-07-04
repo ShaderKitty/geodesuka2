@@ -56,7 +56,7 @@ namespace geodesuka::builtin::app {
 		Property.Title							= "Unit Test";
 
 		// Application main window.
-		Window = new system_window(Context, Engine->Display[0], "Unit Test", Property, int2(0, 0), int2(640, 480));
+		Window = new system_window(Context, Engine->Display[0], "Unit Test", Property, glm::ivec2(0, 0), glm::ivec2(640, 480));
 
 		// Create Compositor Canvas.
 		Compositor = new canvas(Context, Window);
@@ -366,9 +366,9 @@ namespace geodesuka::builtin::app {
 			image::usage::COLOR_ATTACHMENT | image::usage::TRANSFER_SRC | image::usage::TRANSFER_DST
 		);
 
-		image Texture1(Context, I0CreateInfo, image::format::B8G8R8A8_SRGB, uint2(4, 4), TextureData);
+		image Texture1(Context, I0CreateInfo, image::format::B8G8R8A8_SRGB, glm::uvec2(4, 4), TextureData);
 
-		image Texture2(Context, I0CreateInfo, image::format::B8G8R8A8_SRGB, uint2(4, 4));
+		image Texture2(Context, I0CreateInfo, image::format::B8G8R8A8_SRGB, glm::uvec2(4, 4));
 		
 		buffer ReturnImage(Context, HostBufferCreateInfo, TextureSize, NULL);
 

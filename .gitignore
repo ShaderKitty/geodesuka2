@@ -364,9 +364,4 @@ MigrationBackup/
 FodyWeavers.xsd
 
 # Engine Dependencies Exclusion
-/dep/oiio
-/dep/glfw
-/dep/freetype
-/dep/assimp
-/dep/freeimage
-/dep/portaudio
+/dep

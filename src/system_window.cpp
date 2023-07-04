@@ -42,15 +42,15 @@ namespace geodesuka::core::object {
 		Setting			= window::setting();
 		Swapchain		= swapchain::prop();
 		PixelFormat		= VK_FORMAT_B8G8R8A8_SRGB;
-		//Position = float3(0.0f, 0.0f, 0.0f);
-		//Size = float2(0.08f, 0.08f);
+		//Position = glm::vec3(0.0f, 0.0f, 0.0f);
+		//Size = glm::vec2(0.08f, 0.08f);
 		Title = NULL;
 	}
 
 	// ------------------------------ public methods ------------------------------- //
 	
-	system_window::system_window(gcl::context* aContext, system_display* aSystemDisplay, const char* aName, const property& aProperty, float3 aPosition, float2 aSize) : 
-		window(aContext, aSystemDisplay->Stage, aName, uint3(1u, 1u, 1u), aProperty.Swapchain.FrameRate, aProperty.Swapchain.FrameCount, 1)
+	system_window::system_window(gcl::context* aContext, system_display* aSystemDisplay, const char* aName, const property& aProperty, glm::vec3 aPosition, glm::vec2 aSize) : 
+		window(aContext, aSystemDisplay->Stage, aName, glm::uvec3(1u, 1u, 1u), aProperty.Swapchain.FrameRate, aProperty.Swapchain.FrameCount, 1)
 	{
 		vk_result Result = VK_SUCCESS;
 
@@ -69,8 +69,8 @@ namespace geodesuka::core::object {
 		}
 	}
 
-	system_window::system_window(gcl::context* aContext, system_display* aSystemDisplay, const char* aName, const property& aProperty, int2 aPosition, int2 aResolution) :
-		window(aContext, aSystemDisplay->Stage, aName, uint3(aResolution.x, aResolution.y, 1u), aProperty.Swapchain.FrameRate, aProperty.Swapchain.FrameCount, 1)
+	system_window::system_window(gcl::context* aContext, system_display* aSystemDisplay, const char* aName, const property& aProperty, glm::ivec2 aPosition, glm::ivec2 aResolution) :
+		window(aContext, aSystemDisplay->Stage, aName, glm::uvec3(aResolution.x, aResolution.y, 1u), aProperty.Swapchain.FrameRate, aProperty.Swapchain.FrameCount, 1)
 	{
 		vk_result Result = VK_SUCCESS;
 
@@ -96,11 +96,11 @@ namespace geodesuka::core::object {
 		this->Mutex.unlock();
 	}
 
-	void system_window::set_position(float3 aPosition) {
+	void system_window::set_position(glm::vec3 aPosition) {
 		Mutex.lock();
 		this->Position = aPosition;
-		this->PositionVSC = this->Display->convert_to_screen(float2(aPosition.x, aPosition.y));
-		int2 GlobalPosition = this->Display->convert_to_global_position(this->PositionVSC, this->SizeVSC);
+		this->PositionVSC = this->Display->convert_to_screen(glm::vec2(aPosition.x, aPosition.y));
+		glm::ivec2 GlobalPosition = this->Display->convert_to_global_position(this->PositionVSC, this->SizeVSC);
 		glfwSetWindowPos(this->Window, GlobalPosition.x, GlobalPosition.y);
 		Mutex.unlock();
 	}
@@ -109,39 +109,39 @@ namespace geodesuka::core::object {
 		return ID;
 	}
 
-	void system_window::set_size(float2 aSize) {
+	void system_window::set_size(glm::vec2 aSize) {
 		Mutex.lock();
 		this->Size = aSize;
 		this->SizeVSC = this->Display->convert_to_screen(aSize);
-		int2 GlobalPosition = this->Display->convert_to_global_position(this->PositionVSC, this->SizeVSC);
+		glm::ivec2 GlobalPosition = this->Display->convert_to_global_position(this->PositionVSC, this->SizeVSC);
 		glfwSetWindowPos(Window, GlobalPosition.x, GlobalPosition.y);
 		Mutex.unlock();
 	}
 
-	void system_window::set_resolution(uint2 aResolution) {
-		int2 NewSize(aResolution.x, aResolution.y);
+	void system_window::set_resolution(glm::uvec2 aResolution) {
+		glm::ivec2 NewSize(aResolution.x, aResolution.y);
 		this->set_size(NewSize);
 	}
 
-	void system_window::set_position(int2 aPosition) {
+	void system_window::set_position(glm::ivec2 aPosition) {
 		Mutex.lock();
 		this->Position = this->Display->convert_to_physical_position(aPosition);
 		this->PositionVSC = aPosition;
-		int2 GlobalPosition = this->Display->convert_to_global_position(aPosition, this->SizeVSC);
+		glm::ivec2 GlobalPosition = this->Display->convert_to_global_position(aPosition, this->SizeVSC);
 		glfwSetWindowPos(Window, GlobalPosition.x, GlobalPosition.y);
 		Mutex.unlock();
 	}
 
-	void system_window::set_size(int2 aSize) {
+	void system_window::set_size(glm::ivec2 aSize) {
 		Mutex.lock();
 		this->Size = this->Display->convert_to_physical_size(aSize);
 		this->SizeVSC = aSize;
-		int2 GlobalPosition = this->Display->convert_to_global_position(this->PositionVSC, this->SizeVSC);
-		int2 FramebufferResolution;
+		glm::ivec2 GlobalPosition = this->Display->convert_to_global_position(this->PositionVSC, this->SizeVSC);
+		glm::ivec2 FramebufferResolution;
 		glfwSetWindowSize(Window, SizeVSC.x, SizeVSC.y);
 		glfwSetWindowPos(Window, GlobalPosition.x, GlobalPosition.y);
 		glfwGetFramebufferSize(this->Window, &FramebufferResolution.x, &FramebufferResolution.y);
-		this->FrameResolution = uint3(FramebufferResolution.x, FramebufferResolution.y, 1u);
+		this->FrameResolution = glm::uvec3(FramebufferResolution.x, FramebufferResolution.y, 1u);
 		// Need to refresh window.
 		Mutex.unlock();
 	}
@@ -208,10 +208,10 @@ namespace geodesuka::core::object {
 
 	// ------------------------------ private methods ------------------------------ //
 
-	vk_result system_window::create_system_window(gcl::context* aContext, system_display* aSystemDisplay, const char* aName, const property& aProperty, int2 aPosition, int2 aResolution) {
+	vk_result system_window::create_system_window(gcl::context* aContext, system_display* aSystemDisplay, const char* aName, const property& aProperty, glm::ivec2 aPosition, glm::ivec2 aResolution) {
 		vk_result Result = VK_SUCCESS;
 
-		this->FrameResolution	= uint3(aResolution.x, aResolution.y, 1u);
+		this->FrameResolution	= glm::uvec3(aResolution.x, aResolution.y, 1u);
 		this->Title				= aProperty.Title;
 
 		// Create GLFW Window and Vulkan Surface.
@@ -288,7 +288,7 @@ namespace geodesuka::core::object {
 		}
 
 		if (this->Window != NULL) {
-			int2 FramebufferResolution;
+			glm::ivec2 FramebufferResolution;
 			// User pointer to forward input stream.
 			glfwSetWindowUserPointer(this->Window, (void*)this);
 
@@ -319,7 +319,7 @@ namespace geodesuka::core::object {
 			glfwSetDropCallback(this->Window, system_window::file_drop_callback);
 
 			glfwGetFramebufferSize(this->Window, &FramebufferResolution.x, &FramebufferResolution.y);
-			this->FrameResolution = uint3(FramebufferResolution.x, FramebufferResolution.y, 1u);
+			this->FrameResolution = glm::uvec3(FramebufferResolution.x, FramebufferResolution.y, 1u);
 
 			return GLFW_NO_ERROR;
 		} else {
@@ -663,7 +663,7 @@ namespace geodesuka::core::object {
 		// Wait for all resoure operations to finish.
 		Result = vkDeviceWaitIdle(Context->handle());
 
-		FrameResolution = uint3(aFrameSizeX, aFrameSizeY, 1u);
+		FrameResolution = glm::uvec3(aFrameSizeX, aFrameSizeY, 1u);
 
 		// Destroys old swapchain.
 		for (int i = 0; i < Frame.size(); i++) {
@@ -722,8 +722,8 @@ namespace geodesuka::core::object {
 	}
 
 	void system_window::zero_out() {
-		this->PositionVSC				= int2(0, 0);
-		this->SizeVSC					= int2(640, 480);
+		this->PositionVSC				= glm::ivec2(0, 0);
+		this->SizeVSC					= glm::ivec2(640, 480);
 		this->Display					= nullptr;
 		this->Window					= NULL;
 		this->Surface					= VK_NULL_HANDLE;
@@ -845,13 +845,13 @@ namespace geodesuka::core::object {
 	void system_window::position_callback(glfw_window* aWindowHandle, int aPosX, int aPosY) {
 		system_window* Window = (system_window*)glfwGetWindowUserPointer(aWindowHandle);
 		//Window->Position		= Window->Display->convert_to_display_position(aPosX, aPosY);
-		Window->PositionVSC		= int2(aPosX, aPosY);
+		Window->PositionVSC		= glm::ivec2(aPosX, aPosY);
 	}
 
 	void system_window::size_callback(glfw_window* aWindowHandle, int aSizeX, int aSizeY) {
 		system_window* Window = (system_window*)glfwGetWindowUserPointer(aWindowHandle);
-		Window->Size			= Window->Display->convert_to_physical_size(int2(aSizeX, aSizeY));
-		Window->SizeVSC			= int2(aSizeX, aSizeY);
+		Window->Size			= Window->Display->convert_to_physical_size(glm::ivec2(aSizeX, aSizeY));
+		Window->SizeVSC			= glm::ivec2(aSizeX, aSizeY);
 	}
 
 	void system_window::close_callback(glfw_window* aWindowHandle) {
@@ -889,7 +889,7 @@ namespace geodesuka::core::object {
 
 	void system_window::framebuffer_size_callback(glfw_window* aWindowHandle, int aFrameSizeX, int aFrameSizeY) {
 		system_window* Window = (system_window*)glfwGetWindowUserPointer(aWindowHandle);
-		//Window->FrameResolution = uint3(aFrameSizeX, aFrameSizeY, 1u);
+		//Window->FrameResolution = glm::uvec3(aFrameSizeX, aFrameSizeY, 1u);
 		Window->Engine->ThreadController.suspend(Window->Engine->RenderThreadID);
 		Window->recreate_swapchain(aFrameSizeX, aFrameSizeY);
 		Window->Engine->ThreadController.resume(Window->Engine->RenderThreadID);

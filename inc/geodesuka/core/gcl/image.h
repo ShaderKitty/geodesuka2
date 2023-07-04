@@ -324,33 +324,33 @@ namespace geodesuka::core::gcl {
 		image(const util::string& aFilePath);
 		image(const char* aFilePath);
 
-		image(type::id aTypeID, uint aResolution);
-		image(type::id aTypeID, uint2 aResolution);
-		image(type::id aTypeID, uint3 aResolution);
-		image(uint aArrayLayers, type::id aTypeID, uint aResolution);
-		image(uint aArrayLayers, type::id aTypeID, uint2 aResolution);
-		image(uint aArrayLayers, type::id aTypeID, uint3 aResolution);
+		image(type::id aTypeID, unsigned int aResolution);
+		image(type::id aTypeID, glm::uvec2 aResolution);
+		image(type::id aTypeID, glm::uvec3 aResolution);
+		image(unsigned int aArrayLayers, type::id aTypeID, unsigned int aResolution);
+		image(unsigned int aArrayLayers, type::id aTypeID, glm::uvec2 aResolution);
+		image(unsigned int aArrayLayers, type::id aTypeID, glm::uvec3 aResolution);
 
-		image(type::id aTypeID, uint aResolution, void* aTextureData);
-		image(type::id aTypeID, uint2 aResolution, void* aTextureData);
-		image(type::id aTypeID, uint3 aResolution, void* aTextureData);
-		image(uint aArrayLayers, type::id aTypeID, uint aResolution, void* aTextureData);
-		image(uint aArrayLayers, type::id aTypeID, uint2 aResolution, void* aTextureData);
-		image(uint aArrayLayers, type::id aTypeID, uint3 aResolution, void* aTextureData);
+		image(type::id aTypeID, unsigned int aResolution, void* aTextureData);
+		image(type::id aTypeID, glm::uvec2 aResolution, void* aTextureData);
+		image(type::id aTypeID, glm::uvec3 aResolution, void* aTextureData);
+		image(unsigned int aArrayLayers, type::id aTypeID, unsigned int aResolution, void* aTextureData);
+		image(unsigned int aArrayLayers, type::id aTypeID, glm::uvec2 aResolution, void* aTextureData);
+		image(unsigned int aArrayLayers, type::id aTypeID, glm::uvec3 aResolution, void* aTextureData);
 
-		image(format aFormat, uint aResolution);
-		image(format aFormat, uint2 aResolution);
-		image(format aFormat, uint3 aResolution);
-		image(uint aArrayLayers, format aFormat, uint aResolution);
-		image(uint aArrayLayers, format aFormat, uint2 aResolution);
-		image(uint aArrayLayers, format aFormat, uint3 aResolution);
+		image(format aFormat, unsigned int aResolution);
+		image(format aFormat, glm::uvec2 aResolution);
+		image(format aFormat, glm::uvec3 aResolution);
+		image(unsigned int aArrayLayers, format aFormat, unsigned int aResolution);
+		image(unsigned int aArrayLayers, format aFormat, glm::uvec2 aResolution);
+		image(unsigned int aArrayLayers, format aFormat, glm::uvec3 aResolution);
 
-		image(format aFormat, uint aResolution, void* aTextureData);
-		image(format aFormat, uint2 aResolution, void* aTextureData);
-		image(format aFormat, uint3 aResolution, void* aTextureData);
-		image(uint aArrayLayers, format aFormat, uint aResolution, void* aTextureData);
-		image(uint aArrayLayers, format aFormat, uint2 aResolution, void* aTextureData);
-		image(uint aArrayLayers, format aFormat, uint3 aResolution, void* aTextureData);
+		image(format aFormat, unsigned int aResolution, void* aTextureData);
+		image(format aFormat, glm::uvec2 aResolution, void* aTextureData);
+		image(format aFormat, glm::uvec3 aResolution, void* aTextureData);
+		image(unsigned int aArrayLayers, format aFormat, unsigned int aResolution, void* aTextureData);
+		image(unsigned int aArrayLayers, format aFormat, glm::uvec2 aResolution, void* aTextureData);
+		image(unsigned int aArrayLayers, format aFormat, glm::uvec3 aResolution, void* aTextureData);
 
 		// -------------------- Device Context Memory -------------------- //
 
@@ -362,36 +362,36 @@ namespace geodesuka::core::gcl {
 		image(context* aContext, create_info aCreateInfo, const image* aHostImage);
 
 		// No Data Upload.
-		image(context* aContext, create_info aCreateInfo, type::id aTypeID, uint aResolution);
-		image(context* aContext, create_info aCreateInfo, type::id aTypeID, uint2 aResolution);
-		image(context* aContext, create_info aCreateInfo, type::id aTypeID, uint3 aResolution);
-		image(context* aContext, create_info aCreateInfo, uint aArrayLayers, type::id aTypeID, uint aResolution);
-		image(context* aContext, create_info aCreateInfo, uint aArrayLayers, type::id aTypeID, uint2 aResolution);
-		image(context* aContext, create_info aCreateInfo, uint aArrayLayers, type::id aTypeID, uint3 aResolution);
+		image(context* aContext, create_info aCreateInfo, type::id aTypeID, unsigned int aResolution);
+		image(context* aContext, create_info aCreateInfo, type::id aTypeID, glm::uvec2 aResolution);
+		image(context* aContext, create_info aCreateInfo, type::id aTypeID, glm::uvec3 aResolution);
+		image(context* aContext, create_info aCreateInfo, unsigned int aArrayLayers, type::id aTypeID, unsigned int aResolution);
+		image(context* aContext, create_info aCreateInfo, unsigned int aArrayLayers, type::id aTypeID, glm::uvec2 aResolution);
+		image(context* aContext, create_info aCreateInfo, unsigned int aArrayLayers, type::id aTypeID, glm::uvec3 aResolution);
 
 		// Data Upload
-		image(context* aContext, create_info aCreateInfo, type::id aTypeID, uint aResolution, void* aTextureData);
-		image(context* aContext, create_info aCreateInfo, type::id aTypeID, uint2 aResolution, void* aTextureData);
-		image(context* aContext, create_info aCreateInfo, type::id aTypeID, uint3 aResolution, void* aTextureData);
-		image(context* aContext, create_info aCreateInfo, uint aArrayLayers, type::id aTypeID, uint aResolution, void* aTextureData);
-		image(context* aContext, create_info aCreateInfo, uint aArrayLayers, type::id aTypeID, uint2 aResolution, void* aTextureData);
-		image(context* aContext, create_info aCreateInfo, uint aArrayLayers, type::id aTypeID, uint3 aResolution, void* aTextureData);
+		image(context* aContext, create_info aCreateInfo, type::id aTypeID, unsigned int aResolution, void* aTextureData);
+		image(context* aContext, create_info aCreateInfo, type::id aTypeID, glm::uvec2 aResolution, void* aTextureData);
+		image(context* aContext, create_info aCreateInfo, type::id aTypeID, glm::uvec3 aResolution, void* aTextureData);
+		image(context* aContext, create_info aCreateInfo, unsigned int aArrayLayers, type::id aTypeID, unsigned int aResolution, void* aTextureData);
+		image(context* aContext, create_info aCreateInfo, unsigned int aArrayLayers, type::id aTypeID, glm::uvec2 aResolution, void* aTextureData);
+		image(context* aContext, create_info aCreateInfo, unsigned int aArrayLayers, type::id aTypeID, glm::uvec3 aResolution, void* aTextureData);
 
 		// No Data Upload.
-		image(context* aContext, create_info aCreateInfo, format aFormat, uint aResolution);
-		image(context* aContext, create_info aCreateInfo, format aFormat, uint2 aResolution);
-		image(context* aContext, create_info aCreateInfo, format aFormat, uint3 aResolution);
-		image(context* aContext, create_info aCreateInfo, uint aArrayLayers, format aFormat, uint aResolution);
-		image(context* aContext, create_info aCreateInfo, uint aArrayLayers, format aFormat, uint2 aResolution);
-		image(context* aContext, create_info aCreateInfo, uint aArrayLayers, format aFormat, uint3 aResolution);
+		image(context* aContext, create_info aCreateInfo, format aFormat, unsigned int aResolution);
+		image(context* aContext, create_info aCreateInfo, format aFormat, glm::uvec2 aResolution);
+		image(context* aContext, create_info aCreateInfo, format aFormat, glm::uvec3 aResolution);
+		image(context* aContext, create_info aCreateInfo, unsigned int aArrayLayers, format aFormat, unsigned int aResolution);
+		image(context* aContext, create_info aCreateInfo, unsigned int aArrayLayers, format aFormat, glm::uvec2 aResolution);
+		image(context* aContext, create_info aCreateInfo, unsigned int aArrayLayers, format aFormat, glm::uvec3 aResolution);
 
 		// Data Upload
-		image(context* aContext, create_info aCreateInfo, format aFormat, uint aResolution, void* aTextureData);
-		image(context* aContext, create_info aCreateInfo, format aFormat, uint2 aResolution, void* aTextureData);
-		image(context* aContext, create_info aCreateInfo, format aFormat, uint3 aResolution, void* aTextureData);
-		image(context* aContext, create_info aCreateInfo, uint aArrayLayers, format aFormat, uint aResolution, void* aTextureData);
-		image(context* aContext, create_info aCreateInfo, uint aArrayLayers, format aFormat, uint2 aResolution, void* aTextureData);
-		image(context* aContext, create_info aCreateInfo, uint aArrayLayers, format aFormat, uint3 aResolution, void* aTextureData);
+		image(context* aContext, create_info aCreateInfo, format aFormat, unsigned int aResolution, void* aTextureData);
+		image(context* aContext, create_info aCreateInfo, format aFormat, glm::uvec2 aResolution, void* aTextureData);
+		image(context* aContext, create_info aCreateInfo, format aFormat, glm::uvec3 aResolution, void* aTextureData);
+		image(context* aContext, create_info aCreateInfo, unsigned int aArrayLayers, format aFormat, unsigned int aResolution, void* aTextureData);
+		image(context* aContext, create_info aCreateInfo, unsigned int aArrayLayers, format aFormat, glm::uvec2 aResolution, void* aTextureData);
+		image(context* aContext, create_info aCreateInfo, unsigned int aArrayLayers, format aFormat, glm::uvec3 aResolution, void* aTextureData);
 
 		// Copy Constructor.
 		image(image& aInput);
@@ -470,9 +470,9 @@ namespace geodesuka::core::gcl {
 		// Host Memory
 		//size_t						Size;
 		//void*						Data;
-		uint						Layers;
+		unsigned int				Layers;
 		int							Format;
-		uint3						Resolution;
+		glm::uvec3					Resolution;
 
 		// Device Memory
 		context*					Context;
@@ -494,12 +494,12 @@ namespace geodesuka::core::gcl {
 		uint32_t mip_level_count(vk_image_type aImageType, vk_extent_3d aExtent);
 
 		// Creates Device Image.
-		vk_result create_device_image(context* aContext, create_info aCreateInfo, uint aArrayLayers, int aFormat, uint3 aResolution);
+		vk_result create_device_image(context* aContext, create_info aCreateInfo, unsigned int aArrayLayers, int aFormat, glm::uvec3 aResolution);
 		vk_result create_device_image(context* aDeviceContext, vk_image_create_info aCreateInfo, int aMemoryType);
-		vk_result get_limits(vk_image_format_properties * aReturn, device* aDevice, create_info aCreateInfo, int aFormat, uint3 aResolution);
-		vk_image_create_info pack_create_info(vk_image_format_properties aImageLimits, create_info aCreateInfo, uint aArrayLayers, int aFormat, uint3 aResolution);
+		vk_result get_limits(vk_image_format_properties * aReturn, device* aDevice, create_info aCreateInfo, int aFormat, glm::uvec3 aResolution);
+		vk_image_create_info pack_create_info(vk_image_format_properties aImageLimits, create_info aCreateInfo, unsigned int aArrayLayers, int aFormat, glm::uvec3 aResolution);
 		vk_memory_allocate_info pack_allocate_info(context* aContext, device* aDevice, int aMemoryType);
-		vk_result generate_miplevels(uint aMipLevel, uint aArrayLayers, vk_image_layout aInitialLayout, vk_image_type aImageType, vk_extent_3d aExtent);
+		vk_result generate_miplevels(unsigned int aMipLevel, unsigned int aArrayLayers, vk_image_layout aInitialLayout, vk_image_type aImageType, vk_extent_3d aExtent);
 
 		// Destroys device memory image.
 		void clear_device_memory();
@@ -508,7 +508,7 @@ namespace geodesuka::core::gcl {
 		void zero_out();
 
 		// Used by system_window
-		vk_image_view create_system_window_frame(context* aContext, vk_format aFormat, vk_image_usage_flags aUsageFlags, vk_image aImageHandle, uint3 aImageResolution);
+		vk_image_view create_system_window_frame(context* aContext, vk_format aFormat, vk_image_usage_flags aUsageFlags, vk_image aImageHandle, glm::uvec3 aImageResolution);
 
 	};
 

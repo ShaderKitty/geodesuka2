@@ -99,13 +99,13 @@ namespace geodesuka::core::object {
 		static std::vector<const char*> RequiredContextExtension;
 		static constexpr int ID = 2;
 
-		system_window(gcl::context* aContext, system_display* aSystemDisplay, const char* aName, const property& aProperty, float3 aPosition, float2 aSize);
-		system_window(gcl::context* aContext, system_display* aSystemDisplay, const char* aName, const property& aProperty, int2 aPosition, int2 aResolution);
+		system_window(gcl::context* aContext, system_display* aSystemDisplay, const char* aName, const property& aProperty, glm::vec3 aPosition, glm::vec2 aSize);
+		system_window(gcl::context* aContext, system_display* aSystemDisplay, const char* aName, const property& aProperty, glm::ivec2 aPosition, glm::ivec2 aResolution);
 		~system_window();
 
 		// -------------------- object_t methods -------------------- //
 
-		virtual void set_position(float3 aPosition) override;
+		virtual void set_position(glm::vec3 aPosition) override;
 
 		// -------------------- render_target methods --------------- //
 
@@ -113,13 +113,13 @@ namespace geodesuka::core::object {
 
 		// -------------------- window methods ---------------------- //
 
-		virtual void set_size(float2 aSize) override;
-		virtual void set_resolution(uint2 aResolution) override;
+		virtual void set_size(glm::vec2 aSize) override;
+		virtual void set_resolution(glm::uvec2 aResolution) override;
 
 		// -------------------- native methods ---------------------- //
 
-		void set_position(int2 aPosition);
-		void set_size(int2 aSize);
+		void set_position(glm::ivec2 aPosition);
+		void set_size(glm::ivec2 aSize);
 		void set_option(setting::id, bool aValue);
 
 	protected:
@@ -145,8 +145,8 @@ namespace geodesuka::core::object {
 
 	private:
 
-		int2									PositionVSC;
-		int2									SizeVSC;
+		glm::ivec2									PositionVSC;
+		glm::ivec2									SizeVSC;
 		system_display*							Display;
 		glfw_window*							Window;
 		vk_surface_khr							Surface;
@@ -163,7 +163,7 @@ namespace geodesuka::core::object {
 		// ------------------------------ Utility (Internal, Do Not Use) ------------------------------ //
 
 		// Render Target Side.
-		vk_result create_system_window(gcl::context* aContext, system_display* aSystemDisplay, const char* aName, const property& aProperty, int2 aPosition, int2 aResolution);
+		vk_result create_system_window(gcl::context* aContext, system_display* aSystemDisplay, const char* aName, const property& aProperty, glm::ivec2 aPosition, glm::ivec2 aResolution);
 		
 		// ---------- system_window resources ---------- //
 

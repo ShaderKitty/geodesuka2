@@ -166,13 +166,13 @@ namespace geodesuka::core {
 		}
 	}
 
-	void object_t::set_position(float3 aPosition) {
+	void object_t::set_position(glm::vec3 aPosition) {
 		this->Mutex.lock();
 		this->Position = aPosition;
 		this->Mutex.unlock();
 	}
 
-	float3 object_t::get_position() const {
+	glm::vec3 object_t::get_position() const {
 		return this->Position;
 	}
 
@@ -269,17 +269,17 @@ namespace geodesuka::core {
 			Engine->ThreadController.resume_all();
 		}
 
-		InputVelocity	= float3(0.0, 0.0, 0.0);
-		InputForce		= float3(0.0, 0.0, 0.0);
+		InputVelocity	= glm::vec3(0.0, 0.0, 0.0);
+		InputForce		= glm::vec3(0.0, 0.0, 0.0);
 
 		Mass			= 1.0;
 		Time			= logic::get_time();
-		Position		= float3(0.0, 0.0, 0.0);
-		Momentum		= float3(0.0, 0.0, 0.0);
-		Force			= float3(0.0, 0.0, 0.0);
-		DirectionX		= float3(1.0, 0.0, 0.0);
-		DirectionY		= float3(0.0, 1.0, 0.0);
-		DirectionZ		= float3(0.0, 0.0, 1.0);
+		Position		= glm::vec3(0.0, 0.0, 0.0);
+		Momentum		= glm::vec3(0.0, 0.0, 0.0);
+		Force			= glm::vec3(0.0, 0.0, 0.0);
+		DirectionX		= glm::vec3(1.0, 0.0, 0.0);
+		DirectionY		= glm::vec3(0.0, 1.0, 0.0);
+		DirectionZ		= glm::vec3(0.0, 0.0, 1.0);
 	}
 
 	void object_t::input(const hid::mouse& aMouse, const hid::keyboard& aKeyboard) {
@@ -306,8 +306,8 @@ namespace geodesuka::core {
 		this->Mutex.lock();
 
 		// Generic Free body motion equations.
-		Momentum += (Force + InputForce) * aDeltaTime;
-		Position += ((Momentum / Mass) + InputVelocity) * aDeltaTime;
+		// Momentum += (Force + InputForce) * aDeltaTime;
+		// Position += ((Momentum / Mass) + InputVelocity) * aDeltaTime;
 
 		this->Mutex.unlock();
 		return TransferBatch;

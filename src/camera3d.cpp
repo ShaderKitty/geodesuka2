@@ -16,7 +16,7 @@ namespace geodesuka::core::object {
 	// Ze = Near -> Zn = +1
 	// Ze = Far -> Zn = -1
 	// The farther out a vertex, the more negative it becomes.
-	static float4x4 perspective(float aFOV, float aAspectRatio, float aNear, float aFar) {
+	static glm::mat4 perspective(float aFOV, float aAspectRatio, float aNear, float aFar) {
 		//tex:
 		// Aspect Ratio: $$a$$
 		// Field of View (Radians): $$\theta$$
@@ -25,8 +25,8 @@ namespace geodesuka::core::object {
 		// $$ x_{n} = \frac{1}{\tan{\frac{\theta}{2}}} \frac{x_{e}}{z_{e}}$$
 		// $$ y_{n} = \frac{a}{\tan{\frac{\theta}{2}}} \frac{y_{e}}{z_{e}}$$
 		// $$ z_{n} = \frac{1}{z_{e}} \bigg(-\frac{f+n}{f-n} z_{e} + \frac{2fn}{f-n} \bigg)$$ 
-		// The $z$ term is why the perspective matrix must be a float4x4 type 
-		// and not just a float3x3. The set of equations above describe
+		// The $z$ term is why the perspective matrix must be a glm::mat4 type 
+		// and not just a glm::mat3. The set of equations above describe
 		// the transform from what the perspective of the camera
 		// to the screen space of the context.
 		// 
@@ -41,7 +41,7 @@ namespace geodesuka::core::object {
 		// $$
 
 		float Tangent = std::tan(aFOV / 2.0);
-		return float4x4(
+		return glm::mat4(
 			(1.0 / Tangent), 0.0, 0.0, 0.0,
 			0.0, (aAspectRatio / Tangent), 0.0, 0.0,
 			0.0, 0.0, (-((aFar + aNear) / (aFar - aNear))), ((2.0 * aFar * aNear) / ((double)aFar - (double)aNear)),
@@ -50,8 +50,8 @@ namespace geodesuka::core::object {
 	}
 
 	// TODO: Create orthographic transformation matrix later.
-	static float4x4 orthographic() {
-		return float4x4::I;
+	static glm::mat4 orthographic() {
+		return glm::mat4(1.0f);
 	}
 
 	//void camera3d::draw(object_t* aObject) {
@@ -86,8 +86,8 @@ namespace geodesuka::core::object {
 		return ID;
 	}
 
-	camera3d::camera3d(gcl::context* aContext, stage::scene3d* aScene3D, const char* aName, float3 aPosition, int2 aResolution, double aFrameRate, uint32_t aFrameCount) : 
-		camera(aContext, aScene3D, aName, uint3(aResolution.x, aResolution.y, 1u), aFrameRate, aFrameCount, 4) 
+	camera3d::camera3d(gcl::context* aContext, stage::scene3d* aScene3D, const char* aName, glm::vec3 aPosition, glm::ivec2 aResolution, double aFrameRate, uint32_t aFrameCount) : 
+		camera(aContext, aScene3D, aName, glm::uvec3(aResolution.x, aResolution.y, 1u), aFrameRate, aFrameCount, 4) 
 	{
 		vk_result Result = VK_SUCCESS;
 
@@ -97,24 +97,24 @@ namespace geodesuka::core::object {
 		this->AspectRatio 	= 1.0f;
 		this->MinDistance 	= 10.0f;
 		this->MaxDistance 	= 1000.0f;
-		this->Theta 		= math::constant::pi;
+		this->Theta 		= glm::pi<float>();
 		this->Phi 			= 0.0f;
-		this->DirectionX 	= float3(sin(Phi), -cos(Phi), 0.0f);
-		this->DirectionY 	= float3(-cos(Phi) * cos(Theta), -sin(Phi) * cos(Theta), sin(Theta));
-		this->DirectionZ 	= float3(cos(Phi) * sin(Theta), sin(Phi) * sin(Theta), cos(Theta));
+		this->DirectionX 	= glm::vec3(sin(Phi), -cos(Phi), 0.0f);
+		this->DirectionY 	= glm::vec3(-cos(Phi) * cos(Theta), -sin(Phi) * cos(Theta), sin(Theta));
+		this->DirectionZ 	= glm::vec3(cos(Phi) * sin(Theta), sin(Phi) * sin(Theta), cos(Theta));
 
 		this->Projection = perspective(this->FieldOfView, this->AspectRatio, this->MinDistance, this->MaxDistance);
 
 		// Transforms to a RH coordinate system where +Z is popping out of the screen.
 		// TODO: Insure default pipeline recognizes this definition in its constructor.
-		this->Rotation = float4x4(
+		this->Rotation = glm::mat4(
 			this->DirectionX.x, this->DirectionX.y, this->DirectionX.z, 0.0f,
 			this->DirectionZ.x, this->DirectionZ.y, this->DirectionZ.z, 0.0f,
 			this->DirectionY.x, this->DirectionY.y, this->DirectionY.z, 0.0f,
 			0.0f, 0.0f, 0.0f, 1.0f
 		);
 
-		this->Translation = float4x4(
+		this->Translation = glm::mat4(
 			1.0f, 0.0f, 0.0f, this->Position.x,
 			0.0f, 1.0f, 0.0f, this->Position.y,
 			0.0f, 0.0f, 1.0f, this->Position.z,
@@ -194,7 +194,7 @@ namespace geodesuka::core::object {
 		return RenderBatch;
 	}
 
-	camera3d::geometry_buffer::geometry_buffer(context* aContext, uint2 aResolution) {
+	camera3d::geometry_buffer::geometry_buffer(context* aContext, glm::uvec2 aResolution) {
 		vk_result Result = VK_SUCCESS;
 
 		// New API design?
@@ -280,7 +280,7 @@ namespace geodesuka::core::object {
 
 		// Create Images.
 		for (size_t i = 0; i < this->Frame.size(); i++) {
-			GeometryBuffer.emplace_back(Context, uint2(FrameResolution.x, FrameResolution.y));
+			GeometryBuffer.emplace_back(Context, glm::uvec2(FrameResolution.x, FrameResolution.y));
 		}
 
 		// Fill out attachment description

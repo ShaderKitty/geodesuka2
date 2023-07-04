@@ -14,7 +14,7 @@ namespace geodesuka::core::object {
 	// ------------------------------ public methods ------------------------------- //
 	
 	system_display::system_display(engine* aEngine, glfw_monitor* aMonitor, const char* aName) : 
-		window(nullptr, nullptr, aName, uint3(1u, 1u, 1u), 0.0f, 0, 0) 
+		window(nullptr, nullptr, aName, glm::uvec3(1u, 1u, 1u), 0.0f, 0, 0) 
 	{
 		Engine = aEngine;
 		Handle = aMonitor;
@@ -37,10 +37,10 @@ namespace geodesuka::core::object {
 		glfwGetMonitorPos(Handle, &PositionVSC.x, &PositionVSC.y);
 
 		// Returns units in mm, converts to meters.
-		int2 PhysicalSize = int2(0, 0);
+		glm::ivec2 PhysicalSize = glm::ivec2(0, 0);
 		glfwGetMonitorPhysicalSize(Handle, &PhysicalSize.x, &PhysicalSize.y);
-		Size.x = (math::real)(((double)PhysicalSize.x) / 1000.0);
-		Size.y = (math::real)(((double)PhysicalSize.y) / 1000.0);
+		Size.x = (float)(((double)PhysicalSize.x) / 1000.0);
+		Size.y = (float)(((double)PhysicalSize.y) / 1000.0);
 
 		// Load resolution
 		SizeVSC.x = CurrentVideoMode->width;
@@ -76,18 +76,18 @@ namespace geodesuka::core::object {
 	// Centers system_display and system_window.
 	// $$ \vec{r}_{scr}^{w} = \vec{r}_{vsc}^{w} - \frac{\vec{s}_{scr}^{w}}{2} + \Big(\vec{r}_{scr}^{m} + \frac{\vec{s}_{scr}^{m}}{2} \Big) $$
 
-	float3 system_display::convert_to_physical_position(int2 aPosition) {
-		float2 TempPhysicalPosition = this->convert_to_physical(aPosition);
-		return float3(TempPhysicalPosition.x, TempPhysicalPosition.y, 0.0f);
+	glm::vec3 system_display::convert_to_physical_position(glm::ivec2 aPosition) {
+		glm::vec2 TempPhysicalPosition = this->convert_to_physical(aPosition);
+		return glm::vec3(TempPhysicalPosition.x, TempPhysicalPosition.y, 0.0f);
 	}
 
-	float2 system_display::convert_to_physical_size(int2 aSize) {
+	glm::vec2 system_display::convert_to_physical_size(glm::ivec2 aSize) {
 		return this->convert_to_physical(aSize);
 	}
 
 	// Takes physical position on display and converts to VSC
-	int2 system_display::convert_to_vsc_position(float3 aPosition) {
-		int2 R;
+	glm::ivec2 system_display::convert_to_vsc_position(glm::vec3 aPosition) {
+		glm::ivec2 R;
 
 
 
@@ -95,35 +95,35 @@ namespace geodesuka::core::object {
 	}
 
 	// Takes physical size on display and converts to VSC
-	int2 system_display::convert_to_vsc_size(float2 aSize) {
-		int2 S;
+	glm::ivec2 system_display::convert_to_vsc_size(glm::vec2 aSize) {
+		glm::ivec2 S;
 		return S;
 	}
 
 
-	float2 system_display::convert_to_physical(int2 aVector) {
-		float2 Physical;
+	glm::vec2 system_display::convert_to_physical(glm::ivec2 aVector) {
+		glm::vec2 Physical;
 		Physical.x = (((float)aVector.x) / ((float)this->SizeVSC.x)) * this->Size.x;
 		Physical.y = (((float)aVector.y) / ((float)this->SizeVSC.y)) * this->Size.y;
 		return Physical;
 	}
 
-	int2 system_display::convert_to_screen(float2 aVector) {
-		int2 Screen;
+	glm::ivec2 system_display::convert_to_screen(glm::vec2 aVector) {
+		glm::ivec2 Screen;
 		Screen.x = (int)round((aVector.x / this->Size.x) * (float)this->SizeVSC.x);
 		Screen.y = (int)round((aVector.y / this->Size.y) * (float)this->SizeVSC.y);
 		return Screen;
 	}
 
-	int2 system_display::convert_to_display_position(int2 aPosition, int2 aSize) {
-		int2 DisplayPosition;
+	glm::ivec2 system_display::convert_to_display_position(glm::ivec2 aPosition, glm::ivec2 aSize) {
+		glm::ivec2 DisplayPosition;
 		DisplayPosition.x = (aPosition.x + (int)round(((float)aSize.x) / 2.0f)) - (this->PositionVSC.x + (int)round(((float)this->SizeVSC.x) / 2.0f));
 		DisplayPosition.y = -((aPosition.y + (int)round(((float)aSize.y) / 2.0f)) - (this->PositionVSC.y + (int)round(((float)this->SizeVSC.y) / 2.0f)));
 		return DisplayPosition;
 	}
 
-	int2 system_display::convert_to_global_position(int2 aPosition, int2 aSize) {
-		int2 GlobalPosition;
+	glm::ivec2 system_display::convert_to_global_position(glm::ivec2 aPosition, glm::ivec2 aSize) {
+		glm::ivec2 GlobalPosition;
 		GlobalPosition.x = (aSize.x - (int)round(((float)aSize.x) / 2.0f)) + (this->PositionVSC.x + round(((float)this->SizeVSC.x) / 2.0f));
 		GlobalPosition.y = -((aPosition.y + (int)round(((float)aSize.y) / 2.0f)) - (this->PositionVSC.y + (int)round(((float)this->SizeVSC.y) / 2.0f)));
 		return GlobalPosition;

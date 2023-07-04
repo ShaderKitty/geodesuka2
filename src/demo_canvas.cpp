@@ -28,7 +28,7 @@ namespace geodesuka::builtin::stage {
 		Property.PixelFormat					= VK_FORMAT_B8G8R8A8_SRGB;
 		Property.Title							= "Unit Test";
 
-		//this->RenderTarget	|= new system_window(Engine, Context, PrimaryDisplay, "Unit Test", Property, int2(0, 0), int2(640, 480));
+		//this->RenderTarget	|= new system_window(Engine, Context, PrimaryDisplay, "Unit Test", Property, glm::ivec2(0, 0), glm::ivec2(640, 480));
 		//this->Object		|= new triangle(Engine, Context, this, "Simple Triangle");
 
 	}

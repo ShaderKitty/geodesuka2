@@ -45,6 +45,7 @@ PROJECT_TYPE = "Unix Makefiles"
 # This is used to discriminate between compile types.
 DISC = $(PLAT)/$(ARCH)/$(MODE)
 
+GLM_INC = -Idep/glm/
 GLFW_INC = -Idep/glfw/include/
 PORTAUDIO_INC = -Idep/portaudio/include/
 ASSIMP_INC = -Idep/assimp/include/ -Idep/assimp/bld/$(DISC)/include/
@@ -111,7 +112,7 @@ DEP_DIR = dep
 SYS_INC = $(VULKAN_INC)
 SYS_LIB = $(GLSLANG_LIB) $(SPIRV_LIB) $(VULKAN_LIB) $(OPENGL_LIB) $(ALSA_LIB) $(X11_LIB) 
 
-DEP_INC = $(FREEIMAGE_INC) $(FREETYPE_INC) $(ASSIMP_INC) $(PORTAUDIO_INC) $(GLFW_INC)
+DEP_INC = $(FREEIMAGE_INC) $(FREETYPE_INC) $(ASSIMP_INC) $(PORTAUDIO_INC) $(GLFW_INC) $(GLM_INC)
 DEP_LIB = $(FREEIMAGE_LIB) $(FREETYPE_LIB) $(ASSIMP_LIB) $(PORTAUDIO_LIB) $(GLFW_LIB)
 
 INC = -Iinc $(DEP_INC) $(SYS_INC)
@@ -142,10 +143,12 @@ clone:
 	git clone https://github.com/assimp/assimp.git dep/assimp
 	git clone https://gitlab.freedesktop.org/freetype/freetype.git $(DEP_DIR)/freetype
 	git clone https://github.com/ShaderKitty/freeimage.git $(DEP_DIR)/freeimage
+	git clone https://github.com/g-truc/glm.git $(DEP_DIR)/glm
 	(cd $(DEP_DIR)/glfw && git checkout 3.3.8)
 	(cd $(DEP_DIR)/portaudio && git checkout v19.7.0)
 	(cd $(DEP_DIR)/assimp && git checkout v5.2.5)
 	(cd $(DEP_DIR)/freetype && git checkout VER-2-12-1)
+	(cd $(DEP_DIR)/glm && git checkout 0.9.9.8)
 
 # Setup build files
 setup:
@@ -183,5 +186,6 @@ unit-test: geodesuka
 
 # Cleans cached object files
 clean:
+	rm bin/$(DISC)/*
 	rm lib/$(DISC)/*.a
 	rm obj/$(DISC)/*.o

@@ -580,122 +580,122 @@ namespace geodesuka::core::gcl {
 		this->MipExtent = NULL;
 	}
 
-	image::image(type::id aTypeID, uint aResolution) {
+	image::image(type::id aTypeID, unsigned int aResolution) {
 		this->zero_out();
 		assert(!this->create_host_image(1u, t2f(aTypeID), aResolution, 1u, 1u, NULL));
 	}
 
-	image::image(type::id aTypeID, uint2 aResolution) {
+	image::image(type::id aTypeID, glm::uvec2 aResolution) {
 		this->zero_out();
 		assert(!this->create_host_image(1u, t2f(aTypeID), aResolution.x, aResolution.y, 1u, NULL));
 	}
 
-	image::image(type::id aTypeID, uint3 aResolution) {
+	image::image(type::id aTypeID, glm::uvec3 aResolution) {
 		this->zero_out();
 		assert(!this->create_host_image(1u, t2f(aTypeID), aResolution.x, aResolution.y, aResolution.z, NULL));
 	}
 
-	image::image(uint aArrayLayers, type::id aTypeID, uint aResolution) {
+	image::image(unsigned int aArrayLayers, type::id aTypeID, unsigned int aResolution) {
 		this->zero_out();
 		assert(!this->create_host_image(aArrayLayers, t2f(aTypeID), aResolution, 1u, 1u, NULL));
 	}
 
-	image::image(uint aArrayLayers, type::id aTypeID, uint2 aResolution) {
+	image::image(unsigned int aArrayLayers, type::id aTypeID, glm::uvec2 aResolution) {
 		this->zero_out();
 		assert(!this->create_host_image(aArrayLayers, t2f(aTypeID), aResolution.x, aResolution.y, 1u, NULL));
 	}
 
-	image::image(uint aArrayLayers, type::id aTypeID, uint3 aResolution) {
+	image::image(unsigned int aArrayLayers, type::id aTypeID, glm::uvec3 aResolution) {
 		this->zero_out();
 		assert(!this->create_host_image(aArrayLayers, t2f(aTypeID), aResolution.x, aResolution.y, aResolution.z, NULL));
 	}
 
-	image::image(type::id aTypeID, uint aResolution, void* aTextureData) {
+	image::image(type::id aTypeID, unsigned int aResolution, void* aTextureData) {
 		this->zero_out();
 		assert(!this->create_host_image(1u, t2f(aTypeID), aResolution, 1u, 1u, aTextureData));
 	}
 
-	image::image(type::id aTypeID, uint2 aResolution, void* aTextureData) {
+	image::image(type::id aTypeID, glm::uvec2 aResolution, void* aTextureData) {
 		this->zero_out();
 		assert(!this->create_host_image(1u, t2f(aTypeID), aResolution.x, aResolution.y, 1u, aTextureData));
 	}
 
-	image::image(type::id aTypeID, uint3 aResolution, void* aTextureData) {
+	image::image(type::id aTypeID, glm::uvec3 aResolution, void* aTextureData) {
 		this->zero_out();
 		assert(!this->create_host_image(1u, t2f(aTypeID), aResolution.x, aResolution.y, aResolution.z, aTextureData));
 	}
 
-	image::image(uint aArrayLayers, type::id aTypeID, uint aResolution, void* aTextureData) {
+	image::image(unsigned int aArrayLayers, type::id aTypeID, unsigned int aResolution, void* aTextureData) {
 		this->zero_out();
 		assert(!this->create_host_image(aArrayLayers, t2f(aTypeID), aResolution, 1u, 1u, aTextureData));
 	}
 
-	image::image(uint aArrayLayers, type::id aTypeID, uint2 aResolution, void* aTextureData) {
+	image::image(unsigned int aArrayLayers, type::id aTypeID, glm::uvec2 aResolution, void* aTextureData) {
 		this->zero_out();
 		assert(!this->create_host_image(aArrayLayers, t2f(aTypeID), aResolution.x, aResolution.y, 1u, aTextureData));
 	}
 
-	image::image(uint aArrayLayers, type::id aTypeID, uint3 aResolution, void* aTextureData) {
+	image::image(unsigned int aArrayLayers, type::id aTypeID, glm::uvec3 aResolution, void* aTextureData) {
 		this->zero_out();
 		assert(!this->create_host_image(aArrayLayers, t2f(aTypeID), aResolution.x, aResolution.y, aResolution.z, aTextureData));
 	}
 
-	image::image(format aFormat, uint aResolution) {
+	image::image(format aFormat, unsigned int aResolution) {
 		this->zero_out();
 		assert(!this->create_host_image(1u, aFormat, aResolution, 1u, 1u, NULL));
 	}
 
-	image::image(format aFormat, uint2 aResolution) {
+	image::image(format aFormat, glm::uvec2 aResolution) {
 		this->zero_out();
 		assert(!this->create_host_image(1u, aFormat, aResolution.x, aResolution.y, 1u, NULL));
 	}
 
-	image::image(format aFormat, uint3 aResolution) {
+	image::image(format aFormat, glm::uvec3 aResolution) {
 		this->zero_out();
 		assert(!this->create_host_image(1u, aFormat, aResolution.x, aResolution.y, aResolution.z, NULL));
 	}
 
-	image::image(uint aArrayLayers, format aFormat, uint aResolution) {
+	image::image(unsigned int aArrayLayers, format aFormat, unsigned int aResolution) {
 		this->zero_out();
 		assert(!this->create_host_image(aArrayLayers, aFormat, aResolution, 1u, 1u, NULL));
 	}
 
-	image::image(uint aArrayLayers, format aFormat, uint2 aResolution) {
+	image::image(unsigned int aArrayLayers, format aFormat, glm::uvec2 aResolution) {
 		this->zero_out();
 		assert(!this->create_host_image(aArrayLayers, aFormat, aResolution.x, aResolution.y, 1u, NULL));
 	}
 
-	image::image(uint aArrayLayers, format aFormat, uint3 aResolution) {
+	image::image(unsigned int aArrayLayers, format aFormat, glm::uvec3 aResolution) {
 		this->zero_out();
 		assert(!this->create_host_image(aArrayLayers, aFormat, aResolution.x, aResolution.y, aResolution.z, NULL));
 	}
 
-	image::image(format aFormat, uint aResolution, void* aTextureData) {
+	image::image(format aFormat, unsigned int aResolution, void* aTextureData) {
 		this->zero_out();
 		assert(!this->create_host_image(1u, aFormat, aResolution, 1u, 1u, aTextureData));
 	}
 
-	image::image(format aFormat, uint2 aResolution, void* aTextureData) {
+	image::image(format aFormat, glm::uvec2 aResolution, void* aTextureData) {
 		this->zero_out();
 		assert(!this->create_host_image(1u, aFormat, aResolution.x, aResolution.y, 1u, aTextureData));
 	}
 
-	image::image(format aFormat, uint3 aResolution, void* aTextureData) {
+	image::image(format aFormat, glm::uvec3 aResolution, void* aTextureData) {
 		this->zero_out();
 		assert(!this->create_host_image(1u, aFormat, aResolution.x, aResolution.y, aResolution.z, aTextureData));
 	}
 
-	image::image(uint aArrayLayers, format aFormat, uint aResolution, void* aTextureData) {
+	image::image(unsigned int aArrayLayers, format aFormat, unsigned int aResolution, void* aTextureData) {
 		this->zero_out();
 		assert(!this->create_host_image(aArrayLayers, aFormat, aResolution, 1u, 1u, aTextureData));
 	}
 
-	image::image(uint aArrayLayers, format aFormat, uint2 aResolution, void* aTextureData) {
+	image::image(unsigned int aArrayLayers, format aFormat, glm::uvec2 aResolution, void* aTextureData) {
 		this->zero_out();
 		assert(!this->create_host_image(aArrayLayers, aFormat, aResolution.x, aResolution.y, 1u, aTextureData));
 	}
 
-	image::image(uint aArrayLayers, format aFormat, uint3 aResolution, void* aTextureData) {
+	image::image(unsigned int aArrayLayers, format aFormat, glm::uvec3 aResolution, void* aTextureData) {
 		this->zero_out();
 		assert(!this->create_host_image(aArrayLayers, aFormat, aResolution.x, aResolution.y, aResolution.z, aTextureData));
 	}
@@ -706,7 +706,7 @@ namespace geodesuka::core::gcl {
 		this->load_host_image(aFilePath.ptr());
 
 		// Allocate Device Memory
-		Result = this->create_device_image(aContext, aCreateInfo, 1u, this->Format, uint3(this->Resolution.x, this->Resolution.y, 1u));
+		Result = this->create_device_image(aContext, aCreateInfo, 1u, this->Format, glm::uvec3(this->Resolution.x, this->Resolution.y, 1u));
 		assert(Result == VK_SUCCESS);
 
 		// Write memory to device memory.
@@ -721,7 +721,7 @@ namespace geodesuka::core::gcl {
 		this->load_host_image(aFilePath);
 
 		// Allocate Device Memory
-		Result = this->create_device_image(aContext, aCreateInfo, 1u, this->Format, uint3(this->Resolution.x, this->Resolution.y, 1u));
+		Result = this->create_device_image(aContext, aCreateInfo, 1u, this->Format, glm::uvec3(this->Resolution.x, this->Resolution.y, 1u));
 		assert(Result == VK_SUCCESS);
 
 		// Write memory to device memory.
@@ -746,29 +746,29 @@ namespace geodesuka::core::gcl {
 
 	// ----- New Interface.
 
-	image::image(context* aContext, create_info aCreateInfo, type::id aTypeID, uint aResolution) {
+	image::image(context* aContext, create_info aCreateInfo, type::id aTypeID, unsigned int aResolution) {
 		vk_result Result = VK_SUCCESS;
 
 		// Zero out memory.
 		this->zero_out();
 
 		// Allocate Device Memory
-		Result = this->create_device_image(aContext, aCreateInfo, 1u, t2f(aTypeID), uint3(aResolution, 1u, 1u));
+		Result = this->create_device_image(aContext, aCreateInfo, 1u, t2f(aTypeID), glm::uvec3(aResolution, 1u, 1u));
 		assert(Result == VK_SUCCESS);
 	}
 
-	image::image(context* aContext, create_info aCreateInfo, type::id aTypeID, uint2 aResolution) {
+	image::image(context* aContext, create_info aCreateInfo, type::id aTypeID, glm::uvec2 aResolution) {
 		vk_result Result = VK_SUCCESS;
 
 		// Zero out memory.
 		this->zero_out();
 
 		// Allocate Device Memory
-		Result = this->create_device_image(aContext, aCreateInfo, 1u, t2f(aTypeID), uint3(aResolution.x, aResolution.y, 1u));
+		Result = this->create_device_image(aContext, aCreateInfo, 1u, t2f(aTypeID), glm::uvec3(aResolution.x, aResolution.y, 1u));
 		assert(Result == VK_SUCCESS);
 	}
 
-	image::image(context* aContext, create_info aCreateInfo, type::id aTypeID, uint3 aResolution) {
+	image::image(context* aContext, create_info aCreateInfo, type::id aTypeID, glm::uvec3 aResolution) {
 		vk_result Result = VK_SUCCESS;
 
 		// Zero out memory.
@@ -779,29 +779,29 @@ namespace geodesuka::core::gcl {
 		assert(Result == VK_SUCCESS);
 	}
 
-	image::image(context* aContext, create_info aCreateInfo, uint aArrayLayers, type::id aTypeID, uint aResolution) {
+	image::image(context* aContext, create_info aCreateInfo, unsigned int aArrayLayers, type::id aTypeID, unsigned int aResolution) {
 		vk_result Result = VK_SUCCESS;
 
 		// Zero out memory.
 		this->zero_out();
 
 		// Allocate Device Memory
-		Result = this->create_device_image(aContext, aCreateInfo, aArrayLayers, t2f(aTypeID), uint3(aResolution, 1u, 1u));
+		Result = this->create_device_image(aContext, aCreateInfo, aArrayLayers, t2f(aTypeID), glm::uvec3(aResolution, 1u, 1u));
 		assert(Result == VK_SUCCESS);
 	}
 
-	image::image(context* aContext, create_info aCreateInfo, uint aArrayLayers, type::id aTypeID, uint2 aResolution) {
+	image::image(context* aContext, create_info aCreateInfo, unsigned int aArrayLayers, type::id aTypeID, glm::uvec2 aResolution) {
 		vk_result Result = VK_SUCCESS;
 
 		// Zero out memory.
 		this->zero_out();
 
 		// Allocate Device Memory
-		Result = this->create_device_image(aContext, aCreateInfo, aArrayLayers, t2f(aTypeID), uint3(aResolution.x, aResolution.y, 1u));
+		Result = this->create_device_image(aContext, aCreateInfo, aArrayLayers, t2f(aTypeID), glm::uvec3(aResolution.x, aResolution.y, 1u));
 		assert(Result == VK_SUCCESS);
 	}
 
-	image::image(context* aContext, create_info aCreateInfo, uint aArrayLayers, type::id aTypeID, uint3 aResolution) {
+	image::image(context* aContext, create_info aCreateInfo, unsigned int aArrayLayers, type::id aTypeID, glm::uvec3 aResolution) {
 		vk_result Result = VK_SUCCESS;
 
 		// Zero out memory.
@@ -812,14 +812,14 @@ namespace geodesuka::core::gcl {
 		assert(Result == VK_SUCCESS);
 	}
 
-	image::image(context* aContext, create_info aCreateInfo, type::id aTypeID, uint aResolution, void* aTextureData) {
+	image::image(context* aContext, create_info aCreateInfo, type::id aTypeID, unsigned int aResolution, void* aTextureData) {
 		vk_result Result = VK_SUCCESS;
 
 		// Zero out memory.
 		this->zero_out();
 
 		// Allocate Device Memory
-		Result = this->create_device_image(aContext, aCreateInfo, 1u, t2f(aTypeID), uint3(aResolution, 1u, 1u));
+		Result = this->create_device_image(aContext, aCreateInfo, 1u, t2f(aTypeID), glm::uvec3(aResolution, 1u, 1u));
 		assert(Result == VK_SUCCESS);
 
 		// Write memory to device memory.
@@ -828,14 +828,14 @@ namespace geodesuka::core::gcl {
 		}
 	}
 
-	image::image(context* aContext, create_info aCreateInfo, type::id aTypeID, uint2 aResolution, void* aTextureData) {
+	image::image(context* aContext, create_info aCreateInfo, type::id aTypeID, glm::uvec2 aResolution, void* aTextureData) {
 		vk_result Result = VK_SUCCESS;
 
 		// Zero out memory.
 		this->zero_out();
 
 		// Allocate Device Memory
-		Result = this->create_device_image(aContext, aCreateInfo, 1u, t2f(aTypeID), uint3(aResolution.x, aResolution.y, 1u));
+		Result = this->create_device_image(aContext, aCreateInfo, 1u, t2f(aTypeID), glm::uvec3(aResolution.x, aResolution.y, 1u));
 		assert(Result == VK_SUCCESS);
 
 		// Write memory to device memory.
@@ -844,7 +844,7 @@ namespace geodesuka::core::gcl {
 		}
 	}
 
-	image::image(context* aContext, create_info aCreateInfo, type::id aTypeID, uint3 aResolution, void* aTextureData) {
+	image::image(context* aContext, create_info aCreateInfo, type::id aTypeID, glm::uvec3 aResolution, void* aTextureData) {
 		vk_result Result = VK_SUCCESS;
 
 		// Zero out memory.
@@ -860,14 +860,14 @@ namespace geodesuka::core::gcl {
 		}
 	}
 
-	image::image(context* aContext, create_info aCreateInfo, uint aArrayLayers, type::id aTypeID, uint aResolution, void* aTextureData) {
+	image::image(context* aContext, create_info aCreateInfo, unsigned int aArrayLayers, type::id aTypeID, unsigned int aResolution, void* aTextureData) {
 		vk_result Result = VK_SUCCESS;
 
 		// Zero out memory.
 		this->zero_out();
 
 		// Allocate Device Memory
-		Result = this->create_device_image(aContext, aCreateInfo, aArrayLayers, t2f(aTypeID), uint3(aResolution, 1u, 1u));
+		Result = this->create_device_image(aContext, aCreateInfo, aArrayLayers, t2f(aTypeID), glm::uvec3(aResolution, 1u, 1u));
 		assert(Result == VK_SUCCESS);
 
 		// Write memory to device memory.
@@ -876,14 +876,14 @@ namespace geodesuka::core::gcl {
 		}
 	}
 
-	image::image(context* aContext, create_info aCreateInfo, uint aArrayLayers, type::id aTypeID, uint2 aResolution, void* aTextureData) {
+	image::image(context* aContext, create_info aCreateInfo, unsigned int aArrayLayers, type::id aTypeID, glm::uvec2 aResolution, void* aTextureData) {
 		vk_result Result = VK_SUCCESS;
 
 		// Zero out memory.
 		this->zero_out();
 
 		// Allocate Device Memory
-		Result = this->create_device_image(aContext, aCreateInfo, aArrayLayers, t2f(aTypeID), uint3(aResolution.x, aResolution.y, 1u));
+		Result = this->create_device_image(aContext, aCreateInfo, aArrayLayers, t2f(aTypeID), glm::uvec3(aResolution.x, aResolution.y, 1u));
 		assert(Result == VK_SUCCESS);
 
 		// Write memory to device memory.
@@ -892,7 +892,7 @@ namespace geodesuka::core::gcl {
 		}
 	}
 
-	image::image(context* aContext, create_info aCreateInfo, uint aArrayLayers, type::id aTypeID, uint3 aResolution, void* aTextureData) {
+	image::image(context* aContext, create_info aCreateInfo, unsigned int aArrayLayers, type::id aTypeID, glm::uvec3 aResolution, void* aTextureData) {
 		vk_result Result = VK_SUCCESS;
 
 		// Zero out memory.
@@ -908,29 +908,29 @@ namespace geodesuka::core::gcl {
 		}
 	}
 
-	image::image(context* aContext, create_info aCreateInfo, format aFormat, uint aResolution) {
+	image::image(context* aContext, create_info aCreateInfo, format aFormat, unsigned int aResolution) {
 		vk_result Result = VK_SUCCESS;
 
 		// Zero out memory.
 		this->zero_out();
 
 		// Allocate Device Memory
-		Result = this->create_device_image(aContext, aCreateInfo, 1u, aFormat, uint3(aResolution, 1u, 1u));
+		Result = this->create_device_image(aContext, aCreateInfo, 1u, aFormat, glm::uvec3(aResolution, 1u, 1u));
 		assert(Result == VK_SUCCESS);
 	}
 
-	image::image(context* aContext, create_info aCreateInfo, format aFormat, uint2 aResolution) {
+	image::image(context* aContext, create_info aCreateInfo, format aFormat, glm::uvec2 aResolution) {
 		vk_result Result = VK_SUCCESS;
 
 		// Zero out memory.
 		this->zero_out();
 
 		// Allocate Device Memory
-		Result = this->create_device_image(aContext, aCreateInfo, 1u, aFormat, uint3(aResolution.x, aResolution.y, 1u));
+		Result = this->create_device_image(aContext, aCreateInfo, 1u, aFormat, glm::uvec3(aResolution.x, aResolution.y, 1u));
 		assert(Result == VK_SUCCESS);
 	}
 
-	image::image(context* aContext, create_info aCreateInfo, format aFormat, uint3 aResolution) {
+	image::image(context* aContext, create_info aCreateInfo, format aFormat, glm::uvec3 aResolution) {
 		vk_result Result = VK_SUCCESS;
 
 		// Zero out memory.
@@ -941,29 +941,29 @@ namespace geodesuka::core::gcl {
 		assert(Result == VK_SUCCESS);
 	}
 
-	image::image(context* aContext, create_info aCreateInfo, uint aArrayLayers, format aFormat, uint aResolution) {
+	image::image(context* aContext, create_info aCreateInfo, unsigned int aArrayLayers, format aFormat, unsigned int aResolution) {
 		vk_result Result = VK_SUCCESS;
 
 		// Zero out memory.
 		this->zero_out();
 
 		// Allocate Device Memory
-		Result = this->create_device_image(aContext, aCreateInfo, aArrayLayers, aFormat, uint3(aResolution, 1u, 1u));
+		Result = this->create_device_image(aContext, aCreateInfo, aArrayLayers, aFormat, glm::uvec3(aResolution, 1u, 1u));
 		assert(Result == VK_SUCCESS);
 	}
 
-	image::image(context* aContext, create_info aCreateInfo, uint aArrayLayers, format aFormat, uint2 aResolution) {
+	image::image(context* aContext, create_info aCreateInfo, unsigned int aArrayLayers, format aFormat, glm::uvec2 aResolution) {
 		vk_result Result = VK_SUCCESS;
 
 		// Zero out memory.
 		this->zero_out();
 
 		// Allocate Device Memory
-		Result = this->create_device_image(aContext, aCreateInfo, aArrayLayers, aFormat, uint3(aResolution.x, aResolution.y, 1u));
+		Result = this->create_device_image(aContext, aCreateInfo, aArrayLayers, aFormat, glm::uvec3(aResolution.x, aResolution.y, 1u));
 		assert(Result == VK_SUCCESS);
 	}
 
-	image::image(context* aContext, create_info aCreateInfo, uint aArrayLayers, format aFormat, uint3 aResolution) {
+	image::image(context* aContext, create_info aCreateInfo, unsigned int aArrayLayers, format aFormat, glm::uvec3 aResolution) {
 		vk_result Result = VK_SUCCESS;
 
 		// Zero out memory.
@@ -974,14 +974,14 @@ namespace geodesuka::core::gcl {
 		assert(Result == VK_SUCCESS);
 	}
 
-	image::image(context* aContext, create_info aCreateInfo, format aFormat, uint aResolution, void* aTextureData) {
+	image::image(context* aContext, create_info aCreateInfo, format aFormat, unsigned int aResolution, void* aTextureData) {
 		vk_result Result = VK_SUCCESS;
 
 		// Zero out memory.
 		this->zero_out();
 
 		// Allocate Device Memory
-		Result = this->create_device_image(aContext, aCreateInfo, 1u, aFormat, uint3(aResolution, 1u, 1u));
+		Result = this->create_device_image(aContext, aCreateInfo, 1u, aFormat, glm::uvec3(aResolution, 1u, 1u));
 		assert(Result == VK_SUCCESS);
 
 		// Write memory to device memory.
@@ -990,14 +990,14 @@ namespace geodesuka::core::gcl {
 		}
 	}
 
-	image::image(context* aContext, create_info aCreateInfo, format aFormat, uint2 aResolution, void* aTextureData) {
+	image::image(context* aContext, create_info aCreateInfo, format aFormat, glm::uvec2 aResolution, void* aTextureData) {
 		vk_result Result = VK_SUCCESS;
 
 		// Zero out memory.
 		this->zero_out();
 
 		// Allocate Device Memory
-		Result = this->create_device_image(aContext, aCreateInfo, 1u, aFormat, uint3(aResolution.x, aResolution.y, 1u));
+		Result = this->create_device_image(aContext, aCreateInfo, 1u, aFormat, glm::uvec3(aResolution.x, aResolution.y, 1u));
 		assert(Result == VK_SUCCESS);
 
 		// Write memory to device memory.
@@ -1006,7 +1006,7 @@ namespace geodesuka::core::gcl {
 		}
 	}
 
-	image::image(context* aContext, create_info aCreateInfo, format aFormat, uint3 aResolution, void* aTextureData) {
+	image::image(context* aContext, create_info aCreateInfo, format aFormat, glm::uvec3 aResolution, void* aTextureData) {
 		vk_result Result = VK_SUCCESS;
 
 		// Zero out memory.
@@ -1022,14 +1022,14 @@ namespace geodesuka::core::gcl {
 		}
 	}
 
-	image::image(context* aContext, create_info aCreateInfo, uint aArrayLayers, format aFormat, uint aResolution, void* aTextureData) {
+	image::image(context* aContext, create_info aCreateInfo, unsigned int aArrayLayers, format aFormat, unsigned int aResolution, void* aTextureData) {
 		vk_result Result = VK_SUCCESS;
 
 		// Zero out memory.
 		this->zero_out();
 
 		// Allocate Device Memory
-		Result = this->create_device_image(aContext, aCreateInfo, aArrayLayers, aFormat, uint3(aResolution, 1u, 1u));
+		Result = this->create_device_image(aContext, aCreateInfo, aArrayLayers, aFormat, glm::uvec3(aResolution, 1u, 1u));
 		assert(Result == VK_SUCCESS);
 
 		// Write memory to device memory.
@@ -1038,14 +1038,14 @@ namespace geodesuka::core::gcl {
 		}
 	}
 
-	image::image(context* aContext, create_info aCreateInfo, uint aArrayLayers, format aFormat, uint2 aResolution, void* aTextureData) {
+	image::image(context* aContext, create_info aCreateInfo, unsigned int aArrayLayers, format aFormat, glm::uvec2 aResolution, void* aTextureData) {
 		vk_result Result = VK_SUCCESS;
 
 		// Zero out memory.
 		this->zero_out();
 
 		// Allocate Device Memory
-		Result = this->create_device_image(aContext, aCreateInfo, aArrayLayers, aFormat, uint3(aResolution.x, aResolution.y, 1u));
+		Result = this->create_device_image(aContext, aCreateInfo, aArrayLayers, aFormat, glm::uvec3(aResolution.x, aResolution.y, 1u));
 		assert(Result == VK_SUCCESS);
 
 		// Write memory to device memory.
@@ -1054,14 +1054,14 @@ namespace geodesuka::core::gcl {
 		}
 	}
 
-	image::image(context* aContext, create_info aCreateInfo, uint aArrayLayers, format aFormat, uint3 aResolution, void* aTextureData) {
+	image::image(context* aContext, create_info aCreateInfo, unsigned int aArrayLayers, format aFormat, glm::uvec3 aResolution, void* aTextureData) {
 		vk_result Result = VK_SUCCESS;
 
 		// Zero out memory.
 		this->zero_out();
 
 		// Allocate Device Memory
-		Result = this->create_device_image(aContext, aCreateInfo, aArrayLayers, aFormat, aResolution.x);
+		Result = this->create_device_image(aContext, aCreateInfo, aArrayLayers, aFormat, aResolution);
 		assert(Result == VK_SUCCESS);
 
 		// Write memory to device memory.
@@ -1753,7 +1753,7 @@ namespace geodesuka::core::gcl {
 
 		this->Layers			= aArrayLayers;
 		this->Format			= aFormat;
-		this->Resolution		= uint3(aWidth, aHeight, aDepth);
+		this->Resolution		= glm::uvec3(aWidth, aHeight, aDepth);
 		if (aTextureData != NULL) {
 			memcpy(this->HostData, aTextureData, this->HostSize);
 		}
@@ -1761,7 +1761,7 @@ namespace geodesuka::core::gcl {
 	}
 
 	void image::clear_host_memory() {
-		this->Resolution	= uint3(0, 0, 0);
+		this->Resolution	= glm::uvec3(0, 0, 0);
 		this->Format		= format::UNDEFINED;
 		this->Layers		= 0;
 		free(this->HostData);
@@ -1824,7 +1824,7 @@ namespace geodesuka::core::gcl {
 		return MipLevelCount;
 	}
 
-	vk_result image::create_device_image(context* aContext, create_info aCreateInfo, uint aArrayLayers, int aFormat, uint3 aResolution) {
+	vk_result image::create_device_image(context* aContext, create_info aCreateInfo, unsigned int aArrayLayers, int aFormat, glm::uvec3 aResolution) {
 		vk_result Result = VK_SUCCESS;
 		vk_image_format_properties FormatProperties{};
 
@@ -1882,19 +1882,19 @@ namespace geodesuka::core::gcl {
 	vk_result image::create_device_image(context* aContext, vk_image_create_info aCreateInfo, int aMemoryType) {
 		vk_result Result = VK_SUCCESS;
 		create_info LocalCreateInfo;
-		uint3 StackResolution = uint3(0, 0, 0);
+		glm::uvec3 StackResolution = glm::uvec3(0, 0, 0);
 
 		LocalCreateInfo.Sample		= aCreateInfo.samples;
 		LocalCreateInfo.Tiling		= aCreateInfo.tiling;
 		LocalCreateInfo.Memory		= aMemoryType;
 		LocalCreateInfo.Usage		= aCreateInfo.usage;
-		StackResolution				= uint3(aCreateInfo.extent.width, aCreateInfo.extent.height, aCreateInfo.extent.depth);
+		StackResolution				= glm::uvec3(aCreateInfo.extent.width, aCreateInfo.extent.height, aCreateInfo.extent.depth);
 		Result = this->create_device_image(Context, LocalCreateInfo, aCreateInfo.arrayLayers, aCreateInfo.format, StackResolution);
 
 		return Result;
 	}
 
-	vk_result image::get_limits(vk_image_format_properties* aReturn, device* aDevice, create_info aCreateInfo, int aFormat, uint3 aResolution) {
+	vk_result image::get_limits(vk_image_format_properties* aReturn, device* aDevice, create_info aCreateInfo, int aFormat, glm::uvec3 aResolution) {
 		vk_image_type ImageType = VK_IMAGE_TYPE_MAX_ENUM;
 		if ((aResolution.x > 1u) && (aResolution.y > 1u) && (aResolution.z > 1u)) {
 			ImageType = VK_IMAGE_TYPE_3D;
@@ -1911,7 +1911,7 @@ namespace geodesuka::core::gcl {
 		return vkGetPhysicalDeviceImageFormatProperties(aDevice->handle(), (vk_format)aFormat, ImageType, (vk_image_tiling)aCreateInfo.Tiling, (vk_image_usage_flags)aCreateInfo.Usage, 0, aReturn);
 	}
 
-	vk_image_create_info image::pack_create_info(vk_image_format_properties aImageLimits, create_info aCreateInfo, uint aArrayLayers, int aFormat, uint3 aResolution) {
+	vk_image_create_info image::pack_create_info(vk_image_format_properties aImageLimits, create_info aCreateInfo, unsigned int aArrayLayers, int aFormat, glm::uvec3 aResolution) {
 		vk_image_create_info NewCreateInfo;
 		NewCreateInfo.sType = VK_STRUCTURE_TYPE_IMAGE_CREATE_INFO;
 		NewCreateInfo.pNext = NULL;
@@ -1964,7 +1964,7 @@ namespace geodesuka::core::gcl {
 		return NewAllocateInfo;
 	}
 
-	vk_result image::generate_miplevels(uint aMipLevel, uint aArrayLayers, vk_image_layout aInitialLayout, vk_image_type aImageType, vk_extent_3d aExtent) {
+	vk_result image::generate_miplevels(unsigned int aMipLevel, unsigned int aArrayLayers, vk_image_layout aInitialLayout, vk_image_type aImageType, vk_extent_3d aExtent) {
 		vk_result Result = VK_SUCCESS;
 
 		if (Result == VK_SUCCESS) {
@@ -2077,7 +2077,7 @@ namespace geodesuka::core::gcl {
 		this->HostData				= NULL;
 		this->Layers				= 0;
 		this->Format				= format::UNDEFINED;
-		this->Resolution			= uint3(0u, 0u, 0u);
+		this->Resolution			= glm::uvec3(0u, 0u, 0u);
 
 		// Device Memory Handles.
 		this->Context				= nullptr;
@@ -2090,7 +2090,7 @@ namespace geodesuka::core::gcl {
 		this->MipExtent				= NULL;
 	}
 
-	vk_image_view image::create_system_window_frame(context* aContext, vk_format aFormat, vk_image_usage_flags aUsageFlags, vk_image aImageHandle, uint3 aImageResolution) {
+	vk_image_view image::create_system_window_frame(context* aContext, vk_format aFormat, vk_image_usage_flags aUsageFlags, vk_image aImageHandle, glm::uvec3 aImageResolution) {
 		this->Resolution = aImageResolution;
 		this->Layout = (vk_image_layout**)malloc(sizeof(vk_image_layout*));
 		if (Layout == NULL) {

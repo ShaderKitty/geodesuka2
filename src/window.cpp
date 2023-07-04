@@ -42,20 +42,20 @@ namespace geodesuka::core::object {
 
 	}
 
-	void window::set_size(float2 aSize) {
+	void window::set_size(glm::vec2 aSize) {
 		this->Size = aSize;
 	}
 
-	float2 window::get_size() {
+	glm::vec2 window::get_size() {
 		return this->Size;
 	}
 
-	void window::set_resolution(uint2 aResolution) {
-		this->FrameResolution = uint3(aResolution.x, aResolution.y, 1u);
+	void window::set_resolution(glm::uvec2 aResolution) {
+		this->FrameResolution = glm::uvec3(aResolution.x, aResolution.y, 1u);
 	}
 
-	uint2 window::get_resolution() {
-		return uint2(this->FrameResolution.x, this->FrameResolution.y);
+	glm::uvec2 window::get_resolution() {
+		return glm::uvec2(this->FrameResolution.x, this->FrameResolution.y);
 	}
 
 	bool window::should_close() {
@@ -68,12 +68,12 @@ namespace geodesuka::core::object {
 		this->Mutex.unlock();
 	}
 
-	window::window(gcl::context* aContext, stage_t* aStage, const char* aName, uint3 aFrameResolution, double aFrameRate, uint32_t aFrameCount, uint32_t aAttachmentCount) :
+	window::window(gcl::context* aContext, stage_t* aStage, const char* aName, glm::uvec3 aFrameResolution, double aFrameRate, uint32_t aFrameCount, uint32_t aAttachmentCount) :
 		render_target(aContext, aStage, aName, aFrameResolution, aFrameRate, aFrameCount, aAttachmentCount)
 	{
 		vk_result Result = VK_SUCCESS;
 		this->Title = aName;
-		this->Size = float2(0.0f, 0.0f);
+		this->Size = glm::vec2(0.0f, 0.0f);
 		this->Setting = {};
 		this->InputTarget = nullptr;
 	}

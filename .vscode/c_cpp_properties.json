@@ -26,6 +26,7 @@
                 "${workspaceFolder}/dep/freetype/include",
                 "${workspaceFolder}/dep/glfw/include",
                 "${workspaceFolder}/dep/portaudio/include",
+                "${workspaceFolder}/dep/glm",
                 "${workspaceFolder}/dep/assimp/bld/Linux/x64/Debug/include",
                 "${workspaceFolder}/dep/freetype/bld/Linux/x64/Debug/include"
             ],

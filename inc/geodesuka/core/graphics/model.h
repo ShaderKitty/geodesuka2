@@ -33,7 +33,7 @@ namespace geodesuka::core::graphics {
 			util::string	Name;
 			int				MeshIndexCount;
 			int*			MeshIndex;
-			float4x4		Transformation;
+			glm::mat4		Transformation;
 
 			gcl::context* 	Context;
 			gcl::buffer 	UniformBuffer;
@@ -58,7 +58,7 @@ namespace geodesuka::core::graphics {
 			node linearize();
 
 			// For this node, it will calculate the world transform for the node.
-			float4x4 global_transform();
+			glm::mat4 global_transform();
 
 			void clear();
 

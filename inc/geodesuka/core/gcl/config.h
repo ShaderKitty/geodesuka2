@@ -25,6 +25,7 @@
 
 /* Vulkan API */
 #include <vulkan/vulkan.h>
+//#include <vulkan/vulkan.hpp>
 /* OpenCL API */
 //#define CL_TARGET_OPENCL_VERSION GCL_OPENCL_VERSION
 //#ifdef __APPLE__

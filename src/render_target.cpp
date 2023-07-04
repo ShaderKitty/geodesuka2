@@ -119,7 +119,7 @@ namespace geodesuka::core::object {
 		return DescriptorPoolSize;
 	}
 
-	render_target::render_target(gcl::context* aContext, stage_t* aStage, const char* aName, uint3 aFrameResolution, double aFrameRate, uint32_t aFrameCount, uint32_t aAttachmentCount) :
+	render_target::render_target(gcl::context* aContext, stage_t* aStage, const char* aName, glm::uvec3 aFrameResolution, double aFrameRate, uint32_t aFrameCount, uint32_t aAttachmentCount) :
 		object_t(aContext, aStage, aName),
 		CommandPool(aContext, 0, gcl::device::qfeo::GRAPHICS_AND_COMPUTE)
 	{

@@ -36,8 +36,8 @@ namespace geodesuka::builtin::stage {
 		Property.Swapchain.PresentMode		= core::object::system_window::present_mode::MAILBOX;
 		Property.Swapchain.Clipped			= true;
 		Property.PixelFormat				= VK_FORMAT_R16G16B16A16_SFLOAT;
-		Property.Position					= float3(0, 0, 0);
-		Property.Size						= float2(0.3, 0.3);
+		Property.Position					= glm::vec3(0, 0, 0);
+		Property.Size						= glm::vec2(0.3, 0.3);
 		Property.Title						= "Triangle";
 
 		SystemDisplay = Engine->get_primary_display();

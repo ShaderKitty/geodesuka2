@@ -27,7 +27,7 @@ namespace geodesuka::core::graphics {
 			aMeshNode.MeshIndex[i] = aAssimpNode->mMeshes[i];
 		}
 		aAssimpNode->mTransformation.a1;
-		aMeshNode.Transformation = float4x4(
+		aMeshNode.Transformation = glm::mat4(
 			aAssimpNode->mTransformation.a1, aAssimpNode->mTransformation.a2, aAssimpNode->mTransformation.a3, aAssimpNode->mTransformation.a4,
 			aAssimpNode->mTransformation.b1, aAssimpNode->mTransformation.b2, aAssimpNode->mTransformation.b3, aAssimpNode->mTransformation.b4,
 			aAssimpNode->mTransformation.c1, aAssimpNode->mTransformation.c2, aAssimpNode->mTransformation.c3, aAssimpNode->mTransformation.c4,
@@ -70,7 +70,7 @@ namespace geodesuka::core::graphics {
 		this->ChildCount			= 0;
 		this->Child					= nullptr;
 		this->Name					= "";
-		this->Transformation		= float4x4::I;
+		this->Transformation		= glm::mat4(1.0f);
 		this->MeshIndexCount		= 0;
 		this->MeshIndex				= NULL;
 	}
@@ -102,7 +102,7 @@ namespace geodesuka::core::graphics {
 		aInput.Name				= "";
 		aInput.MeshIndexCount	= 0;
 		aInput.MeshIndex		= NULL;
-		aInput.Transformation	= float4x4();
+		aInput.Transformation	= glm::mat4(1.0f);
 		for (int i = 0; i < this->ChildCount; i++) {
 			this->Child[i].set_root(this);
 			this->Child[i].Parent = this;
@@ -222,7 +222,7 @@ namespace geodesuka::core::graphics {
 		return Linear;
 	}
 
-	float4x4 model::node::global_transform() {
+	glm::mat4 model::node::global_transform() {
 		// TODO: Do not forget there are animations that alter this.
 		if (this->Parent != nullptr) {
 			return this->Parent->global_transform() * this->Transformation;
@@ -263,7 +263,7 @@ namespace geodesuka::core::graphics {
 		this->ChildCount			= 0;
 		this->Child					= nullptr;
 		this->Name					= "";
-		this->Transformation		= float4x4::I;
+		this->Transformation		= glm::mat4(1.0f);
 		this->MeshIndexCount		= 0;
 		this->MeshIndex				= NULL;
 	}

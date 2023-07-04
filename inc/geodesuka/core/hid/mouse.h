@@ -33,14 +33,14 @@ namespace geodesuka::core::hid {
 		// Mouse Input
 		int Action[8];
 		int Modifier[8];
-		float2 Scroll;
+		glm::vec2 Scroll;
 
 		// Cursor Variables
 		int Mode;
 		bool InWindow;
-		float2 Position;
-		float2 Velocity;
-		float2 Acceleration;
+		glm::vec2 Position;
+		glm::vec2 Velocity;
+		glm::vec2 Acceleration;
 
 		mouse();
 		~mouse();

@@ -7,14 +7,14 @@
 namespace geodesuka::core::graphics {
 
 	mesh::vertex::vertex() {
-		this->Position					= float3(0.0f, 0.0f, 0.0f);
-		this->Normal					= float3(0.0f, 0.0f, 0.0f);
-		this->Tangent					= float3(0.0f, 0.0f, 0.0f);
-		this->Bitangent					= float3(0.0f, 0.0f, 0.0f);
-		this->BoneID					= uint4(0u, 0u, 0u, 0u);
-		this->BoneWeight				= float4(0.0f, 0.0f, 0.0f, 0.0f);
-		this->TextureCoordinate			= float2(0.0f, 0.0f);
-		this->Color						= float4(0.0f, 0.0f, 0.0f, 0.0f);
+		this->Position					= glm::vec3(0.0f, 0.0f, 0.0f);
+		this->Normal					= glm::vec3(0.0f, 0.0f, 0.0f);
+		this->Tangent					= glm::vec3(0.0f, 0.0f, 0.0f);
+		this->Bitangent					= glm::vec3(0.0f, 0.0f, 0.0f);
+		this->BoneID					= glm::uvec4(0u, 0u, 0u, 0u);
+		this->BoneWeight				= glm::vec4(0.0f, 0.0f, 0.0f, 0.0f);
+		this->TextureCoordinate			= glm::vec2(0.0f, 0.0f);
+		this->Color						= glm::vec4(0.0f, 0.0f, 0.0f, 0.0f);
 	}
 
 	mesh::mesh(primitive aPrimitive) {
@@ -28,11 +28,11 @@ namespace geodesuka::core::graphics {
 		{
 			// vertex VertexData[3];
 			// this->VertexCount = sizeof(VertexData) / sizeof(vertex);
-			// VertexData[0].Position = float3(0.433f, -0.25f, 0.0f);
-			// VertexData[1].Position = float3(-0.433f, -0.25f, 0.0f);
-			// VertexData[2].Position = float3(0.0f, 0.5f, 0.0f);
+			// VertexData[0].Position = glm::vec3(0.433f, -0.25f, 0.0f);
+			// VertexData[1].Position = glm::vec3(-0.433f, -0.25f, 0.0f);
+			// VertexData[2].Position = glm::vec3(0.0f, 0.5f, 0.0f);
 			// for (size_t i = 0; i < this->VertexCount; i++) {
-			// 	VertexData[i].Normal = float3(0.0f, 0.0f, 1.0f);
+			// 	VertexData[i].Normal = glm::vec3(0.0f, 0.0f, 1.0f);
 			// }
 
 			// this->VertexCount = sizeof(VertexData) / sizeof(vertex);
@@ -45,12 +45,12 @@ namespace geodesuka::core::graphics {
 		{
 			// vertex VertexData[4];
 			// this->VertexCount = sizeof(VertexData) / sizeof(vertex);
-			// VertexData[0].Position = float3(-0.5f, -0.5f, 0.0f); // Bottom Left
-			// VertexData[1].Position = float3(0.5f, -0.5f, 0.0f); // Bottom Right
-			// VertexData[2].Position = float3(0.5f, 0.5f, 0.0f); // Top Right
-			// VertexData[3].Position = float3(-0.5f, 0.5f, 0.0f); // Top Left
+			// VertexData[0].Position = glm::vec3(-0.5f, -0.5f, 0.0f); // Bottom Left
+			// VertexData[1].Position = glm::vec3(0.5f, -0.5f, 0.0f); // Bottom Right
+			// VertexData[2].Position = glm::vec3(0.5f, 0.5f, 0.0f); // Top Right
+			// VertexData[3].Position = glm::vec3(-0.5f, 0.5f, 0.0f); // Top Left
 			// for (size_t i = 0; i < this->VertexCount; i++) {
-			// 	VertexData[i].Normal = float3(0.0f, 0.0f, 1.0f);
+			// 	VertexData[i].Normal = glm::vec3(0.0f, 0.0f, 1.0f);
 			// }
 
 			// this->Vertex = (vertex*)malloc(this->VertexCount * sizeof(vertex));
@@ -67,16 +67,16 @@ namespace geodesuka::core::graphics {
 			// this->VertexCount = sizeof(VertexData) / sizeof(vertex);
 
 			// // Gizmo Positions.
-			// VertexData[0].Position = float3(0.0f, 0.0f, 0.0f); // Origin
-			// VertexData[1].Position = float3(1.0f, 0.0f, 0.0f); // +X Axis
-			// VertexData[2].Position = float3(0.0f, 1.0f, 0.0f); // +Y Axis
-			// VertexData[3].Position = float3(0.0f, 0.0f, 1.0f); // +Z Axiz
+			// VertexData[0].Position = glm::vec3(0.0f, 0.0f, 0.0f); // Origin
+			// VertexData[1].Position = glm::vec3(1.0f, 0.0f, 0.0f); // +X Axis
+			// VertexData[2].Position = glm::vec3(0.0f, 1.0f, 0.0f); // +Y Axis
+			// VertexData[3].Position = glm::vec3(0.0f, 0.0f, 1.0f); // +Z Axiz
 
 			// // Gizmo Coloring.
-			// VertexData[0].Color = float4(1.0f, 1.0f, 1.0f, 1.0f); // White
-			// VertexData[1].Color = float4(1.0f, 0.0f, 0.0f, 1.0f); // Red
-			// VertexData[2].Color = float4(0.0f, 1.0f, 0.0f, 1.0f); // Green
-			// VertexData[3].Color = float4(0.0f, 0.0f, 1.0f, 1.0f); // Blue
+			// VertexData[0].Color = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f); // White
+			// VertexData[1].Color = glm::vec4(1.0f, 0.0f, 0.0f, 1.0f); // Red
+			// VertexData[2].Color = glm::vec4(0.0f, 1.0f, 0.0f, 1.0f); // Green
+			// VertexData[3].Color = glm::vec4(0.0f, 0.0f, 1.0f, 1.0f); // Blue
 
 			// this->Vertex = (vertex*)malloc(this->VertexCount * sizeof(vertex));
 			// assert(this->Vertex);
