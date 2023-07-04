@@ -405,6 +405,7 @@ namespace geodesuka {
 	}
 
 	void engine::destroy_engine_resources() {
+
 		for (int i = 0; i < Stage.count(); i++) {
 			delete Stage[i];
 			Stage[i] = nullptr;

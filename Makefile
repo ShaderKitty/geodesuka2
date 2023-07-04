@@ -175,7 +175,7 @@ $(OBJ): $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 
 # Creates library
 geodesuka: $(OBJ)
-	ar -crs lib/$(DISC)/geodesuka.a $(OBJ)
+	ar -crs $(GEODESUKA) $(OBJ)
 
 # Compiles unit test
 unit-test: geodesuka
