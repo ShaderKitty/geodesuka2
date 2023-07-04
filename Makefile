@@ -8,7 +8,7 @@ ifeq ($(COMPILER),gcc)
 	LFLGS = -std=c++17 -pthread
 	ifeq ($(MODE),Debug)
 		CFLGS += -g
-		LFLGS += =g
+		LFLGS += -g
 	endif
 else ifeq ($(COMPILER),cl)
 	LNK = link
