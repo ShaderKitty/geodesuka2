@@ -1,15 +1,46 @@
 # make -e ARCH=x64 MODE=Release [RECIPE]
 
+# Determines Compiler Info
+ifeq ($(COMPILER),gcc)
+	LNK = ld
+	LIB = ar -rcs
+	CFLGS = -std=c++17 -pthread
+	LFLGS = -std=c++17 -pthread
+	ifeq ($(MODE),Debug)
+		CFLGS += -g
+		LFLGS += =g
+	endif
+else ifeq ($(COMPILER),cl)
+	LNK = link
+	LIB = lib
+	CFLGS = /NOLOGO
+	ifeq ($(MODE),Debug)
+		CFLGS += /DEBUG
+	endif
+else 
+# Error, Unknown Compiler
+
+endif
+
+# Determines Platform Operating System
+ifeq ($(OS),Windows_NT)
+	PLAT = Windows
+	PROJECT_TYPE = "NMake Makefiles"
+	MAKE_TOOL = nmake
+else
+    UNAME_S := $(shell uname -s)
+    ifeq ($(UNAME_S),Linux)
+		PLAT = Linux
+	endif
+    ifeq ($(UNAME_S),Darwin)
+		PLAT = MacOS
+    endif
+	PROJECT_TYPE = "Unix Makefiles"
+	MAKE_TOOL = make
+endif
+
 PLAT = Linux
 PROJECT_TYPE = "Unix Makefiles"
-
-CFLGS = -std=c++17 -pthread
-LFLGS = -std=c++17 -pthread
-
-ifeq ($(MODE),Debug)
-CFLGS += -g
-LFLGS += -g
-endif
 
 # This is used to discriminate between compile types.
 DISC = $(PLAT)/$(ARCH)/$(MODE)
