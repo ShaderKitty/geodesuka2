@@ -39,17 +39,17 @@ namespace geodesuka::core::gcl {
 		public:
 
 			pool();
-			pool(uint32_t aDescriptorSetCount, const std::vector<vk_descriptor_pool_size>& aDescriptorPoolSizes);
+			pool(uint32_t aDescriptorSetCount, const std::vector<VkDescriptorPoolSize>& aDescriptorPoolSizes);
 			//pool(const std::vector<gcl::pipeline>& aPipelineList);
 			~pool();
 			
 		private:
 
-			std::vector<vk_descriptor_pool_size> 	PoolSize;
+			std::vector<VkDescriptorPoolSize> 	PoolSize;
 
 			context* 								Context;
-			vk_descriptor_pool_create_info 			CreateInfo;
-			vk_descriptor_pool 						Handle;
+			VkDescriptorPoolCreateInfo 			CreateInfo;
+			VkDescriptorPool 						Handle;
 
 		};
 
@@ -116,7 +116,7 @@ namespace geodesuka::core::gcl {
 
 			// Used to bind to pipeline.
 			uint32_t SetCount;
-			vk_descriptor_set SetHandle[4];
+			VkDescriptorSet SetHandle[4];
 
 			block();
 			block(context* aContext, table& aDescriptorTable);
@@ -124,8 +124,8 @@ namespace geodesuka::core::gcl {
 			block(block&& aInput) noexcept;
 			~block();
 
-			vk_descriptor_set& operator[](uint32_t aIndex);
-			vk_descriptor_set operator[](uint32_t aIndex) const;
+			VkDescriptorSet& operator[](uint32_t aIndex);
+			VkDescriptorSet operator[](uint32_t aIndex) const;
 			block& operator=(const block& aRhs);
 			block& operator=(block&& aRhs) noexcept;
 
@@ -140,26 +140,26 @@ namespace geodesuka::core::gcl {
 			table DescriptorTable;
 
 			context* Context;
-			vk_descriptor_pool_create_info CreateInfo{};
-			vk_descriptor_pool Pool;
+			VkDescriptorPoolCreateInfo CreateInfo{};
+			VkDescriptorPool Pool;
 
 		};
 
 		descriptor(uint32_t aBindingIndex, type aType, shader::stage aStage);
 		descriptor(uint32_t aBindingIndex, type aType, uint32_t aCount, shader::stage aStage);
-		descriptor(uint32_t aBindingIndex, type aType, shader::stage aStage, vk_sampler* aSampler);
-		descriptor(uint32_t aBindingIndex, type aType, uint32_t aCount, shader::stage aStage, vk_sampler* aSampler);
+		descriptor(uint32_t aBindingIndex, type aType, shader::stage aStage, VkSampler* aSampler);
+		descriptor(uint32_t aBindingIndex, type aType, uint32_t aCount, shader::stage aStage, VkSampler* aSampler);
 
 	private:
 
-		// vk_descriptor_set_layout_binding
+		// VkDescriptorSetLayoutBinding
 		uint32_t			Binding;
 		type				Type;
 		uint32_t			Count;
 		shader::stage		Stage;
-		vk_sampler*			Sampler;
+		VkSampler*			Sampler;
 		
-		// vk_write_descriptor_set
+		// VkWriteDescriptorSet
 
 		void zero_out();
 

@@ -72,23 +72,23 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(ProjectDir)lib\Windows\$(Configuration)\$(PlatformShortName)\</OutDir>
-    <IntDir>$(ProjectDir)obj\engine\$(Configuration)\$(PlatformShortName)\</IntDir>
+    <OutDir>$(ProjectDir)lib\Windows\$(PlatformShortName)\$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDir)obj\engine\$(PlatformShortName)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(ProjectDir)lib\Windows\$(Configuration)\$(PlatformShortName)\</OutDir>
-    <IntDir>$(ProjectDir)obj\engine\$(Configuration)\$(PlatformShortName)\</IntDir>
+    <OutDir>$(ProjectDir)lib\Windows\$(PlatformShortName)\$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDir)obj\engine\$(PlatformShortName)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(ProjectDir)lib\Windows\$(Configuration)\$(PlatformShortName)\</OutDir>
-    <IntDir>$(ProjectDir)obj\engine\$(Configuration)\$(PlatformShortName)\</IntDir>
+    <OutDir>$(ProjectDir)lib\Windows\$(PlatformShortName)\$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDir)obj\engine\$(PlatformShortName)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(ProjectDir)lib\Windows\$(Configuration)\$(PlatformShortName)\</OutDir>
-    <IntDir>$(ProjectDir)obj\engine\$(Configuration)\$(PlatformShortName)\</IntDir>
+    <OutDir>$(ProjectDir)lib\Windows\$(PlatformShortName)\$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDir)obj\engine\$(PlatformShortName)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -318,44 +318,19 @@
     <ClInclude Include="inc\geodesuka\core\logic\time_step.h" />
     <ClInclude Include="inc\geodesuka\core\math.h" />
     <ClInclude Include="inc\geodesuka\core\math\config.h" />
-    <ClInclude Include="inc\geodesuka\core\math\matrix.h" />
-    <ClInclude Include="inc\geodesuka\core\math\matrix\float2x2.h" />
-    <ClInclude Include="inc\geodesuka\core\math\matrix\float2x3.h" />
-    <ClInclude Include="inc\geodesuka\core\math\matrix\float2x4.h" />
-    <ClInclude Include="inc\geodesuka\core\math\matrix\float3x2.h" />
-    <ClInclude Include="inc\geodesuka\core\math\matrix\float3x3.h" />
-    <ClInclude Include="inc\geodesuka\core\math\matrix\float3x4.h" />
-    <ClInclude Include="inc\geodesuka\core\math\matrix\float4x2.h" />
-    <ClInclude Include="inc\geodesuka\core\math\matrix\float4x3.h" />
-    <ClInclude Include="inc\geodesuka\core\math\matrix\float4x4.h" />
-    <ClInclude Include="inc\geodesuka\core\math\matrix\multiply.h" />
-    <ClInclude Include="inc\geodesuka\core\math\number.h" />
-    <ClInclude Include="inc\geodesuka\core\math\number\complex.h" />
-    <ClInclude Include="inc\geodesuka\core\math\number\constants.h" />
-    <ClInclude Include="inc\geodesuka\core\math\number\quaternion.h" />
-    <ClInclude Include="inc\geodesuka\core\math\number\type.h" />
-    <ClInclude Include="inc\geodesuka\core\math\vector.h" />
-    <ClInclude Include="inc\geodesuka\core\math\vector\char2.h" />
-    <ClInclude Include="inc\geodesuka\core\math\vector\char3.h" />
-    <ClInclude Include="inc\geodesuka\core\math\vector\char4.h" />
-    <ClInclude Include="inc\geodesuka\core\math\vector\float2.h" />
-    <ClInclude Include="inc\geodesuka\core\math\vector\float3.h" />
-    <ClInclude Include="inc\geodesuka\core\math\vector\float4.h" />
-    <ClInclude Include="inc\geodesuka\core\math\vector\int2.h" />
-    <ClInclude Include="inc\geodesuka\core\math\vector\int3.h" />
-    <ClInclude Include="inc\geodesuka\core\math\vector\int4.h" />
-    <ClInclude Include="inc\geodesuka\core\math\vector\short2.h" />
-    <ClInclude Include="inc\geodesuka\core\math\vector\short3.h" />
-    <ClInclude Include="inc\geodesuka\core\math\vector\short4.h" />
-    <ClInclude Include="inc\geodesuka\core\math\vector\uchar2.h" />
-    <ClInclude Include="inc\geodesuka\core\math\vector\uchar3.h" />
-    <ClInclude Include="inc\geodesuka\core\math\vector\uchar4.h" />
-    <ClInclude Include="inc\geodesuka\core\math\vector\uint2.h" />
-    <ClInclude Include="inc\geodesuka\core\math\vector\uint3.h" />
-    <ClInclude Include="inc\geodesuka\core\math\vector\uint4.h" />
-    <ClInclude Include="inc\geodesuka\core\math\vector\ushort2.h" />
-    <ClInclude Include="inc\geodesuka\core\math\vector\ushort3.h" />
-    <ClInclude Include="inc\geodesuka\core\math\vector\ushort4.h" />
+    <ClInclude Include="inc\geodesuka\core\math\field.h" />
+    <ClInclude Include="inc\geodesuka\core\math\mat2.h" />
+    <ClInclude Include="inc\geodesuka\core\math\mat2x3.h" />
+    <ClInclude Include="inc\geodesuka\core\math\mat2x4.h" />
+    <ClInclude Include="inc\geodesuka\core\math\mat3.h" />
+    <ClInclude Include="inc\geodesuka\core\math\mat3x2.h" />
+    <ClInclude Include="inc\geodesuka\core\math\mat3x4.h" />
+    <ClInclude Include="inc\geodesuka\core\math\mat4.h" />
+    <ClInclude Include="inc\geodesuka\core\math\mat4x2.h" />
+    <ClInclude Include="inc\geodesuka\core\math\mat4x3.h" />
+    <ClInclude Include="inc\geodesuka\core\math\vec2.h" />
+    <ClInclude Include="inc\geodesuka\core\math\vec3.h" />
+    <ClInclude Include="inc\geodesuka\core\math\vec4.h" />
     <ClInclude Include="inc\geodesuka\core\object.h" />
     <ClInclude Include="inc\geodesuka\core\object\camera.h" />
     <ClInclude Include="inc\geodesuka\core\object\camera2d.h" />

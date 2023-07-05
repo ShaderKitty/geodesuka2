@@ -159,7 +159,7 @@ namespace geodesuka::core::util {
 		};
 
 		// Parse error into string.
-		static const char* get_er_str(vk_result Res);
+		static const char* get_er_str(VkResult Res);
 
 		log();
 		log(message aMessage);

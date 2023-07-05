@@ -88,7 +88,7 @@ namespace geodesuka::core::object {
 		struct property {
 			setting				Setting;
 			swapchain::prop		Swapchain;
-			vk_format			PixelFormat;
+			VkFormat			PixelFormat;
 			const char*			Title;
 			property();
 		};
@@ -126,17 +126,17 @@ namespace geodesuka::core::object {
 
 		// -------------------- object_t methods -------------------- //
 
-		virtual vk_submit_info update(double aDeltaTime) override;
+		virtual VkSubmitInfo update(double aDeltaTime) override;
 
-		//virtual vk_submit_info compute() override;
+		//virtual VkSubmitInfo compute() override;
 		
 		// -------------------- render_target methods --------------- //
 
 		virtual gcl::command_batch render(stage_t* aStage) override;
 
-		virtual vk_result next_frame() override;
+		virtual VkResult next_frame() override;
 		//virtual std::vector<gcl::command_list> draw(const std::vector<object_t*>& aObject) override;
-		virtual vk_present_info_khr present_frame() override;
+		virtual VkPresentInfoKHR present_frame() override;
 
 		// -------------------- window methods ---------------------- //
 
@@ -149,37 +149,37 @@ namespace geodesuka::core::object {
 		glm::ivec2									SizeVSC;
 		system_display*							Display;
 		glfw_window*							Window;
-		vk_surface_khr							Surface;
-		vk_pipeline_stage_flags					PipelineStageFlags;
-		vk_result								PresentationResult;
-		vk_semaphore							RenderWait;
-		vk_semaphore							RenderComplete;
-		vk_swapchain_create_info_khr			CreateInfo;
-		vk_swapchain_khr						Swapchain;
-		vk_present_info_khr						PresentInfo;
+		VkSurfaceKHR							Surface;
+		VkPipelineStageFlags					PipelineStageFlags;
+		VkResult								PresentationResult;
+		VkSemaphore							RenderWait;
+		VkSemaphore							RenderComplete;
+		VkSwapchainCreateInfoKHR			CreateInfo;
+		VkSwapchainKHR						Swapchain;
+		VkPresentInfoKHR						PresentInfo;
 		std::vector<gcl::command_list>			PreRenderOperations;
 		std::vector<gcl::command_list>			PostRenderOperations;
 
 		// ------------------------------ Utility (Internal, Do Not Use) ------------------------------ //
 
 		// Render Target Side.
-		vk_result create_system_window(gcl::context* aContext, system_display* aSystemDisplay, const char* aName, const property& aProperty, glm::ivec2 aPosition, glm::ivec2 aResolution);
+		VkResult create_system_window(gcl::context* aContext, system_display* aSystemDisplay, const char* aName, const property& aProperty, glm::ivec2 aPosition, glm::ivec2 aResolution);
 		
 		// ---------- system_window resources ---------- //
 
 		int create_glfw_window(engine* aEngine, window::setting aSetting, int aWidth, int aHeight, const char* aTitle, system_display* aDisplay);
-		vk_result create_vulkan_surface();
-		vk_result create_semaphores();
-		vk_result create_swapchain(property aProperty);
-		vk_result create_images();
-		vk_result create_cscbs();
+		VkResult create_vulkan_surface();
+		VkResult create_semaphores();
+		VkResult create_swapchain(property aProperty);
+		VkResult create_images();
+		VkResult create_cscbs();
 
 		// ---------- system_window renderer ---------- //
 
-		vk_result create_render_pass();
-		vk_result create_pipelines();
+		VkResult create_render_pass();
+		VkResult create_pipelines();
 
-		vk_result recreate_swapchain(int aFrameSizeX, int aFrameSizeY);
+		VkResult recreate_swapchain(int aFrameSizeX, int aFrameSizeY);
 
 		void clear();
 		void zero_out();

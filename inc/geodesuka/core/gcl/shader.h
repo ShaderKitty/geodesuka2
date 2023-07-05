@@ -73,10 +73,10 @@ namespace geodesuka::core::gcl {
 
 
 		
-		vk_shader_stage_flag_bits get_stage();
-		vk_shader_module handle();
+		VkShaderStageFlagBits get_stage();
+		VkShaderModule handle();
 
-		vk_pipeline_shader_stage_create_info stageci();
+		VkPipelineShaderStageCreateInfo stageci();
 
 	private:
 
@@ -91,13 +91,13 @@ namespace geodesuka::core::gcl {
 
 		// Device memory data.
 		context*						Context;
-		vk_shader_module_create_info	CreateInfo{};
-		vk_shader_module				Handle;
+		VkShaderModuleCreateInfo	CreateInfo{};
+		VkShaderModule				Handle;
 
 		// TODO: Rename to something else, does not generate SPIRV.
 		bool compile_source(stage aStage, const char* aSource);
 		//bool generate_spirv();
-		vk_result create_module(context* aContext, std::vector<unsigned int>& aSPIRV);
+		VkResult create_module(context* aContext, std::vector<unsigned int>& aSPIRV);
 		void zero_out();
 
 	};

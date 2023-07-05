@@ -65,42 +65,42 @@ namespace geodesuka::core::gcl {
 		buffer& operator=(buffer&& aRhs) noexcept;
 		
 		// TRANSFER
-		vk_command_buffer operator<<(buffer& aRhs);
+		VkCommandBuffer operator<<(buffer& aRhs);
 		// TRANSFER
-		vk_command_buffer operator>>(buffer& aRhs);
+		VkCommandBuffer operator>>(buffer& aRhs);
 		// TRANSFER
-		vk_command_buffer operator<<(image& aRhs);
+		VkCommandBuffer operator<<(image& aRhs);
 		// TRANSFER
-		vk_command_buffer operator>>(image& aRhs);
+		VkCommandBuffer operator>>(image& aRhs);
 
 		// Use Command Buffers to update. vkCmdUpdateBuffer() 64kB limit.
 		// Has to be host memory to be used.
-		vk_result write(size_t aBufferSize, void* aBufferData);
-		vk_result write(size_t aSrcOffset, size_t aDstOffset, size_t aRegionSize, size_t aBufferSize, void* aBufferData);
-		vk_result write(uint32_t aRegionCount, vk_buffer_copy *aRegionList, size_t aBufferSize, void *aBufferData);
+		VkResult write(size_t aBufferSize, void* aBufferData);
+		VkResult write(size_t aSrcOffset, size_t aDstOffset, size_t aRegionSize, size_t aBufferSize, void* aBufferData);
+		VkResult write(uint32_t aRegionCount, VkBufferCopy *aRegionList, size_t aBufferSize, void *aBufferData);
 
-		vk_result read(size_t aBufferSize, void* aBufferData);
-		vk_result read(size_t aSrcOffset, size_t aDstOffset, size_t aRegionSize, size_t aBufferSize, void* aBufferData);
-		vk_result read(uint32_t aRegionCount, vk_buffer_copy* aRegionList, size_t aBufferSize, void* aBufferData);
+		VkResult read(size_t aBufferSize, void* aBufferData);
+		VkResult read(size_t aSrcOffset, size_t aDstOffset, size_t aRegionSize, size_t aBufferSize, void* aBufferData);
+		VkResult read(uint32_t aRegionCount, VkBufferCopy* aRegionList, size_t aBufferSize, void* aBufferData);
 
 		// Total memory size of the image. (Does not include mip levels)
 		size_t get_memory_size() const;
 
-		vk_buffer& handle();
+		VkBuffer& handle();
 
 	private:
 
 		int							VertexCount;
 		variable					VertexLayout;
 		context*					Context;
-		vk_buffer_create_info		CreateInfo{};
-		vk_buffer					Handle;
-		vk_memory_allocate_info		AllocateInfo{};
-		vk_device_memory			MemoryHandle;
+		VkBufferCreateInfo		CreateInfo{};
+		VkBuffer					Handle;
+		VkMemoryAllocateInfo		AllocateInfo{};
+		VkDeviceMemory			MemoryHandle;
 
-		vk_result create_device_memory(context* aContext, create_info aCreateInfo, size_t aMemorySize);
-		vk_buffer_create_info make_buffer_create_info(size_t aMemorySize, int aBufferUsage);
-		vk_memory_allocate_info make_buffer_allocate_info(context* aContext, device* aDevice, int aMemoryType);
+		VkResult create_device_memory(context* aContext, create_info aCreateInfo, size_t aMemorySize);
+		VkBufferCreateInfo make_buffer_create_info(size_t aMemorySize, int aBufferUsage);
+		VkMemoryAllocateInfo make_buffer_allocate_info(context* aContext, device* aDevice, int aMemoryType);
 
 		void clear_device_memory();
 

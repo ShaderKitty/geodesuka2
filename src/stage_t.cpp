@@ -72,8 +72,8 @@ namespace geodesuka::core {
 		return TransferBatch;
 	}
 
-	vk_submit_info stage_t::update(double aDeltaTime) {
-		vk_submit_info TransferBatch{};
+	VkSubmitInfo stage_t::update(double aDeltaTime) {
+		VkSubmitInfo TransferBatch{};
 		TransferBatch.sType					= VK_STRUCTURE_TYPE_SUBMIT_INFO;
 		TransferBatch.pNext					= NULL;
 		TransferBatch.waitSemaphoreCount	= 0;
@@ -96,8 +96,8 @@ namespace geodesuka::core {
 		return ComputeBatch;
 	}
 
-	vk_submit_info stage_t::compute() {
-		vk_submit_info ComputeBatch{};
+	VkSubmitInfo stage_t::compute() {
+		VkSubmitInfo ComputeBatch{};
 		ComputeBatch.sType					= VK_STRUCTURE_TYPE_SUBMIT_INFO;
 		ComputeBatch.pNext					= NULL;
 		ComputeBatch.waitSemaphoreCount		= 0;

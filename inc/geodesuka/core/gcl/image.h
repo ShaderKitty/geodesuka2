@@ -315,7 +315,7 @@ namespace geodesuka::core::gcl {
 		static format t2f(type::id aID);
 		static size_t bytesperpixel(int aFormat);
 		static size_t bitsperpixel(int aFormat);
-		static vk_image_aspect_flags aspect_flag(int aFormat);
+		static VkImageAspectFlags aspect_flag(int aFormat);
 
 		// -------------------- Host Memory -------------------- //
 
@@ -405,60 +405,60 @@ namespace geodesuka::core::gcl {
 		// Move Assignment.
 		image& operator=(image&& aRhs) noexcept;
 		// TRANSFER
-		vk_command_buffer operator<<(image& aRhs);
+		VkCommandBuffer operator<<(image& aRhs);
 		// TRANSFER
-		vk_command_buffer operator>>(image& aRhs);
+		VkCommandBuffer operator>>(image& aRhs);
 		// TRANSFER
-		vk_command_buffer operator<<(buffer& aRhs);
+		VkCommandBuffer operator<<(buffer& aRhs);
 		// TRANSFER
-		vk_command_buffer operator>>(buffer& aRhs);
+		VkCommandBuffer operator>>(buffer& aRhs);
 		// GRAPHICS
-		vk_command_buffer generate_mipmaps(vk_filter aFilter);
+		VkCommandBuffer generate_mipmaps(VkFilter aFilter);
 
 		// Transistions all mip levels and array layers into the desired image layout.
 		// Queue Support: T, G, C, D, E.
-		void cmd_transition(vk_command_buffer aCommandBuffer,
-			vk_access_flags aSrcAccessMask, vk_access_flags aDstAccessMask,
-			vk_pipeline_stage_flags aSrcStage, vk_pipeline_stage_flags aDstStage,
-			vk_image_layout aNewLayout
+		void cmd_transition(VkCommandBuffer aCommandBuffer,
+			VkAccessFlags aSrcAccessMask, VkAccessFlags aDstAccessMask,
+			VkPipelineStageFlags aSrcStage, VkPipelineStageFlags aDstStage,
+			VkImageLayout aNewLayout
 		);
 
 		// Transistions selected mip levels and array layers into the desired image layout.
 		// Queue Support: T, G, C, D, E.
-		void cmd_transition(vk_command_buffer aCommandBuffer,
-			vk_access_flags aSrcAccessMask, vk_access_flags aDstAccessMask,
-			vk_pipeline_stage_flags aSrcStage, vk_pipeline_stage_flags aDstStage,
+		void cmd_transition(VkCommandBuffer aCommandBuffer,
+			VkAccessFlags aSrcAccessMask, VkAccessFlags aDstAccessMask,
+			VkPipelineStageFlags aSrcStage, VkPipelineStageFlags aDstStage,
 			uint32_t aMipLevel, uint32_t aMipLevelCount,
 			uint32_t aArrayLayer, uint32_t aArrayLayerCount,
-			vk_image_layout aNewLayout
+			VkImageLayout aNewLayout
 		);
 
-		vk_attachment_description description(vk_attachment_load_op aLoadOp, vk_attachment_store_op aStoreOp);
-		vk_attachment_description description(vk_attachment_load_op aLoadOp, vk_attachment_store_op aStoreOp, vk_image_layout aFinalLayout);
+		VkAttachmentDescription description(VkAttachmentLoadOp aLoadOp, VkAttachmentStoreOp aStoreOp);
+		VkAttachmentDescription description(VkAttachmentLoadOp aLoadOp, VkAttachmentStoreOp aStoreOp, VkImageLayout aFinalLayout);
 
 		// Insure that all MipLevels and ArrayLayers have the same image layout before using a description.
 		// Insure that all mip levels, and array layers, have the same layout before using a description.
-		vk_attachment_description description(
-			vk_attachment_load_op aLoadOp, vk_attachment_store_op aStoreOp,
-			vk_attachment_load_op aStencilLoadOp, vk_attachment_store_op aStencilStoreOp,
-			vk_image_layout aInitialLayout, vk_image_layout aFinalLayout
+		VkAttachmentDescription description(
+			VkAttachmentLoadOp aLoadOp, VkAttachmentStoreOp aStoreOp,
+			VkAttachmentLoadOp aStencilLoadOp, VkAttachmentStoreOp aStencilStoreOp,
+			VkImageLayout aInitialLayout, VkImageLayout aFinalLayout
 		);
 
 		// Generates image views from texture instance. (YOU ARE RESPONSIBLE FOR DESTROYING VIEWS)
-		vk_image_view view();
-		//vk_image_view view(vk_image_viewType aType, VkImageSubresourceRange aRange);
-		//vk_image_view view(vk_image_viewType aType, VkComponentMapping aComponentMapping, VkImageSubresourceRange aRange);
+		VkImageView view();
+		//VkImageView view(vk_image_viewType aType, VkImageSubresourceRange aRange);
+		//VkImageView view(vk_image_viewType aType, VkComponentMapping aComponentMapping, VkImageSubresourceRange aRange);
 		
 		// Write to an image.
-		vk_result write(size_t aMemorySize, void* aData);
+		VkResult write(size_t aMemorySize, void* aData);
 
 		// Read to an image.
-		vk_result read(size_t aMemorySize, void* aData);
+		VkResult read(size_t aMemorySize, void* aData);
 
 		// Total memory size of the image. (Does not include mip levels)
 		size_t get_memory_size() const;
 
-		vk_image handle();
+		VkImage handle();
 
 		void clear();
 
@@ -477,12 +477,12 @@ namespace geodesuka::core::gcl {
 		// Device Memory
 		context*					Context;
 		size_t						DeviceSize;
-		vk_image_create_info		CreateInfo;
-		vk_image					Handle;
-		vk_memory_allocate_info		AllocateInfo;
-		vk_device_memory			MemoryHandle;
-		vk_image_layout**			Layout; 
-		vk_extent_3d*				MipExtent;
+		VkImageCreateInfo		CreateInfo;
+		VkImage					Handle;
+		VkMemoryAllocateInfo		AllocateInfo;
+		VkDeviceMemory			MemoryHandle;
+		VkImageLayout**			Layout; 
+		VkExtent3D*				MipExtent;
 
 		bool load_host_image(const char* aFilePath);
 
@@ -491,15 +491,15 @@ namespace geodesuka::core::gcl {
 		void clear_host_memory();
 
 		// Calculates number of possible mip levels.
-		uint32_t mip_level_count(vk_image_type aImageType, vk_extent_3d aExtent);
+		uint32_t mip_level_count(VkImageType aImageType, VkExtent3D aExtent);
 
 		// Creates Device Image.
-		vk_result create_device_image(context* aContext, create_info aCreateInfo, unsigned int aArrayLayers, int aFormat, glm::uvec3 aResolution);
-		vk_result create_device_image(context* aDeviceContext, vk_image_create_info aCreateInfo, int aMemoryType);
-		vk_result get_limits(vk_image_format_properties * aReturn, device* aDevice, create_info aCreateInfo, int aFormat, glm::uvec3 aResolution);
-		vk_image_create_info pack_create_info(vk_image_format_properties aImageLimits, create_info aCreateInfo, unsigned int aArrayLayers, int aFormat, glm::uvec3 aResolution);
-		vk_memory_allocate_info pack_allocate_info(context* aContext, device* aDevice, int aMemoryType);
-		vk_result generate_miplevels(unsigned int aMipLevel, unsigned int aArrayLayers, vk_image_layout aInitialLayout, vk_image_type aImageType, vk_extent_3d aExtent);
+		VkResult create_device_image(context* aContext, create_info aCreateInfo, unsigned int aArrayLayers, int aFormat, glm::uvec3 aResolution);
+		VkResult create_device_image(context* aDeviceContext, VkImageCreateInfo aCreateInfo, int aMemoryType);
+		VkResult get_limits(VkImageFormatProperties * aReturn, device* aDevice, create_info aCreateInfo, int aFormat, glm::uvec3 aResolution);
+		VkImageCreateInfo pack_create_info(VkImageFormatProperties aImageLimits, create_info aCreateInfo, unsigned int aArrayLayers, int aFormat, glm::uvec3 aResolution);
+		VkMemoryAllocateInfo pack_allocate_info(context* aContext, device* aDevice, int aMemoryType);
+		VkResult generate_miplevels(unsigned int aMipLevel, unsigned int aArrayLayers, VkImageLayout aInitialLayout, VkImageType aImageType, VkExtent3D aExtent);
 
 		// Destroys device memory image.
 		void clear_device_memory();
@@ -508,7 +508,7 @@ namespace geodesuka::core::gcl {
 		void zero_out();
 
 		// Used by system_window
-		vk_image_view create_system_window_frame(context* aContext, vk_format aFormat, vk_image_usage_flags aUsageFlags, vk_image aImageHandle, glm::uvec3 aImageResolution);
+		VkImageView create_system_window_frame(context* aContext, VkFormat aFormat, VkImageUsageFlags aUsageFlags, VkImage aImageHandle, glm::uvec3 aImageResolution);
 
 	};
 

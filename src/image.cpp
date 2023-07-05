@@ -412,8 +412,8 @@ namespace geodesuka::core::gcl {
 		}
 	}
 
-	vk_image_aspect_flags image::aspect_flag(int aFormat) {
-		vk_image_aspect_flags AspectFlag = 0;
+	VkImageAspectFlags image::aspect_flag(int aFormat) {
+		VkImageAspectFlags AspectFlag = 0;
 		switch (aFormat) {
 		default: 
 			AspectFlag = 0;
@@ -701,7 +701,7 @@ namespace geodesuka::core::gcl {
 	}
 
 	image::image(context* aContext, create_info aCreateInfo, const util::string& aFilePath) : io::file(aFilePath) {
-		vk_result Result = VK_SUCCESS;
+		VkResult Result = VK_SUCCESS;
 
 		this->load_host_image(aFilePath.ptr());
 
@@ -716,7 +716,7 @@ namespace geodesuka::core::gcl {
 	}
 
 	image::image(context* aContext, create_info aCreateInfo, const char* aFilePath) : io::file(aFilePath) {
-		vk_result Result = VK_SUCCESS;
+		VkResult Result = VK_SUCCESS;
 
 		this->load_host_image(aFilePath);
 
@@ -731,7 +731,7 @@ namespace geodesuka::core::gcl {
 	}
 
 	image::image(context* aContext, create_info aCreateInfo, const image* aHostImage) {
-		vk_result Result = VK_SUCCESS;
+		VkResult Result = VK_SUCCESS;
 		this->zero_out();
 
 		// Allocate Device Memory
@@ -747,7 +747,7 @@ namespace geodesuka::core::gcl {
 	// ----- New Interface.
 
 	image::image(context* aContext, create_info aCreateInfo, type::id aTypeID, unsigned int aResolution) {
-		vk_result Result = VK_SUCCESS;
+		VkResult Result = VK_SUCCESS;
 
 		// Zero out memory.
 		this->zero_out();
@@ -758,7 +758,7 @@ namespace geodesuka::core::gcl {
 	}
 
 	image::image(context* aContext, create_info aCreateInfo, type::id aTypeID, glm::uvec2 aResolution) {
-		vk_result Result = VK_SUCCESS;
+		VkResult Result = VK_SUCCESS;
 
 		// Zero out memory.
 		this->zero_out();
@@ -769,7 +769,7 @@ namespace geodesuka::core::gcl {
 	}
 
 	image::image(context* aContext, create_info aCreateInfo, type::id aTypeID, glm::uvec3 aResolution) {
-		vk_result Result = VK_SUCCESS;
+		VkResult Result = VK_SUCCESS;
 
 		// Zero out memory.
 		this->zero_out();
@@ -780,7 +780,7 @@ namespace geodesuka::core::gcl {
 	}
 
 	image::image(context* aContext, create_info aCreateInfo, unsigned int aArrayLayers, type::id aTypeID, unsigned int aResolution) {
-		vk_result Result = VK_SUCCESS;
+		VkResult Result = VK_SUCCESS;
 
 		// Zero out memory.
 		this->zero_out();
@@ -791,7 +791,7 @@ namespace geodesuka::core::gcl {
 	}
 
 	image::image(context* aContext, create_info aCreateInfo, unsigned int aArrayLayers, type::id aTypeID, glm::uvec2 aResolution) {
-		vk_result Result = VK_SUCCESS;
+		VkResult Result = VK_SUCCESS;
 
 		// Zero out memory.
 		this->zero_out();
@@ -802,7 +802,7 @@ namespace geodesuka::core::gcl {
 	}
 
 	image::image(context* aContext, create_info aCreateInfo, unsigned int aArrayLayers, type::id aTypeID, glm::uvec3 aResolution) {
-		vk_result Result = VK_SUCCESS;
+		VkResult Result = VK_SUCCESS;
 
 		// Zero out memory.
 		this->zero_out();
@@ -813,7 +813,7 @@ namespace geodesuka::core::gcl {
 	}
 
 	image::image(context* aContext, create_info aCreateInfo, type::id aTypeID, unsigned int aResolution, void* aTextureData) {
-		vk_result Result = VK_SUCCESS;
+		VkResult Result = VK_SUCCESS;
 
 		// Zero out memory.
 		this->zero_out();
@@ -829,7 +829,7 @@ namespace geodesuka::core::gcl {
 	}
 
 	image::image(context* aContext, create_info aCreateInfo, type::id aTypeID, glm::uvec2 aResolution, void* aTextureData) {
-		vk_result Result = VK_SUCCESS;
+		VkResult Result = VK_SUCCESS;
 
 		// Zero out memory.
 		this->zero_out();
@@ -845,7 +845,7 @@ namespace geodesuka::core::gcl {
 	}
 
 	image::image(context* aContext, create_info aCreateInfo, type::id aTypeID, glm::uvec3 aResolution, void* aTextureData) {
-		vk_result Result = VK_SUCCESS;
+		VkResult Result = VK_SUCCESS;
 
 		// Zero out memory.
 		this->zero_out();
@@ -861,7 +861,7 @@ namespace geodesuka::core::gcl {
 	}
 
 	image::image(context* aContext, create_info aCreateInfo, unsigned int aArrayLayers, type::id aTypeID, unsigned int aResolution, void* aTextureData) {
-		vk_result Result = VK_SUCCESS;
+		VkResult Result = VK_SUCCESS;
 
 		// Zero out memory.
 		this->zero_out();
@@ -877,7 +877,7 @@ namespace geodesuka::core::gcl {
 	}
 
 	image::image(context* aContext, create_info aCreateInfo, unsigned int aArrayLayers, type::id aTypeID, glm::uvec2 aResolution, void* aTextureData) {
-		vk_result Result = VK_SUCCESS;
+		VkResult Result = VK_SUCCESS;
 
 		// Zero out memory.
 		this->zero_out();
@@ -893,7 +893,7 @@ namespace geodesuka::core::gcl {
 	}
 
 	image::image(context* aContext, create_info aCreateInfo, unsigned int aArrayLayers, type::id aTypeID, glm::uvec3 aResolution, void* aTextureData) {
-		vk_result Result = VK_SUCCESS;
+		VkResult Result = VK_SUCCESS;
 
 		// Zero out memory.
 		this->zero_out();
@@ -909,7 +909,7 @@ namespace geodesuka::core::gcl {
 	}
 
 	image::image(context* aContext, create_info aCreateInfo, format aFormat, unsigned int aResolution) {
-		vk_result Result = VK_SUCCESS;
+		VkResult Result = VK_SUCCESS;
 
 		// Zero out memory.
 		this->zero_out();
@@ -920,7 +920,7 @@ namespace geodesuka::core::gcl {
 	}
 
 	image::image(context* aContext, create_info aCreateInfo, format aFormat, glm::uvec2 aResolution) {
-		vk_result Result = VK_SUCCESS;
+		VkResult Result = VK_SUCCESS;
 
 		// Zero out memory.
 		this->zero_out();
@@ -931,7 +931,7 @@ namespace geodesuka::core::gcl {
 	}
 
 	image::image(context* aContext, create_info aCreateInfo, format aFormat, glm::uvec3 aResolution) {
-		vk_result Result = VK_SUCCESS;
+		VkResult Result = VK_SUCCESS;
 
 		// Zero out memory.
 		this->zero_out();
@@ -942,7 +942,7 @@ namespace geodesuka::core::gcl {
 	}
 
 	image::image(context* aContext, create_info aCreateInfo, unsigned int aArrayLayers, format aFormat, unsigned int aResolution) {
-		vk_result Result = VK_SUCCESS;
+		VkResult Result = VK_SUCCESS;
 
 		// Zero out memory.
 		this->zero_out();
@@ -953,7 +953,7 @@ namespace geodesuka::core::gcl {
 	}
 
 	image::image(context* aContext, create_info aCreateInfo, unsigned int aArrayLayers, format aFormat, glm::uvec2 aResolution) {
-		vk_result Result = VK_SUCCESS;
+		VkResult Result = VK_SUCCESS;
 
 		// Zero out memory.
 		this->zero_out();
@@ -964,7 +964,7 @@ namespace geodesuka::core::gcl {
 	}
 
 	image::image(context* aContext, create_info aCreateInfo, unsigned int aArrayLayers, format aFormat, glm::uvec3 aResolution) {
-		vk_result Result = VK_SUCCESS;
+		VkResult Result = VK_SUCCESS;
 
 		// Zero out memory.
 		this->zero_out();
@@ -975,7 +975,7 @@ namespace geodesuka::core::gcl {
 	}
 
 	image::image(context* aContext, create_info aCreateInfo, format aFormat, unsigned int aResolution, void* aTextureData) {
-		vk_result Result = VK_SUCCESS;
+		VkResult Result = VK_SUCCESS;
 
 		// Zero out memory.
 		this->zero_out();
@@ -991,7 +991,7 @@ namespace geodesuka::core::gcl {
 	}
 
 	image::image(context* aContext, create_info aCreateInfo, format aFormat, glm::uvec2 aResolution, void* aTextureData) {
-		vk_result Result = VK_SUCCESS;
+		VkResult Result = VK_SUCCESS;
 
 		// Zero out memory.
 		this->zero_out();
@@ -1007,7 +1007,7 @@ namespace geodesuka::core::gcl {
 	}
 
 	image::image(context* aContext, create_info aCreateInfo, format aFormat, glm::uvec3 aResolution, void* aTextureData) {
-		vk_result Result = VK_SUCCESS;
+		VkResult Result = VK_SUCCESS;
 
 		// Zero out memory.
 		this->zero_out();
@@ -1023,7 +1023,7 @@ namespace geodesuka::core::gcl {
 	}
 
 	image::image(context* aContext, create_info aCreateInfo, unsigned int aArrayLayers, format aFormat, unsigned int aResolution, void* aTextureData) {
-		vk_result Result = VK_SUCCESS;
+		VkResult Result = VK_SUCCESS;
 
 		// Zero out memory.
 		this->zero_out();
@@ -1039,7 +1039,7 @@ namespace geodesuka::core::gcl {
 	}
 
 	image::image(context* aContext, create_info aCreateInfo, unsigned int aArrayLayers, format aFormat, glm::uvec2 aResolution, void* aTextureData) {
-		vk_result Result = VK_SUCCESS;
+		VkResult Result = VK_SUCCESS;
 
 		// Zero out memory.
 		this->zero_out();
@@ -1055,7 +1055,7 @@ namespace geodesuka::core::gcl {
 	}
 
 	image::image(context* aContext, create_info aCreateInfo, unsigned int aArrayLayers, format aFormat, glm::uvec3 aResolution, void* aTextureData) {
-		vk_result Result = VK_SUCCESS;
+		VkResult Result = VK_SUCCESS;
 
 		// Zero out memory.
 		this->zero_out();
@@ -1071,9 +1071,9 @@ namespace geodesuka::core::gcl {
 	}
 
 	image::image(image& aInput) {
-		vk_result Result = VK_SUCCESS;
-		vk_fence Fence = VK_NULL_HANDLE;
-		vk_command_buffer CommandBuffer = VK_NULL_HANDLE;
+		VkResult Result = VK_SUCCESS;
+		VkFence Fence = VK_NULL_HANDLE;
+		VkCommandBuffer CommandBuffer = VK_NULL_HANDLE;
 
 		this->zero_out();
 
@@ -1181,12 +1181,12 @@ namespace geodesuka::core::gcl {
 
 		this->Context = aRhs.Context;
 		if (this->Context != nullptr) {
-			vk_result Result = VK_SUCCESS;
+			VkResult Result = VK_SUCCESS;
 
 			Result = this->create_device_image(aRhs.Context, aRhs.CreateInfo, aRhs.Context->parent()->get_memory_type(aRhs.AllocateInfo.memoryTypeIndex));
 
-			vk_fence Fence = this->Context->create_fence();
-			vk_command_buffer CommandBuffer = (*this << aRhs);
+			VkFence Fence = this->Context->create_fence();
+			VkCommandBuffer CommandBuffer = (*this << aRhs);
 
 			this->Context->execute(device::TRANSFER, CommandBuffer, Fence);
 			Result = vkWaitForFences(this->Context->handle(), 1, &Fence, VK_TRUE, UINT64_MAX);
@@ -1239,8 +1239,8 @@ namespace geodesuka::core::gcl {
 		return *this;
 	}
 
-	vk_command_buffer image::operator<<(image& aRhs) {
-		vk_command_buffer CommandBuffer = VK_NULL_HANDLE;
+	VkCommandBuffer image::operator<<(image& aRhs) {
+		VkCommandBuffer CommandBuffer = VK_NULL_HANDLE;
 		// Cannot do transfer operations if they do not share the
 		// same context.
 		if (this->Context != aRhs.Context) return CommandBuffer;
@@ -1260,11 +1260,11 @@ namespace geodesuka::core::gcl {
 			((aRhs.CreateInfo.usage & image::usage::TRANSFER_SRC) != image::usage::TRANSFER_SRC)
 			) return CommandBuffer;
 
-		vk_result Result = VK_SUCCESS;
+		VkResult Result = VK_SUCCESS;
 		uint32_t RegionCount = this->CreateInfo.mipLevels;
-		vk_image_copy* RegionList = NULL;
+		VkImageCopy* RegionList = NULL;
 
-		RegionList = (vk_image_copy*)malloc(RegionCount * sizeof(vk_image_copy));
+		RegionList = (VkImageCopy*)malloc(RegionCount * sizeof(VkImageCopy));
 		assert(RegionList);
 
 		// Copy every region
@@ -1282,7 +1282,7 @@ namespace geodesuka::core::gcl {
 			RegionList[i].extent = this->MipExtent[i];
 		}
 
-		vk_command_buffer_begin_info BeginInfo{};
+		VkCommandBufferBeginInfo BeginInfo{};
 		BeginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
 		BeginInfo.pNext = NULL;
 		BeginInfo.flags = 0;
@@ -1318,12 +1318,12 @@ namespace geodesuka::core::gcl {
 		return CommandBuffer;
 	}
 
-	vk_command_buffer image::operator>>(image& aRhs) {
+	VkCommandBuffer image::operator>>(image& aRhs) {
 		return (aRhs << *this);
 	}
 
-	vk_command_buffer image::operator<<(buffer& aRhs) {
-		vk_command_buffer CommandBuffer = VK_NULL_HANDLE;
+	VkCommandBuffer image::operator<<(buffer& aRhs) {
+		VkCommandBuffer CommandBuffer = VK_NULL_HANDLE;
 		// Both operands must share the same parent context and memory size.
 		if ((this->Context != aRhs.Context) || (this->get_memory_size() != (size_t)aRhs.CreateInfo.size)) return CommandBuffer;
 		// Texture must have enabled, TRANSFER_DST. buffer must have TRANSFER_SRC enabled in usage.
@@ -1333,15 +1333,15 @@ namespace geodesuka::core::gcl {
 			((aRhs.CreateInfo.usage & buffer::usage::TRANSFER_SRC) != buffer::usage::TRANSFER_SRC)
 			) return CommandBuffer;
 
-		vk_result Result = vk_result::VK_SUCCESS;
+		VkResult Result = VkResult::VK_SUCCESS;
 
-		vk_command_buffer_begin_info BeginInfo{};
+		VkCommandBufferBeginInfo BeginInfo{};
 		BeginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
 		BeginInfo.pNext = NULL;
 		BeginInfo.flags = 0;
 		BeginInfo.pInheritanceInfo = NULL;
 
-		vk_buffer_image_copy CopyRegion{};
+		VkBufferImageCopy CopyRegion{};
 		CopyRegion.bufferOffset = 0;
 		CopyRegion.bufferRowLength = 0;
 		CopyRegion.bufferImageHeight = 0;
@@ -1374,17 +1374,17 @@ namespace geodesuka::core::gcl {
 		return CommandBuffer;
 	}
 
-	vk_command_buffer image::operator>>(buffer& aRhs) {
+	VkCommandBuffer image::operator>>(buffer& aRhs) {
 		return (aRhs << *this);
 	}
 
-	vk_command_buffer image::generate_mipmaps(vk_filter aFilter) {
-		vk_command_buffer CommandBuffer = VK_NULL_HANDLE;
+	VkCommandBuffer image::generate_mipmaps(VkFilter aFilter) {
+		VkCommandBuffer CommandBuffer = VK_NULL_HANDLE;
 		if (this->Context == nullptr) return CommandBuffer;
 
-		vk_result Result = vk_result::VK_SUCCESS;
+		VkResult Result = VkResult::VK_SUCCESS;
 
-		vk_command_buffer_begin_info BeginInfo{};
+		VkCommandBufferBeginInfo BeginInfo{};
 		BeginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
 		BeginInfo.pNext = NULL;
 		BeginInfo.flags = 0;
@@ -1395,7 +1395,7 @@ namespace geodesuka::core::gcl {
 		Result = vkBeginCommandBuffer(CommandBuffer, &BeginInfo);
 		for (uint32_t i = 0; i < this->CreateInfo.mipLevels - 1; i++) {
 			// Blit regions.
-			vk_image_blit Region{};
+			VkImageBlit Region{};
 			Region.srcSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
 			Region.srcSubresource.mipLevel = i;
 			Region.srcSubresource.baseArrayLayer = 0;
@@ -1457,23 +1457,23 @@ namespace geodesuka::core::gcl {
 		return CommandBuffer;
 	}
 
-	void image::cmd_transition(vk_command_buffer aCommandBuffer,
-		vk_access_flags aSrcAccessMask, vk_access_flags aDstAccessMask,
-		vk_pipeline_stage_flags aSrcStage, vk_pipeline_stage_flags aDstStage,
-		vk_image_layout aNewLayout
+	void image::cmd_transition(VkCommandBuffer aCommandBuffer,
+		VkAccessFlags aSrcAccessMask, VkAccessFlags aDstAccessMask,
+		VkPipelineStageFlags aSrcStage, VkPipelineStageFlags aDstStage,
+		VkImageLayout aNewLayout
 	) {
 		this->cmd_transition(aCommandBuffer, aSrcAccessMask, aDstAccessMask, aSrcStage, aDstStage, 0, this->CreateInfo.mipLevels, 0, this->CreateInfo.arrayLayers, aNewLayout);
 	}
 
-	void image::cmd_transition(vk_command_buffer aCommandBuffer,
-		vk_access_flags aSrcAccessMask, vk_access_flags aDstAccessMask,
-		vk_pipeline_stage_flags aSrcStage, vk_pipeline_stage_flags aDstStage,
+	void image::cmd_transition(VkCommandBuffer aCommandBuffer,
+		VkAccessFlags aSrcAccessMask, VkAccessFlags aDstAccessMask,
+		VkPipelineStageFlags aSrcStage, VkPipelineStageFlags aDstStage,
 		uint32_t aMipLevel, uint32_t aMipLevelCount,
 		uint32_t aArrayLayer, uint32_t aArrayLayerCount,
-		vk_image_layout aNewLayout
+		VkImageLayout aNewLayout
 	) {
 		uint32_t TransitionCount = aMipLevelCount * aArrayLayerCount;
-		vk_image_memory_barrier* Transition = (vk_image_memory_barrier*)malloc(TransitionCount * sizeof(vk_image_memory_barrier));
+		VkImageMemoryBarrier* Transition = (VkImageMemoryBarrier*)malloc(TransitionCount * sizeof(VkImageMemoryBarrier));
 		assert(Transition);
 
 		for (uint32_t i = aMipLevel; i < (aMipLevel + aMipLevelCount); i++) {
@@ -1508,11 +1508,11 @@ namespace geodesuka::core::gcl {
 		free(Transition);
 	}
 
-	vk_image_view image::view() {
+	VkImageView image::view() {
 		// Change later after screwing with.
-		vk_result Result = VK_SUCCESS;
-		vk_image_view ImageView = VK_NULL_HANDLE;
-		vk_image_view_create_info ImageViewCreateInfo{};
+		VkResult Result = VK_SUCCESS;
+		VkImageView ImageView = VK_NULL_HANDLE;
+		VkImageViewCreateInfo ImageViewCreateInfo{};
 		ImageViewCreateInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
 		ImageViewCreateInfo.pNext = NULL;
 		ImageViewCreateInfo.flags = 0;
@@ -1544,20 +1544,20 @@ namespace geodesuka::core::gcl {
 		return ImageView;
 	}
 
-	vk_attachment_description image::description(vk_attachment_load_op aLoadOp, vk_attachment_store_op aStoreOp) {
+	VkAttachmentDescription image::description(VkAttachmentLoadOp aLoadOp, VkAttachmentStoreOp aStoreOp) {
 		return this->description(aLoadOp, aStoreOp, VK_ATTACHMENT_LOAD_OP_DONT_CARE, VK_ATTACHMENT_STORE_OP_DONT_CARE, this->Layout[0][0], this->Layout[0][0]);
 	}
 
-	vk_attachment_description image::description(vk_attachment_load_op aLoadOp, vk_attachment_store_op aStoreOp, vk_image_layout aFinalLayout){
+	VkAttachmentDescription image::description(VkAttachmentLoadOp aLoadOp, VkAttachmentStoreOp aStoreOp, VkImageLayout aFinalLayout){
 		return this->description(aLoadOp, aStoreOp, VK_ATTACHMENT_LOAD_OP_DONT_CARE, VK_ATTACHMENT_STORE_OP_DONT_CARE, this->Layout[0][0], aFinalLayout);
 	}
 
-	vk_attachment_description image::description(
-		vk_attachment_load_op aLoadOp, vk_attachment_store_op aStoreOp,
-		vk_attachment_load_op aStencilLoadOp, vk_attachment_store_op aStencilStoreOp,
-		vk_image_layout aInitialLayout, vk_image_layout aFinalLayout
+	VkAttachmentDescription image::description(
+		VkAttachmentLoadOp aLoadOp, VkAttachmentStoreOp aStoreOp,
+		VkAttachmentLoadOp aStencilLoadOp, VkAttachmentStoreOp aStencilStoreOp,
+		VkImageLayout aInitialLayout, VkImageLayout aFinalLayout
 	) {
-		vk_attachment_description AttachmentDescription;
+		VkAttachmentDescription AttachmentDescription;
 		AttachmentDescription.flags = 0;
 		AttachmentDescription.format = this->CreateInfo.format;
 		AttachmentDescription.samples = this->CreateInfo.samples;
@@ -1570,11 +1570,11 @@ namespace geodesuka::core::gcl {
 		return AttachmentDescription;
 	}
 
-	vk_result image::write(size_t aMemorySize, void* aData) {
-		vk_result Result = VK_SUCCESS;
+	VkResult image::write(size_t aMemorySize, void* aData) {
+		VkResult Result = VK_SUCCESS;
 		command_list CommandList[2] = { command_list(1), command_list(1) };
-		vk_fence Fence[2] = { VK_NULL_HANDLE, VK_NULL_HANDLE };
-		vk_semaphore Semaphore = VK_NULL_HANDLE;
+		VkFence Fence[2] = { VK_NULL_HANDLE, VK_NULL_HANDLE };
+		VkSemaphore Semaphore = VK_NULL_HANDLE;
 
 		// Create staging buffer and prepare for transfer.
 		buffer StagingBuffer(
@@ -1611,10 +1611,10 @@ namespace geodesuka::core::gcl {
 		return Result;
 	}
 
-	vk_result image::read(size_t aMemorySize, void* aData) {
-		vk_result Result = VK_SUCCESS;
-		vk_fence Fence = VK_NULL_HANDLE;
-		vk_command_buffer TransferToBuffer = VK_NULL_HANDLE;
+	VkResult image::read(size_t aMemorySize, void* aData) {
+		VkResult Result = VK_SUCCESS;
+		VkFence Fence = VK_NULL_HANDLE;
+		VkCommandBuffer TransferToBuffer = VK_NULL_HANDLE;
 
 		// Create staging buffer and prepare for transfer.
 		buffer StagingBuffer(
@@ -1639,7 +1639,7 @@ namespace geodesuka::core::gcl {
 		return this->CreateInfo.arrayLayers * this->CreateInfo.extent.width * this->CreateInfo.extent.height * this->CreateInfo.extent.depth * this->bytesperpixel(this->CreateInfo.format);
 	}
 
-	vk_image image::handle() {
+	VkImage image::handle() {
 		return this->Handle;
 	}
 
@@ -1779,7 +1779,7 @@ namespace geodesuka::core::gcl {
 
 	6 mip levels.
 	*/
-	uint32_t image::mip_level_count(vk_image_type aImageType, vk_extent_3d aExtent) {
+	uint32_t image::mip_level_count(VkImageType aImageType, VkExtent3D aExtent) {
 		uint32_t MipLevelCount = 1;
 		switch (aImageType) {
 		default:
@@ -1824,9 +1824,9 @@ namespace geodesuka::core::gcl {
 		return MipLevelCount;
 	}
 
-	vk_result image::create_device_image(context* aContext, create_info aCreateInfo, unsigned int aArrayLayers, int aFormat, glm::uvec3 aResolution) {
-		vk_result Result = VK_SUCCESS;
-		vk_image_format_properties FormatProperties{};
+	VkResult image::create_device_image(context* aContext, create_info aCreateInfo, unsigned int aArrayLayers, int aFormat, glm::uvec3 aResolution) {
+		VkResult Result = VK_SUCCESS;
+		VkImageFormatProperties FormatProperties{};
 
 		// Return if an improper context is provided.
 		if (aContext == nullptr) VK_ERROR_INITIALIZATION_FAILED;
@@ -1879,8 +1879,8 @@ namespace geodesuka::core::gcl {
 		return Result;
 	}
 
-	vk_result image::create_device_image(context* aContext, vk_image_create_info aCreateInfo, int aMemoryType) {
-		vk_result Result = VK_SUCCESS;
+	VkResult image::create_device_image(context* aContext, VkImageCreateInfo aCreateInfo, int aMemoryType) {
+		VkResult Result = VK_SUCCESS;
 		create_info LocalCreateInfo;
 		glm::uvec3 StackResolution = glm::uvec3(0, 0, 0);
 
@@ -1894,8 +1894,8 @@ namespace geodesuka::core::gcl {
 		return Result;
 	}
 
-	vk_result image::get_limits(vk_image_format_properties* aReturn, device* aDevice, create_info aCreateInfo, int aFormat, glm::uvec3 aResolution) {
-		vk_image_type ImageType = VK_IMAGE_TYPE_MAX_ENUM;
+	VkResult image::get_limits(VkImageFormatProperties* aReturn, device* aDevice, create_info aCreateInfo, int aFormat, glm::uvec3 aResolution) {
+		VkImageType ImageType = VK_IMAGE_TYPE_MAX_ENUM;
 		if ((aResolution.x > 1u) && (aResolution.y > 1u) && (aResolution.z > 1u)) {
 			ImageType = VK_IMAGE_TYPE_3D;
 		}
@@ -1908,11 +1908,11 @@ namespace geodesuka::core::gcl {
 		else {
 			ImageType = VK_IMAGE_TYPE_MAX_ENUM;
 		}
-		return vkGetPhysicalDeviceImageFormatProperties(aDevice->handle(), (vk_format)aFormat, ImageType, (vk_image_tiling)aCreateInfo.Tiling, (vk_image_usage_flags)aCreateInfo.Usage, 0, aReturn);
+		return vkGetPhysicalDeviceImageFormatProperties(aDevice->handle(), (VkFormat)aFormat, ImageType, (VkImageTiling)aCreateInfo.Tiling, (VkImageUsageFlags)aCreateInfo.Usage, 0, aReturn);
 	}
 
-	vk_image_create_info image::pack_create_info(vk_image_format_properties aImageLimits, create_info aCreateInfo, unsigned int aArrayLayers, int aFormat, glm::uvec3 aResolution) {
-		vk_image_create_info NewCreateInfo;
+	VkImageCreateInfo image::pack_create_info(VkImageFormatProperties aImageLimits, create_info aCreateInfo, unsigned int aArrayLayers, int aFormat, glm::uvec3 aResolution) {
+		VkImageCreateInfo NewCreateInfo;
 		NewCreateInfo.sType = VK_STRUCTURE_TYPE_IMAGE_CREATE_INFO;
 		NewCreateInfo.pNext = NULL;
 		NewCreateInfo.flags = 0;
@@ -1928,7 +1928,7 @@ namespace geodesuka::core::gcl {
 		else {
 			return {};
 		}
-		NewCreateInfo.format = (vk_format)aFormat;
+		NewCreateInfo.format = (VkFormat)aFormat;
 		switch (NewCreateInfo.imageType) {
 		default:
 			return {};
@@ -1944,8 +1944,8 @@ namespace geodesuka::core::gcl {
 		}
 		NewCreateInfo.mipLevels					= this->mip_level_count(NewCreateInfo.imageType, NewCreateInfo.extent);
 		NewCreateInfo.arrayLayers				= aArrayLayers;
-		NewCreateInfo.samples					= (vk_sample_count_flag_bits)aCreateInfo.Sample;
-		NewCreateInfo.tiling					= (vk_image_tiling)aCreateInfo.Tiling;
+		NewCreateInfo.samples					= (VkSampleCountFlagBits)aCreateInfo.Sample;
+		NewCreateInfo.tiling					= (VkImageTiling)aCreateInfo.Tiling;
 		NewCreateInfo.usage						= aCreateInfo.Usage;
 		NewCreateInfo.sharingMode				= VK_SHARING_MODE_EXCLUSIVE;
 		NewCreateInfo.queueFamilyIndexCount		= 0;
@@ -1954,9 +1954,9 @@ namespace geodesuka::core::gcl {
 		return NewCreateInfo;
 	}
 
-	vk_memory_allocate_info image::pack_allocate_info(context* aContext, device* aDevice, int aMemoryType) {
-		vk_memory_allocate_info NewAllocateInfo{};
-		vk_memory_requirements ImageMemoryRequirements = aContext->get_image_memory_requirements(this->Handle);
+	VkMemoryAllocateInfo image::pack_allocate_info(context* aContext, device* aDevice, int aMemoryType) {
+		VkMemoryAllocateInfo NewAllocateInfo{};
+		VkMemoryRequirements ImageMemoryRequirements = aContext->get_image_memory_requirements(this->Handle);
 		NewAllocateInfo.sType				= VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
 		NewAllocateInfo.pNext				= NULL;
 		NewAllocateInfo.allocationSize		= ImageMemoryRequirements.size;
@@ -1964,19 +1964,19 @@ namespace geodesuka::core::gcl {
 		return NewAllocateInfo;
 	}
 
-	vk_result image::generate_miplevels(unsigned int aMipLevel, unsigned int aArrayLayers, vk_image_layout aInitialLayout, vk_image_type aImageType, vk_extent_3d aExtent) {
-		vk_result Result = VK_SUCCESS;
+	VkResult image::generate_miplevels(unsigned int aMipLevel, unsigned int aArrayLayers, VkImageLayout aInitialLayout, VkImageType aImageType, VkExtent3D aExtent) {
+		VkResult Result = VK_SUCCESS;
 
 		if (Result == VK_SUCCESS) {
 
-			this->Layout = (vk_image_layout**)malloc(aMipLevel * sizeof(vk_image_layout*));
+			this->Layout = (VkImageLayout**)malloc(aMipLevel * sizeof(VkImageLayout*));
 
-			this->MipExtent = (vk_extent_3d*)malloc(aMipLevel * sizeof(vk_extent_3d));
+			this->MipExtent = (VkExtent3D*)malloc(aMipLevel * sizeof(VkExtent3D));
 
 			if ((this->Layout != NULL) && (this->MipExtent != NULL)) {
 				bool FullyAllocated = true;
 				for (uint32_t i = 0; i < aMipLevel; i++) {
-					this->Layout[i] = (vk_image_layout*)malloc(aArrayLayers * sizeof(vk_image_layout));
+					this->Layout[i] = (VkImageLayout*)malloc(aArrayLayers * sizeof(VkImageLayout));
 					FullyAllocated &= (this->Layout[i] != NULL);
 				}
 
@@ -2090,19 +2090,19 @@ namespace geodesuka::core::gcl {
 		this->MipExtent				= NULL;
 	}
 
-	vk_image_view image::create_system_window_frame(context* aContext, vk_format aFormat, vk_image_usage_flags aUsageFlags, vk_image aImageHandle, glm::uvec3 aImageResolution) {
+	VkImageView image::create_system_window_frame(context* aContext, VkFormat aFormat, VkImageUsageFlags aUsageFlags, VkImage aImageHandle, glm::uvec3 aImageResolution) {
 		this->Resolution = aImageResolution;
-		this->Layout = (vk_image_layout**)malloc(sizeof(vk_image_layout*));
+		this->Layout = (VkImageLayout**)malloc(sizeof(VkImageLayout*));
 		if (Layout == NULL) {
 			throw log::message(log::ERROR, log::OUT_OF_HOST_MEMORY, "System Window Creation", log::GEODESUKA, "image", "Frame", "Insufficient Host Memory!");
 		}
 
-		this->Layout[0] = (vk_image_layout*)malloc(sizeof(vk_image_layout));
+		this->Layout[0] = (VkImageLayout*)malloc(sizeof(VkImageLayout));
 		if (this->Layout[0] == NULL) {
 			throw log::message(log::ERROR, log::OUT_OF_HOST_MEMORY, "System Window Creation", log::GEODESUKA, "image", "Frame", "Insufficient Host Memory!");
 		}
 
-		this->MipExtent = (vk_extent_3d*)malloc(sizeof(vk_extent_3d));
+		this->MipExtent = (VkExtent3D*)malloc(sizeof(VkExtent3D));
 		if (this->MipExtent == NULL) {
 			throw log::message(log::ERROR, log::OUT_OF_HOST_MEMORY, "System Window Creation", log::GEODESUKA, "image", "Frame", "Insufficient Host Memory!");
 		}
@@ -2128,8 +2128,8 @@ namespace geodesuka::core::gcl {
 		this->CreateInfo.initialLayout							= VK_IMAGE_LAYOUT_UNDEFINED;
 		this->Handle											= aImageHandle;
 
-		vk_image_view_create_info ImageViewCreateInfo{};
-		vk_image_view ImageView = VK_NULL_HANDLE;
+		VkImageViewCreateInfo ImageViewCreateInfo{};
+		VkImageView ImageView = VK_NULL_HANDLE;
 
 		ImageViewCreateInfo.sType								= VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
 		ImageViewCreateInfo.pNext								= NULL;
@@ -2147,7 +2147,7 @@ namespace geodesuka::core::gcl {
 		ImageViewCreateInfo.subresourceRange.baseArrayLayer		= 0;
 		ImageViewCreateInfo.subresourceRange.layerCount			= 1;
 
-		vk_result Result = vkCreateImageView(this->Context->handle(), &ImageViewCreateInfo, NULL, &ImageView);
+		VkResult Result = vkCreateImageView(this->Context->handle(), &ImageViewCreateInfo, NULL, &ImageView);
 		if (Result == VK_SUCCESS) {
 			*this->Context << log::message(log::INFO, log::SUCCESS, "System Window", log::VULKAN, "image", "Frame", "Image View Creation Succesful");
 		}

@@ -12,7 +12,7 @@ namespace geodesuka::core::gcl {
 
 	using namespace util;
 
-	device::device(engine* aEngine, vk_physical_device aPhysicalDevice) {
+	device::device(engine* aEngine, VkPhysicalDevice aPhysicalDevice) {
 
 		this->ParentInstance = aEngine->handle();
 		this->Handle = aPhysicalDevice;
@@ -25,7 +25,7 @@ namespace geodesuka::core::gcl {
 		this->QueueFamilyCapability = NULL;
 		this->QueueFamilySupportCount = NULL;
 
-		vk_result Result = VK_SUCCESS;
+		VkResult Result = VK_SUCCESS;
 
 		// Gather all extensions.
 		Result = vkEnumerateDeviceExtensionProperties(this->Handle, NULL, &this->ExtensionCount, NULL);
@@ -38,7 +38,7 @@ namespace geodesuka::core::gcl {
 
 		// Allocate memory is extensions exist.
 		if (this->ExtensionCount > 0) {
-			this->Extension = (vk_extension_properties*)malloc(this->ExtensionCount * sizeof(vk_extension_properties));
+			this->Extension = (VkExtensionProperties*)malloc(this->ExtensionCount * sizeof(VkExtensionProperties));
 			if (this->Extension == NULL) return;
 		}
 		else {
@@ -47,7 +47,7 @@ namespace geodesuka::core::gcl {
 
 		// Allocate memory for queues.
 		if (this->QueueFamilyCount > 0) {
-			this->QueueFamilyProperty = (vk_queue_family_properties*)malloc(this->QueueFamilyCount * sizeof(vk_queue_family_properties));
+			this->QueueFamilyProperty = (VkQueueFamilyProperties*)malloc(this->QueueFamilyCount * sizeof(VkQueueFamilyProperties));
 			this->QueueFamilyCapability = (queue_family_capability*)malloc(this->QueueFamilyCount * sizeof(queue_family_capability));
 			this->QueueFamilySupportCount = (uint32_t*)malloc(this->QueueFamilyCount * sizeof(uint32_t));
 		}
@@ -82,7 +82,7 @@ namespace geodesuka::core::gcl {
 		glfwDefaultWindowHints();
 
 		// Since this code only relies on an instance, maybe query in device class?
-		vk_surface_khr lDummySurface = VK_NULL_HANDLE;
+		VkSurfaceKHR lDummySurface = VK_NULL_HANDLE;
 		Result = glfwCreateWindowSurface(aEngine->handle(), lDummyWindow, NULL, &lDummySurface);
 
 		// Check needed objects are properly allocated, otherwise abort.
@@ -129,7 +129,7 @@ namespace geodesuka::core::gcl {
 				this->QueueFamilySupportCount[i] += 1;
 			}
 
-			vk_bool_32 PresentSupport;
+			VkBool32 PresentSupport;
 			Result = vkGetPhysicalDeviceSurfaceSupportKHR(aPhysicalDevice, i, lDummySurface, &PresentSupport);
 			if (PresentSupport == VK_TRUE) {
 				this->QueueFamilyCapability[i].Support |= qfeo::PRESENT;
@@ -277,24 +277,24 @@ namespace geodesuka::core::gcl {
 		return isSupported;
 	}
 
-	vk_physical_device_properties device::get_properties() const {
-		vk_physical_device_properties temp{};
+	VkPhysicalDeviceProperties device::get_properties() const {
+		VkPhysicalDeviceProperties temp{};
 		if (this->Handle != VK_NULL_HANDLE) {
 			vkGetPhysicalDeviceProperties(this->Handle, &temp);
 		}
 		return temp;
 	}
 
-	vk_physical_device_features device::get_features() const {
-		vk_physical_device_features temp{};
+	VkPhysicalDeviceFeatures device::get_features() const {
+		VkPhysicalDeviceFeatures temp{};
 		if (this->Handle != VK_NULL_HANDLE) {
 			vkGetPhysicalDeviceFeatures(this->Handle, &temp);
 		}
 		return temp;
 	}
 
-	vk_physical_device_memory_properties device::get_memory_properties() const {
-		vk_physical_device_memory_properties temp;
+	VkPhysicalDeviceMemoryProperties device::get_memory_properties() const {
+		VkPhysicalDeviceMemoryProperties temp;
 		vkGetPhysicalDeviceMemoryProperties(this->Handle, &temp);
 		return temp;
 	}
@@ -347,33 +347,33 @@ namespace geodesuka::core::gcl {
 		return this->QueueFamilyCapability;
 	}
 
-	vk_surface_capabilities_khr device::get_surface_capabilities(vk_surface_khr aSurface) {
-		vk_surface_capabilities_khr SurfaceCapabilities;
+	VkSurfaceCapabilitiesKHR device::get_surface_capabilities(VkSurfaceKHR aSurface) {
+		VkSurfaceCapabilitiesKHR SurfaceCapabilities;
 		vkGetPhysicalDeviceSurfaceCapabilitiesKHR(this->Handle, aSurface, &SurfaceCapabilities);
 		return SurfaceCapabilities;
 	}
 
-	std::vector<vk_surface_format_khr> device::get_surface_format(vk_surface_khr aSurface) {
-		vk_result Result = VK_SUCCESS;
+	std::vector<VkSurfaceFormatKHR> device::get_surface_format(VkSurfaceKHR aSurface) {
+		VkResult Result = VK_SUCCESS;
 		uint32_t VectorCount = 0;
 		Result = vkGetPhysicalDeviceSurfaceFormatsKHR(this->Handle, aSurface, &VectorCount, NULL);
-		std::vector<vk_surface_format_khr> SurfaceFormat(VectorCount);
+		std::vector<VkSurfaceFormatKHR> SurfaceFormat(VectorCount);
 		Result = vkGetPhysicalDeviceSurfaceFormatsKHR(this->Handle, aSurface, &VectorCount, SurfaceFormat.data());
 		return SurfaceFormat;
 	}
 
-	std::vector<vk_present_mode_khr> device::get_surface_present_mode(vk_surface_khr aSurface) {
-		vk_result Result = VK_SUCCESS;
+	std::vector<VkPresentModeKHR> device::get_surface_present_mode(VkSurfaceKHR aSurface) {
+		VkResult Result = VK_SUCCESS;
 		uint32_t VectorCount = 0;
 		Result = vkGetPhysicalDeviceSurfacePresentModesKHR(this->Handle, aSurface, &VectorCount, NULL);
-		std::vector<vk_present_mode_khr> PresentMode(VectorCount);
+		std::vector<VkPresentModeKHR> PresentMode(VectorCount);
 		Result = vkGetPhysicalDeviceSurfacePresentModesKHR(this->Handle, aSurface, &VectorCount, PresentMode.data());
 		return PresentMode;
 	}
 
-	//vk_image_format_properties device::image_format_properties(vk_format format, vk_image_type type, vk_image_tiling tiling, vk_image_usage_flags usage, vk_image_create_flags flags) {
+	//VkImageFormatProperties device::image_format_properties(VkFormat format, VkImageType type, VkImageTiling tiling, VkImageUsageFlags usage, VkImageCreateFlags flags) {
 	//	vkGetPhysicalDeviceImageFormatProperties()
-	//	return vk_image_format_properties();
+	//	return VkImageFormatProperties();
 	//}
 
 	bool device::available(unsigned int aQFS) const {
@@ -397,11 +397,11 @@ namespace geodesuka::core::gcl {
 		return temp;
 	}
 
-	vk_instance device::inst() {
+	VkInstance device::inst() {
 		return this->ParentInstance;
 	}
 
-	vk_physical_device device::handle() {
+	VkPhysicalDevice device::handle() {
 		return this->Handle;
 	}
 

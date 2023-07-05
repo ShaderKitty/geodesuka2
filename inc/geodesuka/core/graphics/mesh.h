@@ -39,9 +39,9 @@ namespace geodesuka::core::graphics {
 
 		struct face {
 			// How the vertices are to be read.
-			vk_primitive_topology	Topology;
+			VkPrimitiveTopology	Topology;
 			size_t					IndexCount;
-			vk_index_type 			IndexType;
+			VkIndexType 			IndexType;
 			void*					IndexData;
 		};
 

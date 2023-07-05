@@ -625,7 +625,7 @@ namespace geodesuka::core::util {
 		}
 	}
 
-	const char* log::get_er_str(vk_result Res) {
+	const char* log::get_er_str(VkResult Res) {
 		const char* temp;
 		switch (Res) {
 		default:

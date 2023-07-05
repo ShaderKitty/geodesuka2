@@ -26,7 +26,7 @@ namespace geodesuka::core::gcl {
 	}
 
 	buffer::buffer(context* aContext, create_info aCreateInfo, int aVertexCount, variable aVertexLayout, void* aVertexData) {
-		vk_result Result = VK_SUCCESS;
+		VkResult Result = VK_SUCCESS;
 		size_t TotalSize = aVertexCount * aVertexLayout.size();
 		this->zero_out();
 
@@ -40,7 +40,7 @@ namespace geodesuka::core::gcl {
 	}
 
 	buffer::buffer(context* aContext, create_info aCreateInfo, size_t aBufferSize, void* aBufferData) {
-		vk_result Result = VK_SUCCESS;
+		VkResult Result = VK_SUCCESS;
 		this->zero_out();
 
 		// Allocate Device Memory.
@@ -53,7 +53,7 @@ namespace geodesuka::core::gcl {
 	}
 
 	buffer::buffer(context* aContext, int aMemoryType, int aBufferUsage, int aVertexCount, variable aVertexLayout, void* aVertexData) {
-		vk_result Result = VK_SUCCESS;
+		VkResult Result = VK_SUCCESS;
 		size_t TotalSize = aVertexCount * aVertexLayout.size();
 		this->zero_out();
 
@@ -67,7 +67,7 @@ namespace geodesuka::core::gcl {
 	}
 
 	buffer::buffer(context* aContext, int aMemoryType, int aBufferUsage, size_t aBufferSize, void* aBufferData) {
-		vk_result Result = VK_SUCCESS;
+		VkResult Result = VK_SUCCESS;
 		this->zero_out();
 
 		// Create memory for vertex buffer.
@@ -80,7 +80,7 @@ namespace geodesuka::core::gcl {
 	}
 
 	buffer::buffer(buffer& aInput) {
-		vk_result Result = VK_SUCCESS;
+		VkResult Result = VK_SUCCESS;
 
 		// Zero out new object.
 		this->zero_out();
@@ -95,8 +95,8 @@ namespace geodesuka::core::gcl {
 		}
 
 		if (Result == VK_SUCCESS) {
-			vk_fence Fence = VK_NULL_HANDLE;
-			vk_command_buffer CommandBuffer = VK_NULL_HANDLE;
+			VkFence Fence = VK_NULL_HANDLE;
+			VkCommandBuffer CommandBuffer = VK_NULL_HANDLE;
 
 			Fence = this->Context->create_fence();
 			CommandBuffer = (*this << aInput);
@@ -128,7 +128,7 @@ namespace geodesuka::core::gcl {
 	// TODO: Optimize for memory recycling.
 	buffer& buffer::operator=(buffer& aRhs) {
 		if (this == &aRhs) return *this;
-		vk_result Result = VK_SUCCESS;
+		VkResult Result = VK_SUCCESS;
 		this->clear_device_memory();
 
 		if (aRhs.Context != nullptr) {
@@ -141,8 +141,8 @@ namespace geodesuka::core::gcl {
 		}
 
 		if (Result == VK_SUCCESS) {
-			vk_fence Fence = this->Context->create_fence();
-			vk_command_buffer CommandBuffer = (*this << aRhs);
+			VkFence Fence = this->Context->create_fence();
+			VkCommandBuffer CommandBuffer = (*this << aRhs);
 
 			Result = this->Context->execute(device::TRANSFER, CommandBuffer, Fence);
 			Result = vkWaitForFences(this->Context->handle(), 1, &Fence, VK_TRUE, UINT64_MAX);
@@ -167,8 +167,8 @@ namespace geodesuka::core::gcl {
 		return *this;
 	}
 
-	vk_command_buffer buffer::operator<<(buffer& aRhs) {
-		vk_command_buffer CommandBuffer = VK_NULL_HANDLE;
+	VkCommandBuffer buffer::operator<<(buffer& aRhs) {
+		VkCommandBuffer CommandBuffer = VK_NULL_HANDLE;
 		// Both operands must share the same parent context, and have same memory size.
 		if ((this->Context != aRhs.Context) || ((size_t)this->CreateInfo.size != aRhs.CreateInfo.size)) return CommandBuffer;
 		// Left operand must have TRANSFER_DST flag enabled, and Right operand must have TRANSFER_SRC flag enabled.
@@ -178,9 +178,9 @@ namespace geodesuka::core::gcl {
 			((aRhs.CreateInfo.usage & buffer::usage::TRANSFER_SRC) != buffer::usage::TRANSFER_SRC)
 		) return CommandBuffer;
 
-		vk_result Result = VK_SUCCESS;
-		vk_command_buffer_begin_info BeginInfo{};
-		vk_buffer_copy Region{};
+		VkResult Result = VK_SUCCESS;
+		VkCommandBufferBeginInfo BeginInfo{};
+		VkBufferCopy Region{};
 
 		BeginInfo.sType						= VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
 		BeginInfo.pNext						= NULL;
@@ -198,12 +198,12 @@ namespace geodesuka::core::gcl {
 		return CommandBuffer;
 	}
 
-	vk_command_buffer buffer::operator>>(buffer& aRhs) {
+	VkCommandBuffer buffer::operator>>(buffer& aRhs) {
 		return (aRhs << *this);
 	}
 
-	vk_command_buffer buffer::operator<<(image& aRhs) {
-		vk_command_buffer CommandBuffer = VK_NULL_HANDLE;
+	VkCommandBuffer buffer::operator<<(image& aRhs) {
+		VkCommandBuffer CommandBuffer = VK_NULL_HANDLE;
 		// Must share the same parent context and have the same size.
 		if ((this->Context != aRhs.Context) || ((size_t)this->CreateInfo.size != aRhs.get_memory_size())) return CommandBuffer;
 		// buffer must have enabled, DST flag. texture must have SRC flag.
@@ -213,15 +213,15 @@ namespace geodesuka::core::gcl {
 			((aRhs.CreateInfo.usage & image::usage::TRANSFER_SRC) != image::usage::TRANSFER_SRC)
 		) return CommandBuffer;
 
-		vk_result Result = VK_SUCCESS;
+		VkResult Result = VK_SUCCESS;
 
-		vk_command_buffer_begin_info BeginInfo{};
+		VkCommandBufferBeginInfo BeginInfo{};
 		BeginInfo.sType							= VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
 		BeginInfo.pNext							= NULL;
 		BeginInfo.flags							= 0;
 		BeginInfo.pInheritanceInfo				= NULL;
 
-		vk_buffer_image_copy Region{};
+		VkBufferImageCopy Region{};
 		Region.bufferOffset						= 0;
 		Region.bufferRowLength					= 0;
 		Region.bufferImageHeight				= 0;
@@ -253,26 +253,26 @@ namespace geodesuka::core::gcl {
 		return CommandBuffer;
 	}
 
-	vk_command_buffer buffer::operator>>(image& aRhs) {
+	VkCommandBuffer buffer::operator>>(image& aRhs) {
 		return (aRhs >> *this);
 	}
 
-	vk_result buffer::write(size_t aBufferSize, void* aBufferData) {
+	VkResult buffer::write(size_t aBufferSize, void* aBufferData) {
 		return this->write(0, 0, aBufferSize, aBufferSize, aBufferData);
 	}
 
-	vk_result buffer::write(size_t aSrcOffset, size_t aDstOffset, size_t aRegionSize, size_t aBufferSize, void* aBufferData) {
-		vk_buffer_copy Region{};
+	VkResult buffer::write(size_t aSrcOffset, size_t aDstOffset, size_t aRegionSize, size_t aBufferSize, void* aBufferData) {
+		VkBufferCopy Region{};
 		Region.srcOffset	= aSrcOffset;
 		Region.dstOffset	= aDstOffset;
 		Region.size			= aRegionSize;
 		return this->write(1, &Region, aBufferSize, aBufferData);
 	}
 
-	vk_result buffer::write(uint32_t aRegionCount, vk_buffer_copy* aRegionList, size_t aBufferSize, void* aBufferData) {
+	VkResult buffer::write(uint32_t aRegionCount, VkBufferCopy* aRegionList, size_t aBufferSize, void* aBufferData) {
 		if ((this->Context == nullptr) || (aRegionCount == 0) || (aRegionList == NULL) || (aBufferData == NULL)) return VK_ERROR_FORMAT_NOT_SUPPORTED;
 
-		vk_result Result = VK_SUCCESS;
+		VkResult Result = VK_SUCCESS;
 		if ((this->Context->parent()->get_memory_type(this->AllocateInfo.memoryTypeIndex) & device::memory::HOST_VISIBLE) == device::memory::HOST_VISIBLE) {
 			// Host Visible, write to directly
 			void* nptr = NULL;
@@ -293,10 +293,10 @@ namespace geodesuka::core::gcl {
 				aBufferData
 			);
 
-			vk_fence Fence = this->Context->create_fence();
-			vk_command_buffer CommandBuffer = this->Context->create_command_buffer(device::TRANSFER, VK_COMMAND_BUFFER_LEVEL_PRIMARY);
+			VkFence Fence = this->Context->create_fence();
+			VkCommandBuffer CommandBuffer = this->Context->create_command_buffer(device::TRANSFER, VK_COMMAND_BUFFER_LEVEL_PRIMARY);
 
-			vk_command_buffer_begin_info BeginInfo{};	
+			VkCommandBufferBeginInfo BeginInfo{};	
 			BeginInfo.sType					= VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
 			BeginInfo.pNext					= NULL;
 			BeginInfo.flags					= 0;
@@ -315,12 +315,12 @@ namespace geodesuka::core::gcl {
 		return Result;
 	}
 
-	vk_result buffer::read(size_t aBufferSize, void* aBufferData) {
+	VkResult buffer::read(size_t aBufferSize, void* aBufferData) {
 		return this->read(0, 0, aBufferSize, aBufferSize, aBufferData);
 	}
 
-	vk_result buffer::read(size_t aSrcOffset, size_t aDstOffset, size_t aRegionSize, size_t aBufferSize, void* aBufferData) {
-		vk_buffer_copy Region{};
+	VkResult buffer::read(size_t aSrcOffset, size_t aDstOffset, size_t aRegionSize, size_t aBufferSize, void* aBufferData) {
+		VkBufferCopy Region{};
 		Region.srcOffset	= aSrcOffset;
 		Region.dstOffset	= aDstOffset;
 		Region.size			= aRegionSize;
@@ -328,10 +328,10 @@ namespace geodesuka::core::gcl {
 	}
 
 	// In the case of the read operation, the 
-	vk_result buffer::read(uint32_t aRegionCount, vk_buffer_copy* aRegionList, size_t aBufferSize, void* aBufferData) {
+	VkResult buffer::read(uint32_t aRegionCount, VkBufferCopy* aRegionList, size_t aBufferSize, void* aBufferData) {
 		if ((this->Context == nullptr) || (aRegionCount == 0) || (aRegionList == NULL) || (aBufferData == NULL)) return VK_ERROR_FORMAT_NOT_SUPPORTED;
 		
-		vk_result Result = VK_SUCCESS;
+		VkResult Result = VK_SUCCESS;
 		if ((this->Context->parent()->get_memory_type(this->AllocateInfo.memoryTypeIndex) & device::memory::HOST_VISIBLE) == device::memory::HOST_VISIBLE) {
 			// Visible, direct write through API
 			void* nptr = NULL;
@@ -352,10 +352,10 @@ namespace geodesuka::core::gcl {
 				NULL
 			);
 
-			vk_fence Fence = this->Context->create_fence();
-			vk_command_buffer CommandBuffer = this->Context->create_command_buffer(device::TRANSFER, VK_COMMAND_BUFFER_LEVEL_PRIMARY);
+			VkFence Fence = this->Context->create_fence();
+			VkCommandBuffer CommandBuffer = this->Context->create_command_buffer(device::TRANSFER, VK_COMMAND_BUFFER_LEVEL_PRIMARY);
 
-			vk_command_buffer_begin_info BeginInfo{};
+			VkCommandBufferBeginInfo BeginInfo{};
 			BeginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
 			BeginInfo.pNext = NULL;
 			BeginInfo.flags = 0;
@@ -383,12 +383,12 @@ namespace geodesuka::core::gcl {
 		return this->CreateInfo.size;
 	}
 
-	vk_buffer& buffer::handle() {
+	VkBuffer& buffer::handle() {
 		return this->Handle;
 	}
 
-	vk_result buffer::create_device_memory(context* aContext, create_info aCreateInfo, size_t aMemorySize) {
-		vk_result Result = VK_SUCCESS;
+	VkResult buffer::create_device_memory(context* aContext, create_info aCreateInfo, size_t aMemorySize) {
+		VkResult Result = VK_SUCCESS;
 
 		// Return if an improper context is provided.
 		if (aContext == nullptr) VK_ERROR_INITIALIZATION_FAILED;
@@ -423,22 +423,22 @@ namespace geodesuka::core::gcl {
 		return Result;
 	}
 
-	vk_buffer_create_info buffer::make_buffer_create_info(size_t aMemorySize, int aBufferUsage) {
-		vk_buffer_create_info NewBufferCreateInfo{};
+	VkBufferCreateInfo buffer::make_buffer_create_info(size_t aMemorySize, int aBufferUsage) {
+		VkBufferCreateInfo NewBufferCreateInfo{};
 		NewBufferCreateInfo.sType						= VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
 		NewBufferCreateInfo.pNext						= NULL;
 		NewBufferCreateInfo.flags						= 0; // Ignore.
 		NewBufferCreateInfo.size						= aMemorySize;
-		NewBufferCreateInfo.usage						= (vk_buffer_usage_flags)(aBufferUsage | buffer::usage::TRANSFER_SRC | buffer::usage::TRANSFER_DST); // Enable Transfer
+		NewBufferCreateInfo.usage						= (VkBufferUsageFlags)(aBufferUsage | buffer::usage::TRANSFER_SRC | buffer::usage::TRANSFER_DST); // Enable Transfer
 		NewBufferCreateInfo.sharingMode					= VK_SHARING_MODE_EXCLUSIVE;
 		NewBufferCreateInfo.queueFamilyIndexCount		= 0;
 		NewBufferCreateInfo.pQueueFamilyIndices			= NULL;
 		return NewBufferCreateInfo;
 	}
 
-	vk_memory_allocate_info buffer::make_buffer_allocate_info(context* aContext, device* aDevice, int aMemoryType) {
-		vk_memory_allocate_info NewAllocateInfo{};
-		vk_memory_requirements MemoryRequirement = Context->get_buffer_memory_requirements(this->Handle);
+	VkMemoryAllocateInfo buffer::make_buffer_allocate_info(context* aContext, device* aDevice, int aMemoryType) {
+		VkMemoryAllocateInfo NewAllocateInfo{};
+		VkMemoryRequirements MemoryRequirement = Context->get_buffer_memory_requirements(this->Handle);
 		NewAllocateInfo.sType			= VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
 		NewAllocateInfo.pNext			= NULL;
 		NewAllocateInfo.allocationSize	= MemoryRequirement.size;

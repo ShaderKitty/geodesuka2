@@ -68,13 +68,13 @@ namespace geodesuka::core {
 		gcl::command_batch update_owned_objects(double aDeltaTime);
 
 		// Base class method does nothing, but can be overriden to update stage resources.
-		virtual vk_submit_info update(double aDeltaTime);
+		virtual VkSubmitInfo update(double aDeltaTime);
 
 		// Get Compute Commands for each owned object.
 		gcl::command_batch compute_owned_objects();
 
 		// Base class does nothing
-		virtual vk_submit_info compute();
+		virtual VkSubmitInfo compute();
 
 		// -------------------- render loop -------------------- //
 

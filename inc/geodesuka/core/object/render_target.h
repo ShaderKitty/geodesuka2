@@ -45,8 +45,8 @@ namespace geodesuka::core::object {
 		struct frame {
 			std::vector<gcl::command_list>				DrawCommand;
 			std::vector<gcl::image>						Image;
-			std::vector<vk_image_view>					Attachment;
-			vk_framebuffer								Buffer;
+			std::vector<VkImageView>					Attachment;
+			VkFramebuffer								Buffer;
 			frame(int aAttachmentCount);
 		};
 
@@ -58,16 +58,16 @@ namespace geodesuka::core::object {
 		uint32_t									FrameReadIndex;
 		uint32_t									FrameDrawIndex;
 		std::vector<frame>							Frame;
-		std::vector<vk_attachment_description>		AttachmentDescription;
+		std::vector<VkAttachmentDescription>		AttachmentDescription;
 
 		// ----- Render Target Renderer ----- //
 		// Render Target Defined Render Operations. (As opposed to object defined)
 
 		// Default Renderer Info (Filled out by render_target implementations.)
-		vk_viewport									DefaultViewport;
-		vk_rect_2d 									DefaultScissor;
-		vk_rect_2d 									RenderArea;
-		vk_render_pass 								RenderPass;
+		VkViewport									DefaultViewport;
+		VkRect2D 									DefaultScissor;
+		VkRect2D 									RenderArea;
+		VkRenderPass 								RenderPass;
 		std::vector<gcl::pipeline> 					Pipeline;
 
 		// ----- Render Target Canvas Variables ----- ///
@@ -104,7 +104,7 @@ namespace geodesuka::core::object {
 		// Will acquire next frame index, if semephore is not VK_NULL_HANDLE, 
 		// use as wait semaphore for render operations. This really only applies
 		// to a system_window.
-		virtual vk_result next_frame();
+		virtual VkResult next_frame();
 
 		// Propose a collection of objects (Most likely from a stage), to 
 		// draw those objects to the render target. The objects will
@@ -115,13 +115,13 @@ namespace geodesuka::core::object {
 		// This will present 
 		// . Must use a semaphore to make presentation
 		// dependant on rendering operations to complete.
-		virtual vk_present_info_khr present_frame();
+		virtual VkPresentInfoKHR present_frame();
 
 		// Calculates total descriptor set bindings for all pipelines in renderer.
 		uint32_t descriptor_set_count() const;
 
 		// Calculates total descriptor pool sizes for all pipelines in renderer.
-		std::vector<vk_descriptor_pool_size> descriptor_pool_sizes() const;
+		std::vector<VkDescriptorPoolSize> descriptor_pool_sizes() const;
 
 	protected:
 
@@ -130,7 +130,7 @@ namespace geodesuka::core::object {
 
 		render_target(gcl::context* aContext, stage_t* aStage, const char* aName, glm::uvec3 aFrameResolution, double aFrameRate, uint32_t aFrameCount, uint32_t aAttachmentCount);
 
-		vk_result create_framebuffers();
+		VkResult create_framebuffers();
 		
 	private:
 

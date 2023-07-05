@@ -71,7 +71,7 @@ namespace geodesuka::core::object {
 	window::window(gcl::context* aContext, stage_t* aStage, const char* aName, glm::uvec3 aFrameResolution, double aFrameRate, uint32_t aFrameCount, uint32_t aAttachmentCount) :
 		render_target(aContext, aStage, aName, aFrameResolution, aFrameRate, aFrameCount, aAttachmentCount)
 	{
-		vk_result Result = VK_SUCCESS;
+		VkResult Result = VK_SUCCESS;
 		this->Title = aName;
 		this->Size = glm::vec2(0.0f, 0.0f);
 		this->Setting = {};

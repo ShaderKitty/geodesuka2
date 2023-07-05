@@ -180,7 +180,7 @@ namespace geodesuka::core::gcl {
 
 	shader::shader(context* aContext, const shader* aShaderSource) {
 		bool Failure = false;
-		vk_result Result = VK_SUCCESS;
+		VkResult Result = VK_SUCCESS;
 		this->zero_out();
 
 		// Copy over shader source code.
@@ -214,7 +214,7 @@ namespace geodesuka::core::gcl {
 
 	shader::shader(context* aDeviceContext, util::string& aFilePath) : io::file(aFilePath) {
 		bool Failure = false;
-		vk_result Result = VK_SUCCESS;
+		VkResult Result = VK_SUCCESS;
 
 		// Load Source File
 		this->read(aFilePath.ptr());
@@ -231,7 +231,7 @@ namespace geodesuka::core::gcl {
 
 	shader::shader(context* aDeviceContext, const char* aFilePath) : io::file(aFilePath) {
 		bool Failure = false;
-		vk_result Result = VK_SUCCESS;
+		VkResult Result = VK_SUCCESS;
 
 		// Load Source File
 		Failure = this->read(aFilePath);
@@ -248,7 +248,7 @@ namespace geodesuka::core::gcl {
 
 	shader::shader(context* aDeviceContext, stage aStage, util::string& aSource) {
 		bool Failure = false;
-		vk_result Result = VK_SUCCESS;
+		VkResult Result = VK_SUCCESS;
 
 		this->zero_out();
 
@@ -261,7 +261,7 @@ namespace geodesuka::core::gcl {
 
 	shader::shader(context* aDeviceContext, stage aStage, const char* aSource) {
 		bool Failure = false;
-		vk_result Result = VK_SUCCESS;
+		VkResult Result = VK_SUCCESS;
 
 		this->zero_out();
 
@@ -280,16 +280,16 @@ namespace geodesuka::core::gcl {
 		}
 	}
 
-	vk_shader_stage_flag_bits shader::get_stage() {
-		return (vk_shader_stage_flag_bits)this->Stage;
+	VkShaderStageFlagBits shader::get_stage() {
+		return (VkShaderStageFlagBits)this->Stage;
 	}
 
-	vk_shader_module shader::handle() {
+	VkShaderModule shader::handle() {
 		return this->Handle;
 	}
 
-	vk_pipeline_shader_stage_create_info shader::stageci() {
-		vk_pipeline_shader_stage_create_info Temp;
+	VkPipelineShaderStageCreateInfo shader::stageci() {
+		VkPipelineShaderStageCreateInfo Temp;
 		Temp.sType					= VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
 		Temp.pNext					= NULL;
 		Temp.flags					= 0;
@@ -428,8 +428,8 @@ namespace geodesuka::core::gcl {
 		return false;
 	}
 
-	vk_result shader::create_module(context* aContext, std::vector<unsigned int>& aSPIRV) {
-		vk_result Result = VK_ERROR_INITIALIZATION_FAILED;
+	VkResult shader::create_module(context* aContext, std::vector<unsigned int>& aSPIRV) {
+		VkResult Result = VK_ERROR_INITIALIZATION_FAILED;
 		if (aContext != nullptr) {
 			this->Context				= aContext;
 			this->CreateInfo.sType		= VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;

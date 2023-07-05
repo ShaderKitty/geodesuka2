@@ -34,13 +34,13 @@ namespace geodesuka::core::gcl {
 		~command_pool();
 
 		// Creates a single command buffer from the chosen family support option.
-		vk_command_buffer allocate(vk_command_buffer_level aLevel);
+		VkCommandBuffer allocate(VkCommandBufferLevel aLevel);
 
 		// Creates a series of command buffers from selected family support option.
-		command_list allocate(vk_command_buffer_level aLevel, uint32_t aCommandBufferCount);
+		command_list allocate(VkCommandBufferLevel aLevel, uint32_t aCommandBufferCount);
 
 		// Destroys a single command buffer.
-		bool release(vk_command_buffer aCommandBuffer);
+		bool release(VkCommandBuffer aCommandBuffer);
 
 		// Destroys a command list.
 		bool release(command_list& aCommandList);
@@ -48,8 +48,8 @@ namespace geodesuka::core::gcl {
 	private:
 
 		context* Context;
-		vk_command_pool_create_info CreateInfo{};
-		vk_command_pool Handle;
+		VkCommandPoolCreateInfo CreateInfo{};
+		VkCommandPool Handle;
 		command_list CommandList;
 
 	};

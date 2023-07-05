@@ -46,21 +46,21 @@ namespace geodesuka::core::gcl {
 			friend class pipeline;
 
 			// Vulkan Objects
-			vk_pipeline_bind_point								BindPoint;
-			vk_pipeline_vertex_input_state_create_info			Input;
-			vk_pipeline_input_assembly_state_create_info		InputAssembly;
-			vk_pipeline_tessellation_state_create_info			Tesselation;
-			vk_pipeline_viewport_state_create_info				Viewport;
-			vk_pipeline_rasterization_state_create_info			Rasterizer;
-			vk_pipeline_multisample_state_create_info			Multisample;
-			vk_pipeline_depth_stencil_state_create_info			DepthStencil;
-			vk_pipeline_color_blend_state_create_info			ColorBlend;
-			vk_pipeline_dynamic_state_create_info				DynamicState;
-			vk_graphics_pipeline_create_info					CreateInfo;
+			VkPipelineBindPoint									BindPoint;
+			VkPipelineVertexInputStateCreateInfo				Input;
+			VkPipelineInputAssemblyStateCreateInfo				InputAssembly;
+			VkPipelineTessellationStateCreateInfo				Tesselation;
+			VkPipelineViewportStateCreateInfo					Viewport;
+			VkPipelineRasterizationStateCreateInfo				Rasterizer;
+			VkPipelineMultisampleStateCreateInfo				Multisample;
+			VkPipelineDepthStencilStateCreateInfo				DepthStencil;
+			VkPipelineColorBlendStateCreateInfo					ColorBlend;
+			VkPipelineDynamicStateCreateInfo					DynamicState;
+			VkGraphicsPipelineCreateInfo						CreateInfo;
 
 			// Uniform
 			uint32_t 											DescriptorSetBindingCount;
-			std::vector<vk_descriptor_set_layout_binding> 		DescriptorSetBinding[GCL_DESCRIPTOR_SET_COUNT];
+			std::vector<VkDescriptorSetLayoutBinding> 			DescriptorSetBinding[GCL_DESCRIPTOR_SET_COUNT];
 			int													UniformBufferCount;
 			variable											UniformBuffer[GCL_MAX_DESCRIPTOR_SET_UNIFORM_BUFFERS];
 			int													SamplerCount;
@@ -69,14 +69,14 @@ namespace geodesuka::core::gcl {
 			variable											StorageBuffer[GCL_MAX_DESCRIPTOR_SET_STORAGE_BUFFERS];
 			// Vertex Attribute Input
 			//uint32_t											VertexBufferBindingCount;
-			vk_vertex_input_binding_description					VertexBufferBindingDescription[GCL_VERTEX_BUFFER_BINDING_COUNT];
+			VkVertexInputBindingDescription						VertexBufferBindingDescription[GCL_VERTEX_BUFFER_BINDING_COUNT];
 			//uint32_t											VertexAttributeCount;
-			vk_vertex_input_attribute_description				VertexAttributeDescription[GCL_VERTEX_ATTRIBUTE_COUNT];
+			VkVertexInputAttributeDescription					VertexAttributeDescription[GCL_VERTEX_ATTRIBUTE_COUNT];
 			variable											VertexAttributeVariable[GCL_VERTEX_ATTRIBUTE_COUNT];
 			// Frame Attachment Output
 			uint32_t											AttachmentCount;
-			vk_attachment_description							AttachmentDescription[GCL_COLOR_ATTACHMENT_COUNT];
-			vk_attachment_reference								AttachmentReference[GCL_COLOR_ATTACHMENT_COUNT];
+			VkAttachmentDescription								AttachmentDescription[GCL_COLOR_ATTACHMENT_COUNT];
+			VkAttachmentReference								AttachmentReference[GCL_COLOR_ATTACHMENT_COUNT];
 			variable											AttachmentVariable[GCL_COLOR_ATTACHMENT_COUNT];
 
 			rasterizer();
@@ -88,7 +88,7 @@ namespace geodesuka::core::gcl {
 
 			void bind(uint32_t aBindingReference, size_t aVertexStride, uint32_t aLocation, size_t aVertexOffset);
 
-			std::vector<vk_descriptor_pool_size> descriptor_pool_size();
+			std::vector<VkDescriptorPoolSize> descriptor_pool_size();
 
 			void clear();
 
@@ -113,8 +113,8 @@ namespace geodesuka::core::gcl {
 		// Pre creation options for a raytracer pipeline.
 		struct raytracer {
 
-			vk_pipeline_bind_point						BindPoint = VK_PIPELINE_BIND_POINT_RAY_TRACING_KHR;
-			vk_ray_tracing_pipeline_create_info_khr		CreateInfo{};
+			VkPipelineBindPoint						BindPoint = VK_PIPELINE_BIND_POINT_RAY_TRACING_KHR;
+			VkRayTracingPipelineCreateInfoKHR		CreateInfo{};
 
 			raytracer();
 			//raytracer(uint32_t aShaderCount, shader** aShaderList);
@@ -125,27 +125,36 @@ namespace geodesuka::core::gcl {
 		// Requires on a single compute shader.
 		struct compute {
 
-			vk_pipeline_bind_point						BindPoint = VK_PIPELINE_BIND_POINT_COMPUTE;
-			vk_compute_pipeline_create_info				CreateInfo{};
+			glm::uvec3 								GroupCount; // Number of Groups
+			glm::uvec3 								GroupSize; //  Number of Items
+
+			VkPipelineBindPoint						BindPoint = VK_PIPELINE_BIND_POINT_COMPUTE;
+			VkComputePipelineCreateInfo				CreateInfo{};
 
 			compute();
 			//compute(shader* aComputeShader);
 
+		private:
+
+			shader*									Shader;
+			glslang::TProgram*						ProgramHandle;
+			std::vector<unsigned int>				ByteCode;
+
 		};
 
-		vk_pipeline_bind_point 			BindPoint;
-		vk_pipeline_layout 				Layout;
-		vk_pipeline_cache 				Cache;
-		vk_pipeline 					Handle;
+		VkPipelineBindPoint 		BindPoint;
+		VkPipelineLayout 			Layout;
+		VkPipelineCache 			Cache;
+		VkPipeline 					Handle;
 
 		// Used to construct PipelineLayout and Allocate DescriptorSets.
-		uint32_t 						DescriptorSetLayoutCount;
-		vk_descriptor_set_layout 		DescriptorSetLayout[GCL_DESCRIPTOR_SET_COUNT];
+		uint32_t 					DescriptorSetLayoutCount;
+		VkDescriptorSetLayout 		DescriptorSetLayout[GCL_DESCRIPTOR_SET_COUNT];
 
 		pipeline();
 
 		// Creates rasterizer pipeline.
-		pipeline(context* aContext, rasterizer& aRasterizer, vk_render_pass aRenderPass, uint32_t aSubpassIndex);
+		pipeline(context* aContext, rasterizer& aRasterizer, VkRenderPass aRenderPass, uint32_t aSubpassIndex);
 
 		// Creates raytracer pipeline.
 		pipeline(context* aContext, raytracer& aRaytracer);
@@ -164,7 +173,7 @@ namespace geodesuka::core::gcl {
 		pipeline& operator=(pipeline&& aRhs) noexcept;
 
 		uint32_t descriptor_set_count() const;
-		std::vector<vk_descriptor_pool_size> descriptor_pool_size() const;		
+		std::vector<VkDescriptorPoolSize> descriptor_pool_size() const;		
 
 	private:
 
@@ -175,13 +184,13 @@ namespace geodesuka::core::gcl {
 
 		// Pipline Construction.
 		context*											Context;
-		std::vector<vk_pipeline_shader_stage_create_info> 	Stage;
+		std::vector<VkPipelineShaderStageCreateInfo> 		Stage;
 
-		vk_graphics_pipeline_create_info					RasterizerCreateInfo;
-		vk_ray_tracing_pipeline_create_info_khr				RaytracerCreateInfo;
-		vk_compute_pipeline_create_info						ComputeCreateInfo;
+		VkGraphicsPipelineCreateInfo						RasterizerCreateInfo;
+		VkRayTracingPipelineCreateInfoKHR					RaytracerCreateInfo;
+		VkComputePipelineCreateInfo							ComputeCreateInfo;
 
-		vk_result create(context* aContext, rasterizer& aRasterizer, vk_render_pass aRenderPass, uint32_t aSubpassIndex);
+		VkResult create(context* aContext, rasterizer& aRasterizer, VkRenderPass aRenderPass, uint32_t aSubpassIndex);
 
 		void clear();
 

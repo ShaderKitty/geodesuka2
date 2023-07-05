@@ -133,7 +133,7 @@ namespace geodesuka {
 
 	}
 
-	vk_instance engine::handle() {
+	VkInstance engine::handle() {
 		return Handle;
 	}
 
@@ -290,7 +290,7 @@ namespace geodesuka {
 		CreateInfo.enabledExtensionCount	= (uint32_t)Extension.size();
 		CreateInfo.ppEnabledExtensionNames	= Extension.data();
 
-		vk_result Result = vkCreateInstance(&CreateInfo, NULL, &Handle);
+		VkResult Result = vkCreateInstance(&CreateInfo, NULL, &Handle);
 		if (Result == VK_SUCCESS) {
 			this->Log << log::message(log::INFO, log::SUCCESS, "Engine Startup", log::VULKAN, "engine", this->Name.Handle, "Vulkan (Graphics & Computation API): Initialization Success!");
 			return true;
@@ -362,10 +362,10 @@ namespace geodesuka {
 		// Use Vulkan API to query for all Graphics & Computation capable devices.
 		{
 			uint32_t PhysicalDeviceCount = 0;
-			vk_result Result = vkEnumeratePhysicalDevices(this->Handle, &PhysicalDeviceCount, NULL);
+			VkResult Result = vkEnumeratePhysicalDevices(this->Handle, &PhysicalDeviceCount, NULL);
 			if (PhysicalDeviceCount > 0) {
 				std::stringstream MainStream;
-				std::vector<vk_physical_device> PhysicalDevice(PhysicalDeviceCount);
+				std::vector<VkPhysicalDevice> PhysicalDevice(PhysicalDeviceCount);
 
 				MainStream << "Physical Device Count: " << PhysicalDeviceCount;
 				this->Log << log::message(log::INFO, log::SUCCESS, "Engine Startup", log::GEODESUKA, "device", "", MainStream.str().c_str());
@@ -437,7 +437,7 @@ namespace geodesuka {
 	// with the app thread.
 	// --------------- Engine Main Thread --------------- //
 	void engine::update(core::app* aApp) {
-		vk_result Result = VK_SUCCESS;
+		VkResult Result = VK_SUCCESS;
 
 		this->MainThreadID = std::this_thread::get_id();
 		while (ThreadController.cycle(aApp->TimeStep.load())) {
@@ -465,7 +465,7 @@ namespace geodesuka {
 	// calls of respective render targets stored in memory.
 	// --------------- Render Thread --------------- //
 	void engine::render() {
-		vk_result Result = VK_SUCCESS;
+		VkResult Result = VK_SUCCESS;
 
 		this->Log << log::message("engine", log::INFO, log::SUCCESS, "Render Thread");
 
@@ -530,8 +530,8 @@ namespace geodesuka {
 		}
 	}
 
-	vk_result engine::update_device_resources() {
-		vk_result Result = VK_SUCCESS;
+	VkResult engine::update_device_resources() {
+		VkResult Result = VK_SUCCESS;
 		for (int i = 0; i < Context.count(); i++) {
 			// Go to next context if not ready.
 			if (!Context[i]->EnableProcessing.load()) continue;
@@ -594,9 +594,9 @@ namespace geodesuka {
 		}
 	}
 
-	vk_result engine::submit_render_operations() {
+	VkResult engine::submit_render_operations() {
 		// Per Context/GPU works is submitted in this section.
-		vk_result Result = VK_SUCCESS;
+		VkResult Result = VK_SUCCESS;
 		for (int i = 0; i < Context.count(); i++) {
 			// Go to next context if not ready.
 			if (!Context[i]->EnableProcessing.load()) continue;

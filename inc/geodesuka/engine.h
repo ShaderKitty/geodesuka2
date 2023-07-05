@@ -115,7 +115,7 @@ namespace geodesuka {
 		core::io::file* open(const char* aFilePath);
 		void close(core::io::file* aFile);
 
-		vk_instance handle();
+		VkInstance handle();
 		core::version get_version();
 		int get_date();
 
@@ -136,9 +136,9 @@ namespace geodesuka {
 		// vk::ApplicationInfo								AppInfo;
 		// vk::InstanceCreateInfo							CreateInfo;
 		// vk::Instance									Handle;
-		vk_application_info								AppInfo{};
-		vk_instance_create_info							CreateInfo{};
-		vk_instance										Handle;
+		VkApplicationInfo								AppInfo{};
+		VkInstanceCreateInfo							CreateInfo{};
+		VkInstance										Handle;
 
 		static bool 									ThirdPartyLibrariesInitialized;
 		static int 										EngineInstanceCount;
@@ -168,9 +168,9 @@ namespace geodesuka {
 		void terminal();					// Thread handles terminal input to the engine.
 
 		void update_host_resources(double aDeltaTime);
-		vk_result update_device_resources();
+		VkResult update_device_resources();
 		void gather_render_operations();
-		vk_result submit_render_operations();
+		VkResult submit_render_operations();
 
 	};
 

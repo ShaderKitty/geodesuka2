@@ -52,7 +52,7 @@ namespace geodesuka::core::object {
 	}
 
 	// Does a simple iteration to the next available frame.
-	vk_result render_target::next_frame() {
+	VkResult render_target::next_frame() {
 		this->FrameReadIndex = this->FrameDrawIndex;
 		this->FrameDrawIndex = ((this->FrameDrawIndex == (this->Frame.size() - 1)) ? 0 : (this->FrameDrawIndex + 1));
 		return VK_SUCCESS;
@@ -67,8 +67,8 @@ namespace geodesuka::core::object {
 	}
 
 	// Is left empty, because it is not used for anything besides system_window.
-	vk_present_info_khr render_target::present_frame() {
-		vk_present_info_khr PresentInfo{};
+	VkPresentInfoKHR render_target::present_frame() {
+		VkPresentInfoKHR PresentInfo{};
 		PresentInfo.sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;
 		PresentInfo.pNext = NULL;
 		PresentInfo.waitSemaphoreCount = 0;
@@ -88,10 +88,10 @@ namespace geodesuka::core::object {
 		return DescriptorSetCount;
 	}
 
-	std::vector<vk_descriptor_pool_size> render_target::descriptor_pool_sizes() const {
-		std::vector<vk_descriptor_pool_size> DescriptorPoolSize;
+	std::vector<VkDescriptorPoolSize> render_target::descriptor_pool_sizes() const {
+		std::vector<VkDescriptorPoolSize> DescriptorPoolSize;
 		for (size_t i = 0; i < this->Pipeline.size(); i++) {
-			std::vector<vk_descriptor_pool_size> PoolSize = this->Pipeline[i].descriptor_pool_size();
+			std::vector<VkDescriptorPoolSize> PoolSize = this->Pipeline[i].descriptor_pool_size();
 			for (size_t j = 0; j < PoolSize.size(); j++) {
 				// Check if PoolSize[j] exits in
 				bool AlreadyExistsInSet = false;
@@ -109,7 +109,7 @@ namespace geodesuka::core::object {
 				}
 				else {
 					// Does not exist in set, add new type.
-					vk_descriptor_pool_size NewPoolSize;
+					VkDescriptorPoolSize NewPoolSize;
 					NewPoolSize.descriptorCount = PoolSize[j].descriptorCount;
 					NewPoolSize.type = PoolSize[j].type;
 					DescriptorPoolSize.push_back(NewPoolSize);
@@ -135,8 +135,8 @@ namespace geodesuka::core::object {
 		this->RenderPass 						= VK_NULL_HANDLE;
 
 		// Viewport
-		vk_viewport	DefaultViewport;
-		vk_rect_2d DefaultScissor;
+		VkViewport	DefaultViewport;
+		VkRect2D DefaultScissor;
 
 		this->DefaultViewport.x						= 0.0f;
 		this->DefaultViewport.y						= 0.0f;
@@ -154,10 +154,10 @@ namespace geodesuka::core::object {
 		this->RenderArea.extent.height				= this->FrameResolution.y;
 	}
 
-	vk_result render_target::create_framebuffers() {
-		vk_result Result = VK_SUCCESS;
+	VkResult render_target::create_framebuffers() {
+		VkResult Result = VK_SUCCESS;
 		for (int i = 0; i < this->Frame.size(); i++) {
-			vk_framebuffer_create_info FramebufferCreateInfo{};
+			VkFramebufferCreateInfo FramebufferCreateInfo{};
 			FramebufferCreateInfo.sType				= VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;
 			FramebufferCreateInfo.pNext				= NULL;
 			FramebufferCreateInfo.flags				= 0;

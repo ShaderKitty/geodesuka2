@@ -44,15 +44,15 @@ namespace geodesuka::core {
 	}
 
 	object_t::default_renderer::default_renderer(gcl::context* aContext, object::camera3d* aCamera3D, object_t* aObject) {
-		vk_result Result = VK_SUCCESS;
+		VkResult Result = VK_SUCCESS;
 
 		this->Context 		= aContext;
 
 		this->RenderTarget 	= aCamera3D;
 
 		// The number of descriptor sets needed must be determined by the render target.
-		std::vector<vk_descriptor_pool_size> DescriptorPoolSize = aCamera3D->descriptor_pool_sizes();
-		vk_descriptor_pool_create_info DescriptorPoolCreateInfo{};
+		std::vector<VkDescriptorPoolSize> DescriptorPoolSize = aCamera3D->descriptor_pool_sizes();
+		VkDescriptorPoolCreateInfo DescriptorPoolCreateInfo{};
 		DescriptorPoolCreateInfo.sType				= VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO;
 		DescriptorPoolCreateInfo.pNext				= NULL;
 		DescriptorPoolCreateInfo.flags				= 0;
@@ -64,7 +64,7 @@ namespace geodesuka::core {
 
 		this->DescriptorSet.resize(aCamera3D->Frame.size());
 		for (size_t i = 0; i < aCamera3D->Frame.size(); i++) {
-			vk_descriptor_set_allocate_info AllocateInfo{};
+			VkDescriptorSetAllocateInfo AllocateInfo{};
 			AllocateInfo.sType					= VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
 			AllocateInfo.pNext					= NULL;
 			AllocateInfo.descriptorPool			= this->DescriptorPool;
@@ -90,9 +90,9 @@ namespace geodesuka::core {
 					int MeshIndex = aObject->Model->MeshNode[a].MeshIndex[b];
 					// Iterate through mesh faces
 					for (int c = 0; c < aObject->Model->Mesh[MeshIndex]->Face.size(); c++) {
-						vk_result Result = VK_SUCCESS;
-						vk_command_buffer_begin_info CommandBufferBeginInfo{};
-						vk_render_pass_begin_info RenderPassBeginInfo{};
+						VkResult Result = VK_SUCCESS;
+						VkCommandBufferBeginInfo CommandBufferBeginInfo{};
+						VkRenderPassBeginInfo RenderPassBeginInfo{};
 
 						CommandBufferBeginInfo.sType				= VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
 						CommandBufferBeginInfo.pNext				= NULL;
@@ -286,8 +286,8 @@ namespace geodesuka::core {
 
 	}
 
-	vk_submit_info object_t::update(double aDeltaTime) {
-		vk_submit_info TransferBatch{};
+	VkSubmitInfo object_t::update(double aDeltaTime) {
+		VkSubmitInfo TransferBatch{};
 		TransferBatch.sType = VkStructureType::VK_STRUCTURE_TYPE_SUBMIT_INFO;
 		TransferBatch.pNext = NULL;
 		TransferBatch.waitSemaphoreCount = 0;
@@ -313,8 +313,8 @@ namespace geodesuka::core {
 		return TransferBatch;
 	}
 
-	vk_submit_info object_t::compute() {
-		vk_submit_info ComputeBatch{};
+	VkSubmitInfo object_t::compute() {
+		VkSubmitInfo ComputeBatch{};
 		ComputeBatch.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
 		ComputeBatch.pNext = NULL;
 		ComputeBatch.waitSemaphoreCount = 0;
@@ -336,7 +336,7 @@ namespace geodesuka::core {
 	//object_t::render_operation::render_operation(object::render_target* aRenderTarget, int aCommandCount) {
 	//	this->RenderTarget = aRenderTarget;
 	//	this->RenderPass = VK_NULL_HANDLE;
-	//	this->Framebuffer = (vk_framebuffer*)malloc(aRenderTarget->FrameCount * sizeof(vk_framebuffer));
+	//	this->Framebuffer = (VkFramebuffer*)malloc(aRenderTarget->FrameCount * sizeof(VkFramebuffer));
 	//	assert(this->Framebuffer);
 	//	this->DrawCommand = gcl::command_group(aRenderTarget->FrameCount, aCommandCount);
 	//}

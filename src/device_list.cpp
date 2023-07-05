@@ -261,7 +261,7 @@ namespace geodesuka::core::gcl {
 		return this->Count;
 	}
 
-	device* device_list::get_device_type(vk_physical_device_type aType) const {
+	device* device_list::get_device_type(VkPhysicalDeviceType aType) const {
 		// Search for device that is discrete gpu.
 		for (int i = 0; i < this->Count; i++) {
 			if (this->Handle[i]->get_properties().deviceType == aType) {

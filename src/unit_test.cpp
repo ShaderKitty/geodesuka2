@@ -274,7 +274,7 @@ namespace geodesuka::builtin::app {
 		}
 		*/
 
-		vk_result Result = VK_SUCCESS;
+		VkResult Result = VK_SUCCESS;
 
 		// -------------------- buffer.h unit testing ------------------------- //
 
@@ -311,9 +311,9 @@ namespace geodesuka::builtin::app {
 		buffer ReturnBuffer(Context, HostBufferCreateInfo, BufferSize, NULL);
 
 		{
-			vk_fence Fence[2] = { VK_NULL_HANDLE, VK_NULL_HANDLE };
+			VkFence Fence[2] = { VK_NULL_HANDLE, VK_NULL_HANDLE };
 			command_list CommandList[2] = { command_list(1), command_list(1) };
-			vk_semaphore Semaphore = VK_NULL_HANDLE;
+			VkSemaphore Semaphore = VK_NULL_HANDLE;
 
 			Context->create_fence(2, Fence);
 			Semaphore = Context->create_semaphore();
@@ -373,9 +373,9 @@ namespace geodesuka::builtin::app {
 		buffer ReturnImage(Context, HostBufferCreateInfo, TextureSize, NULL);
 
 		{
-			vk_result Result = VK_SUCCESS;
-			vk_fence Fence[2];
-			vk_semaphore Semaphore;
+			VkResult Result = VK_SUCCESS;
+			VkFence Fence[2];
+			VkSemaphore Semaphore;
 			gcl::command_list CommandList[2] = { command_list(1), command_list(1) };
 
 			Fence[0] = Context->create_fence();

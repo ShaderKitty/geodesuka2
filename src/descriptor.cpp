@@ -6,7 +6,7 @@ namespace geodesuka::core::gcl {
 
 	}
 
-	descriptor::pool::pool(uint32_t aDescriptorSetCount, const std::vector<vk_descriptor_pool_size>& aDescriptorPoolSizes) {
+	descriptor::pool::pool(uint32_t aDescriptorSetCount, const std::vector<VkDescriptorPoolSize>& aDescriptorPoolSizes) {
 
 	}
 
@@ -74,7 +74,7 @@ namespace geodesuka::core::gcl {
 		this->Sampler	= NULL;
 	}
 
-	descriptor::descriptor(uint32_t aBindingIndex, type aType, shader::stage aStage, vk_sampler* aSampler) {
+	descriptor::descriptor(uint32_t aBindingIndex, type aType, shader::stage aStage, VkSampler* aSampler) {
 		this->Binding	= aBindingIndex;
 		this->Type		= aType;
 		this->Count		= 1u;
@@ -82,7 +82,7 @@ namespace geodesuka::core::gcl {
 		this->Sampler	= aSampler;
 	}
 
-	descriptor::descriptor(uint32_t aBindingIndex, type aType, uint32_t aCount, shader::stage aStage, vk_sampler* aSampler) {
+	descriptor::descriptor(uint32_t aBindingIndex, type aType, uint32_t aCount, shader::stage aStage, VkSampler* aSampler) {
 		this->Binding	= aBindingIndex;
 		this->Type		= aType;
 		this->Count		= aCount;

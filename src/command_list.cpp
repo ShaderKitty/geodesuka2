@@ -12,7 +12,7 @@ namespace geodesuka::core::gcl {
 
 	command_list::command_list() { }
 
-	command_list::command_list(vk_command_buffer aCommandBuffer) {
+	command_list::command_list(VkCommandBuffer aCommandBuffer) {
 		this->Handle.push_back(aCommandBuffer);
 	}
 
@@ -23,16 +23,16 @@ namespace geodesuka::core::gcl {
 		}
 	}
 
-	command_list::command_list(uint32_t aCommandBufferCount, vk_command_buffer* aCommandBufferList) {
+	command_list::command_list(uint32_t aCommandBufferCount, VkCommandBuffer* aCommandBufferList) {
 		this->Handle.resize(aCommandBufferCount);
-		memcpy(this->Handle.data(), aCommandBufferList, aCommandBufferCount * sizeof(vk_command_buffer));
+		memcpy(this->Handle.data(), aCommandBufferList, aCommandBufferCount * sizeof(VkCommandBuffer));
 	}
 
-	vk_command_buffer command_list::operator[](uint32_t aIndex) const {
+	VkCommandBuffer command_list::operator[](uint32_t aIndex) const {
 		return this->Handle[aIndex];
 	}
 
-	vk_command_buffer& command_list::operator[](uint32_t aIndex) {
+	VkCommandBuffer& command_list::operator[](uint32_t aIndex) {
 		return this->Handle[aIndex];
 	}
 
@@ -138,15 +138,15 @@ namespace geodesuka::core::gcl {
 		return Difference;
 	}
 
-	command_list command_list::operator&(vk_command_buffer aRhs) const {
+	command_list command_list::operator&(VkCommandBuffer aRhs) const {
 		return (*this & command_list(aRhs));
 	}
 
-	command_list command_list::operator|(vk_command_buffer aRhs) const {
+	command_list command_list::operator|(VkCommandBuffer aRhs) const {
 		return (*this | command_list(aRhs));
 	}
 
-	command_list command_list::operator-(vk_command_buffer aRhs) const {
+	command_list command_list::operator-(VkCommandBuffer aRhs) const {
 		return (*this - command_list(aRhs));
 	}
 
@@ -165,12 +165,12 @@ namespace geodesuka::core::gcl {
 		return *this;
 	}
 
-	command_list& command_list::operator|=(vk_command_buffer aRhs) {
+	command_list& command_list::operator|=(VkCommandBuffer aRhs) {
 		*this = *this | aRhs;
 		return *this;
 	}
 
-	command_list& command_list::operator-=(vk_command_buffer aRhs) {
+	command_list& command_list::operator-=(VkCommandBuffer aRhs) {
 		*this = *this - aRhs;
 		return *this;
 	}
@@ -179,7 +179,7 @@ namespace geodesuka::core::gcl {
 		this->Handle.resize(aCount);
 	}
 
-	bool command_list::exists_in(vk_command_buffer aCommandBuffer) const {
+	bool command_list::exists_in(VkCommandBuffer aCommandBuffer) const {
 		for (size_t i = 0; i < Handle.size(); i++) {
 			if (Handle[i] == aCommandBuffer) return true;
 		}
@@ -247,7 +247,7 @@ namespace geodesuka::core::gcl {
 		return Purified;
 	}
 
-	void command_list::depends_on(vk_semaphore aDependencyLink, command_list& aProducer, vk_pipeline_stage_flags aProducerStageFlag) {
+	void command_list::depends_on(VkSemaphore aDependencyLink, command_list& aProducer, VkPipelineStageFlags aProducerStageFlag) {
 		if (!aProducer.is_signalling(aDependencyLink)) {
 			aProducer.SignalSemaphore.push_back(aDependencyLink);
 		}
@@ -257,21 +257,21 @@ namespace geodesuka::core::gcl {
 		}
 	}
 
-	void command_list::wait_on(vk_semaphore aWaitSemaphore, vk_pipeline_stage_flags aProducerStageFlag) {
+	void command_list::wait_on(VkSemaphore aWaitSemaphore, VkPipelineStageFlags aProducerStageFlag) {
 		if (!this->is_waiting_on(aWaitSemaphore)) {
 			this->WaitSemaphore.push_back(aWaitSemaphore);
 			this->WaitStage.push_back(aProducerStageFlag);
 		}
 	}
 
-	void command_list::signal_to(vk_semaphore aSignalSemaphore) {
+	void command_list::signal_to(VkSemaphore aSignalSemaphore) {
 		if (!this->is_signalling(aSignalSemaphore)) {
 			this->SignalSemaphore.push_back(aSignalSemaphore);
 		}
 	}
 
-	vk_submit_info command_list::build() const {
-		vk_submit_info SubmissionBuild{};
+	VkSubmitInfo command_list::build() const {
+		VkSubmitInfo SubmissionBuild{};
 		SubmissionBuild.sType					= VK_STRUCTURE_TYPE_SUBMIT_INFO;
 		SubmissionBuild.pNext					= NULL;
 		SubmissionBuild.waitSemaphoreCount		= this->WaitSemaphore.size();
@@ -284,14 +284,14 @@ namespace geodesuka::core::gcl {
 		return SubmissionBuild;
 	}
 
-	bool command_list::is_waiting_on(vk_semaphore aSemaphore) {
+	bool command_list::is_waiting_on(VkSemaphore aSemaphore) {
 		for (size_t i = 0; i < WaitSemaphore.size(); i++) {
 			if (WaitSemaphore[i] == aSemaphore) return true;
 		}
 		return false;
 	}
 
-	bool command_list::is_signalling(vk_semaphore aSemaphore) {
+	bool command_list::is_signalling(VkSemaphore aSemaphore) {
 		for (size_t i = 0; i < SignalSemaphore.size(); i++) {
 			if (SignalSemaphore[i] == aSemaphore) return true;
 		}

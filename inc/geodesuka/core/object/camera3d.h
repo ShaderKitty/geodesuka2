@@ -50,7 +50,7 @@ namespace geodesuka::core::object {
 
 		// ----- object_t methods ----- //
 
-		virtual vk_submit_info update(double aDeltaTime) override;
+		virtual VkSubmitInfo update(double aDeltaTime) override;
 
 		// ----- rendertarget methods ----- //
 
@@ -80,7 +80,7 @@ namespace geodesuka::core::object {
 
 		// Subpass 0:
 
-		std::vector<vk_pipeline_color_blend_attachment_state> BlendingOperation;
+		std::vector<VkPipelineColorBlendAttachmentState> BlendingOperation;
 
 		// Opaque Objects:
 		// The depth list is a list of sorted objects based
@@ -108,12 +108,12 @@ namespace geodesuka::core::object {
 		gcl::command_list *TransparentObjectCommandList;
 		gcl::command_list *TranslucentObjectCommandList;
 
-		vk_result create_images();
+		VkResult create_images();
 
 		// Describes render pass
-		vk_result create_render_pass();
+		VkResult create_render_pass();
 
-		vk_result create_pipelines();
+		VkResult create_pipelines();
 
 
 	};

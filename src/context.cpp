@@ -31,7 +31,7 @@ namespace geodesuka::core::gcl {
 
 		EnableProcessing.store(false);
 
-		vk_result Result = VK_SUCCESS;
+		VkResult Result = VK_SUCCESS;
 
 		// If -1, then the option is not supported by the device.
 		this->QFI[0] = this->Device->qfi(device::qfeo::TRANSFER);
@@ -64,14 +64,14 @@ namespace geodesuka::core::gcl {
 
 		// With UQFI found, generate queues for selected indices.
 		uint32_t QFPCount = 0;
-		const vk_queue_family_properties* QFP = this->Device->get_queue_family_properties(&QFPCount);
+		const VkQueueFamilyProperties* QFP = this->Device->get_queue_family_properties(&QFPCount);
 
 		for (int i = 0; i < UQFICount; i++) {
 			Queue.emplace_back(QFP[UQFI[i]]);
 		}
 
 		for (size_t i = 0; i < Queue.size(); i++) {
-			vk_device_queue_create_info NewQueueCreateInfo{};
+			VkDeviceQueueCreateInfo NewQueueCreateInfo{};
 			NewQueueCreateInfo.sType				= VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
 			NewQueueCreateInfo.pNext				= NULL;
 			NewQueueCreateInfo.flags				= 0;
@@ -120,7 +120,7 @@ namespace geodesuka::core::gcl {
 		this->CommandPool[2] = new command_pool(this, 0, device::qfeo::GRAPHICS);
 		this->CommandPool[3] = new command_pool(this, 0, device::qfeo::GRAPHICS_AND_COMPUTE);
 
-		vk_fence_create_info FenceCreateInfo{};
+		VkFenceCreateInfo FenceCreateInfo{};
 		FenceCreateInfo.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;
 		FenceCreateInfo.pNext = NULL;
 		FenceCreateInfo.flags = 0;
@@ -156,7 +156,7 @@ namespace geodesuka::core::gcl {
 			throw log::message(log::ERROR, log::OUT_OF_HOST_MEMORY, "Context Creation", log::GEODESUKA, "context", "", "Memory Allocation Failure: this->QueuePriority");
 		}
 
-		this->QueueCreateInfo = (vk_device_queue_create_info*)malloc(this->UQFICount * sizeof(vk_device_queue_create_info));
+		this->QueueCreateInfo = (VkDeviceQueueCreateInfo*)malloc(this->UQFICount * sizeof(VkDeviceQueueCreateInfo));
 		if (this->QueueCreateInfo == NULL) {
 			throw log::message(log::ERROR, log::OUT_OF_HOST_MEMORY, "Context Creation", log::GEODESUKA, "context", "", "Memory Allocation Failure: this->QueuePriority");
 		}
@@ -229,7 +229,7 @@ namespace geodesuka::core::gcl {
 		this->CommandPool[2] = new command_pool(this, 0, device::qfeo::GRAPHICS);
 		this->CommandPool[3] = new command_pool(this, 0, device::qfeo::GRAPHICS_AND_COMPUTE);
 
-		vk_fence_create_info FenceCreateInfo{};
+		VkFenceCreateInfo FenceCreateInfo{};
 		FenceCreateInfo.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;
 		FenceCreateInfo.pNext = NULL;
 		FenceCreateInfo.flags = 0;
@@ -310,7 +310,7 @@ namespace geodesuka::core::gcl {
 		return (this->qfi(aQFEO) != -1);
 	}
 
-	vk_command_buffer context::create_command_buffer(device::qfeo aQueueFamilySupportOption, vk_command_buffer_level aLevel) {
+	VkCommandBuffer context::create_command_buffer(device::qfeo aQueueFamilySupportOption, VkCommandBufferLevel aLevel) {
 		switch (aQueueFamilySupportOption) {
 		case geodesuka::core::gcl::device::TRANSFER:
 			return this->CommandPool[0]->allocate(aLevel);
@@ -325,7 +325,7 @@ namespace geodesuka::core::gcl {
 		}
 	}
 
-	command_list context::create_command_list(device::qfeo aQueueFamilySupportOption, vk_command_buffer_level aLevel, uint32_t aCommandBufferCount) {
+	command_list context::create_command_list(device::qfeo aQueueFamilySupportOption, VkCommandBufferLevel aLevel, uint32_t aCommandBufferCount) {
 		command_list List;
 		switch (aQueueFamilySupportOption) {
 		case geodesuka::core::gcl::device::TRANSFER:
@@ -346,7 +346,7 @@ namespace geodesuka::core::gcl {
 		return List;
 	}
 
-	bool context::destroy_command_buffer(device::qfeo aQueueFamilySupportOption, vk_command_buffer aCommandBuffer) {
+	bool context::destroy_command_buffer(device::qfeo aQueueFamilySupportOption, VkCommandBuffer aCommandBuffer) {
 		switch (aQueueFamilySupportOption) {
 		case geodesuka::core::gcl::device::TRANSFER:
 			this->CommandPool[0]->release(aCommandBuffer);
@@ -386,16 +386,16 @@ namespace geodesuka::core::gcl {
 		return false;
 	}
 
-	vk_semaphore context::create_semaphore() {
-		vk_result Result = VK_SUCCESS;
-		vk_semaphore Semaphore = VK_NULL_HANDLE;
+	VkSemaphore context::create_semaphore() {
+		VkResult Result = VK_SUCCESS;
+		VkSemaphore Semaphore = VK_NULL_HANDLE;
 		Result = this->create_semaphore(1, &Semaphore);
 		return Semaphore;
 	}
 
-	vk_result context::create_semaphore(int aSemaphoreCount, vk_semaphore* aSemaphoreList) {
-		vk_result Result = VK_SUCCESS;
-		vk_semaphore_create_info CreateInfo{};
+	VkResult context::create_semaphore(int aSemaphoreCount, VkSemaphore* aSemaphoreList) {
+		VkResult Result = VK_SUCCESS;
+		VkSemaphoreCreateInfo CreateInfo{};
 		CreateInfo.sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO;
 		CreateInfo.pNext = NULL;
 		CreateInfo.flags = 0;
@@ -405,11 +405,11 @@ namespace geodesuka::core::gcl {
 		return Result;
 	}
 
-	void context::destroy_semaphore(vk_semaphore& aSemaphore) {
+	void context::destroy_semaphore(VkSemaphore& aSemaphore) {
 		this->destroy_semaphore(1, &aSemaphore);
 	}
 
-	void context::destroy_semaphore(int aSemaphoreCount, vk_semaphore* aSemaphoreList) {
+	void context::destroy_semaphore(int aSemaphoreCount, VkSemaphore* aSemaphoreList) {
 		for (int i = 0; i < aSemaphoreCount; i++){
 			if (aSemaphoreList[i] != VK_NULL_HANDLE){
 				vkDestroySemaphore(this->Handle, aSemaphoreList[i], NULL);
@@ -418,27 +418,27 @@ namespace geodesuka::core::gcl {
 		}
 	}
 
-	vk_fence context::create_fence() {
-		vk_result Result = VK_SUCCESS;
-		vk_fence Fence = VK_NULL_HANDLE;
-		Result = this->create_fence((vk_fence_create_flags)0, 1, &Fence);
+	VkFence context::create_fence() {
+		VkResult Result = VK_SUCCESS;
+		VkFence Fence = VK_NULL_HANDLE;
+		Result = this->create_fence((VkFenceCreateFlags)0, 1, &Fence);
 		return Fence;
 	}
 
-	vk_fence context::create_fence(vk_fence_create_flags aFenceCreateFlags) {
-		vk_result Result = VK_SUCCESS;
-		vk_fence Fence = VK_NULL_HANDLE;
+	VkFence context::create_fence(VkFenceCreateFlags aFenceCreateFlags) {
+		VkResult Result = VK_SUCCESS;
+		VkFence Fence = VK_NULL_HANDLE;
 		Result = this->create_fence(aFenceCreateFlags, 1, &Fence);
 		return Fence;
 	}
 
-	vk_result context::create_fence(int aFenceCount, vk_fence* aFenceList) {
-		return this->create_fence((vk_fence_create_flags)0, aFenceCount, aFenceList);
+	VkResult context::create_fence(int aFenceCount, VkFence* aFenceList) {
+		return this->create_fence((VkFenceCreateFlags)0, aFenceCount, aFenceList);
 	}
 
-	vk_result context::create_fence(vk_fence_create_flags aFenceCreateFlags, int aFenceCount, vk_fence* aFenceList) {
-		vk_result Result = VK_SUCCESS;
-		vk_fence_create_info CreateInfo{};
+	VkResult context::create_fence(VkFenceCreateFlags aFenceCreateFlags, int aFenceCount, VkFence* aFenceList) {
+		VkResult Result = VK_SUCCESS;
+		VkFenceCreateInfo CreateInfo{};
 		CreateInfo.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;
 		CreateInfo.pNext = NULL;
 		CreateInfo.flags = aFenceCreateFlags;
@@ -448,11 +448,11 @@ namespace geodesuka::core::gcl {
 		return Result;
 	}
 
-	void context::destroy_fence(vk_fence& aFence) {
+	void context::destroy_fence(VkFence& aFence) {
 		this->destroy_fence(1, &aFence);
 	}
 
-	void context::destroy_fence(int aFenceCount, vk_fence* aFenceList) {
+	void context::destroy_fence(int aFenceCount, VkFence* aFenceList) {
 		for (int i = 0; i < aFenceCount; i++){
 			if (aFenceList[i] != VK_NULL_HANDLE){
 				vkDestroyFence(this->Handle, aFenceList[i], NULL);
@@ -461,8 +461,8 @@ namespace geodesuka::core::gcl {
 		}
 	}
 
-	vk_result context::execute(device::qfeo aQFEO, vk_command_buffer aCommandBuffer, vk_fence aFence) {
-		vk_submit_info SubmitInfo{};
+	VkResult context::execute(device::qfeo aQFEO, VkCommandBuffer aCommandBuffer, VkFence aFence) {
+		VkSubmitInfo SubmitInfo{};
 		SubmitInfo.sType				= VK_STRUCTURE_TYPE_SUBMIT_INFO;
 		SubmitInfo.pNext				= NULL;
 		SubmitInfo.waitSemaphoreCount	= 0;
@@ -472,40 +472,40 @@ namespace geodesuka::core::gcl {
 		SubmitInfo.pCommandBuffers		= &aCommandBuffer;
 		SubmitInfo.signalSemaphoreCount	= 0;
 		SubmitInfo.pSignalSemaphores	= NULL;
-		std::vector<vk_submit_info> Submission;
+		std::vector<VkSubmitInfo> Submission;
 		Submission.push_back(SubmitInfo);
 		return this->execute(aQFEO, Submission, aFence);
 	}
 
-	vk_result context::execute(device::qfeo aQFEO, const command_list& aCommandList, vk_fence aFence) {
-		vk_submit_info SubmitInfo = aCommandList.build();
-		std::vector<vk_submit_info> Submission;
+	VkResult context::execute(device::qfeo aQFEO, const command_list& aCommandList, VkFence aFence) {
+		VkSubmitInfo SubmitInfo = aCommandList.build();
+		std::vector<VkSubmitInfo> Submission;
 		Submission.push_back(SubmitInfo);
 		return this->execute(aQFEO, Submission, aFence);
 	}
 
-	vk_result context::execute(device::qfeo aQFS, const std::vector<gcl::command_list>& aCommandBatch, vk_fence aFence) {
-		std::vector<vk_submit_info> SubmissionList(aCommandBatch.size());
+	VkResult context::execute(device::qfeo aQFS, const std::vector<gcl::command_list>& aCommandBatch, VkFence aFence) {
+		std::vector<VkSubmitInfo> SubmissionList(aCommandBatch.size());
 		for (size_t i = 0; i < aCommandBatch.size(); i++) {
 			SubmissionList[i] = aCommandBatch[i].build();
 		}
 		return this->execute(aQFS, SubmissionList, aFence);
 	}
 
-	vk_result context::execute(device::qfeo aQFEO, const std::vector<vk_submit_info>& aSubmissionList, vk_fence aFence) {
-		vk_result Result = VK_SUCCESS;
+	VkResult context::execute(device::qfeo aQFEO, const std::vector<VkSubmitInfo>& aSubmissionList, VkFence aFence) {
+		VkResult Result = VK_SUCCESS;
 		gcl::command_batch CommandBatch((uint32_t)aSubmissionList.size(), aSubmissionList.data());
 		return this->execute(aQFEO, CommandBatch, aFence);
 	}
 
-	vk_result context::execute(const std::vector<vk_present_info_khr>& aPresentationList, vk_fence aFence) {
-		vk_result Result = VK_SUCCESS;
+	VkResult context::execute(const std::vector<VkPresentInfoKHR>& aPresentationList, VkFence aFence) {
+		VkResult Result = VK_SUCCESS;
 		gcl::command_batch CommandBatch((uint32_t)aPresentationList.size(), aPresentationList.data());
 		return this->execute(device::qfeo::PRESENT, CommandBatch, aFence);
 	}
 
-	vk_result context::execute(device::qfeo aQFEO, const command_batch& aCommandBatch, vk_fence aFence) {
-		vk_result Result = VK_SUCCESS;
+	VkResult context::execute(device::qfeo aQFEO, const command_batch& aCommandBatch, VkFence aFence) {
+		VkResult Result = VK_SUCCESS;
 
 		int i = this->qfi_to_i(aQFEO);
 		int j = 0;
@@ -540,22 +540,22 @@ namespace geodesuka::core::gcl {
 	}
 
 
-	vk_result context::wait(vk_fence aFence, vk_bool_32 aWaitOnAll) {
+	VkResult context::wait(VkFence aFence, VkBool32 aWaitOnAll) {
 		return this->wait(1, &aFence, aWaitOnAll);
 	}
 
-	vk_result context::wait(uint32_t aFenceCount, vk_fence* aFenceList, vk_bool_32 aWaitOnAll) {
+	VkResult context::wait(uint32_t aFenceCount, VkFence* aFenceList, VkBool32 aWaitOnAll) {
 		return vkWaitForFences(this->Handle, aFenceCount, aFenceList, aWaitOnAll, UINT64_MAX);
 	}
 
-	vk_memory_requirements context::get_buffer_memory_requirements(vk_buffer aBufferHandle) {
-		vk_memory_requirements MemoryRequirements;
+	VkMemoryRequirements context::get_buffer_memory_requirements(VkBuffer aBufferHandle) {
+		VkMemoryRequirements MemoryRequirements;
 		vkGetBufferMemoryRequirements(this->Handle, aBufferHandle, &MemoryRequirements);
 		return MemoryRequirements;
 	}
 
-	vk_memory_requirements context::get_image_memory_requirements(vk_image aImageHandle) {
-		vk_memory_requirements MemoryRequirements;
+	VkMemoryRequirements context::get_image_memory_requirements(VkImage aImageHandle) {
+		VkMemoryRequirements MemoryRequirements;
 		vkGetImageMemoryRequirements(this->Handle, aImageHandle, &MemoryRequirements);
 		return MemoryRequirements;
 	}
@@ -580,7 +580,7 @@ namespace geodesuka::core::gcl {
 		return this->Handle;
 	}
 
-	context::queue_family::queue_family(vk_queue_family_properties aProperties) {
+	context::queue_family::queue_family(VkQueueFamilyProperties aProperties) {
 		Mutex = new std::mutex[aProperties.queueCount];
 		for (uint32_t i = 0; i < aProperties.queueCount; i++) {
 			this->Priority.push_back(1.0f);
@@ -604,7 +604,7 @@ namespace geodesuka::core::gcl {
 		this->Mutex = nullptr;
 	}
 
-	vk_queue& context::queue_family::operator[](size_t aIndex) {
+	VkQueue& context::queue_family::operator[](size_t aIndex) {
 		return this->Handle[aIndex];
 	}
 

@@ -48,58 +48,58 @@ namespace geodesuka::core::gcl {
 		// creates/destroys
 		
 		// Creates a single command buffer from the chosen family support option.
-		vk_command_buffer create_command_buffer(device::qfeo aQueueFamilySupportOption, vk_command_buffer_level aLevel);
+		VkCommandBuffer create_command_buffer(device::qfeo aQueueFamilySupportOption, VkCommandBufferLevel aLevel);
 
 		// Creates a series of command buffers from selected family support option.
-		command_list create_command_list(device::qfeo aQueueFamilySupportOption, vk_command_buffer_level aLevel, uint32_t aCommandBufferCount);
+		command_list create_command_list(device::qfeo aQueueFamilySupportOption, VkCommandBufferLevel aLevel, uint32_t aCommandBufferCount);
 
 		// Destroys a single command buffer.
-		bool destroy_command_buffer(device::qfeo aQueueFamilySupportOption, vk_command_buffer aCommandBuffer);
+		bool destroy_command_buffer(device::qfeo aQueueFamilySupportOption, VkCommandBuffer aCommandBuffer);
 
 		// Destroys a command list.
 		bool destroy_command_list(device::qfeo aQueueFamilySupportOption, command_list& aCommandList);
 
-		vk_semaphore create_semaphore();
-		vk_result create_semaphore(int aSemaphoreCount, vk_semaphore* aSemaphoreList);
-		void destroy_semaphore(vk_semaphore& aSemaphore);
-		void destroy_semaphore(int aSemaphoreCount, vk_semaphore* aSemaphoreList);
+		VkSemaphore create_semaphore();
+		VkResult create_semaphore(int aSemaphoreCount, VkSemaphore* aSemaphoreList);
+		void destroy_semaphore(VkSemaphore& aSemaphore);
+		void destroy_semaphore(int aSemaphoreCount, VkSemaphore* aSemaphoreList);
 
-		vk_fence create_fence();
-		vk_fence create_fence(vk_fence_create_flags aFenceCreateFlags);
-		vk_result create_fence(int aFenceCount, vk_fence* aFenceList);
-		vk_result create_fence(vk_fence_create_flags aFenceCreateFlags, int aFenceCount, vk_fence* aFenceList);
+		VkFence create_fence();
+		VkFence create_fence(VkFenceCreateFlags aFenceCreateFlags);
+		VkResult create_fence(int aFenceCount, VkFence* aFenceList);
+		VkResult create_fence(VkFenceCreateFlags aFenceCreateFlags, int aFenceCount, VkFence* aFenceList);
 
-		void destroy_fence(vk_fence& aFence);
-		void destroy_fence(int aFenceCount, vk_fence* aFenceList);
+		void destroy_fence(VkFence& aFence);
+		void destroy_fence(int aFenceCount, VkFence* aFenceList);
 
 		// --------------- Execution --------------- //
 		
-		vk_result execute(device::qfeo aQFS, vk_command_buffer aCommandBuffer, vk_fence aFence);
-		vk_result execute(device::qfeo aQFS, const command_list& aCommandList, vk_fence aFence);
-		vk_result execute(device::qfeo aQFS, const std::vector<gcl::command_list>& aCommandBatch, vk_fence aFence);
-		vk_result execute(device::qfeo aQFS, const std::vector<vk_submit_info>& aSubmissionList, vk_fence aFence);
-		vk_result execute(const std::vector<vk_present_info_khr>& aPresentationList, vk_fence aFence);
-		vk_result execute(device::qfeo aQFS, const command_batch& aCommandBatch, vk_fence aFence);
+		VkResult execute(device::qfeo aQFS, VkCommandBuffer aCommandBuffer, VkFence aFence);
+		VkResult execute(device::qfeo aQFS, const command_list& aCommandList, VkFence aFence);
+		VkResult execute(device::qfeo aQFS, const std::vector<gcl::command_list>& aCommandBatch, VkFence aFence);
+		VkResult execute(device::qfeo aQFS, const std::vector<VkSubmitInfo>& aSubmissionList, VkFence aFence);
+		VkResult execute(const std::vector<VkPresentInfoKHR>& aPresentationList, VkFence aFence);
+		VkResult execute(device::qfeo aQFS, const command_batch& aCommandBatch, VkFence aFence);
 
 
 
 
 
-		vk_result wait(vk_fence aFence, vk_bool_32 aWaitOnAll);
-		vk_result wait(uint32_t aFenceCount, vk_fence* aFenceList, vk_bool_32 aWaitOnAll);
+		VkResult wait(VkFence aFence, VkBool32 aWaitOnAll);
+		VkResult wait(uint32_t aFenceCount, VkFence* aFenceList, VkBool32 aWaitOnAll);
 
 		// Buffer memory requirements.
-		vk_memory_requirements get_buffer_memory_requirements(vk_buffer aBufferHandle);
+		VkMemoryRequirements get_buffer_memory_requirements(VkBuffer aBufferHandle);
 
 		// Image memory requirements.
-		vk_memory_requirements get_image_memory_requirements(vk_image aImageHandle);
+		VkMemoryRequirements get_image_memory_requirements(VkImage aImageHandle);
 
 		engine* parent_engine();
 		device* parent_device();
 
-		vk_instance inst();
+		VkInstance inst();
 		device* parent();
-		vk_device handle();
+		VkDevice handle();
 
 		std::mutex 			Mutex;
 		std::atomic<bool> 	EnableProcessing;
@@ -108,7 +108,7 @@ namespace geodesuka::core::gcl {
 		
 		// This data is used for engine execution.
 		std::mutex 			ExecutionMutex;
-		vk_fence 			ExecutionFence[3];
+		VkFence 			ExecutionFence[3];
 		command_batch 		BackBatch[3];
 		command_batch 		WorkBatch[3];
 
@@ -118,12 +118,12 @@ namespace geodesuka::core::gcl {
 		struct queue_family {
 			std::mutex*				Mutex;
 			std::vector<float>		Priority;
-			std::vector<vk_queue>	Handle;
-			queue_family(vk_queue_family_properties aProperties);
+			std::vector<VkQueue>	Handle;
+			queue_family(VkQueueFamilyProperties aProperties);
 			queue_family(const queue_family& aInput);
 			queue_family(queue_family&& aInput) noexcept;
 			~queue_family();
-			vk_queue& operator[](size_t aIndex);
+			VkQueue& operator[](size_t aIndex);
 			queue_family& operator=(const queue_family& aRhs);
 			queue_family& operator=(queue_family&& aRhs) noexcept;
 			size_t count() const;
@@ -138,9 +138,9 @@ namespace geodesuka::core::gcl {
 		int 										UQFICount;
 		int 										UQFI[5];
 		std::vector<queue_family> 					Queue;
-		std::vector<vk_device_queue_create_info>	QueueCreateInfo;
-		vk_device_create_info 						CreateInfo{};
-		vk_device 									Handle;
+		std::vector<VkDeviceQueueCreateInfo>	QueueCreateInfo;
+		VkDeviceCreateInfo 						CreateInfo{};
+		VkDevice 									Handle;
 		command_pool*								CommandPool[4];
 
 		int qfi_to_i(device::qfeo aQFEO);

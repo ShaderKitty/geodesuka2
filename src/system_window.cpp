@@ -52,7 +52,7 @@ namespace geodesuka::core::object {
 	system_window::system_window(gcl::context* aContext, system_display* aSystemDisplay, const char* aName, const property& aProperty, glm::vec3 aPosition, glm::vec2 aSize) : 
 		window(aContext, aSystemDisplay->Stage, aName, glm::uvec3(1u, 1u, 1u), aProperty.Swapchain.FrameRate, aProperty.Swapchain.FrameCount, 1)
 	{
-		vk_result Result = VK_SUCCESS;
+		VkResult Result = VK_SUCCESS;
 
 		this->zero_out();
 
@@ -72,7 +72,7 @@ namespace geodesuka::core::object {
 	system_window::system_window(gcl::context* aContext, system_display* aSystemDisplay, const char* aName, const property& aProperty, glm::ivec2 aPosition, glm::ivec2 aResolution) :
 		window(aContext, aSystemDisplay->Stage, aName, glm::uvec3(aResolution.x, aResolution.y, 1u), aProperty.Swapchain.FrameRate, aProperty.Swapchain.FrameCount, 1)
 	{
-		vk_result Result = VK_SUCCESS;
+		VkResult Result = VK_SUCCESS;
 
 		this->zero_out();
 
@@ -152,8 +152,8 @@ namespace geodesuka::core::object {
 
 	// ------------------------------ protected methods ---------------------------- //
 	
-	vk_submit_info system_window::update(double aDeltaTime) {
-		vk_submit_info TransferBatch{};
+	VkSubmitInfo system_window::update(double aDeltaTime) {
+		VkSubmitInfo TransferBatch{};
 		TransferBatch.sType = VkStructureType::VK_STRUCTURE_TYPE_SUBMIT_INFO;
 		TransferBatch.pNext = NULL;
 		TransferBatch.waitSemaphoreCount = 0;
@@ -170,7 +170,7 @@ namespace geodesuka::core::object {
 	}
 
 	gcl::command_batch system_window::render(stage_t* aStage) {
-		vk_result Result = VK_SUCCESS;
+		VkResult Result = VK_SUCCESS;
 		gcl::command_batch Batch;
 		stage::canvas* Canvas = (stage::canvas*)aStage;
 
@@ -198,18 +198,18 @@ namespace geodesuka::core::object {
 		return Batch;
 	}
 
-	vk_result system_window::next_frame() {
+	VkResult system_window::next_frame() {
 		return vkAcquireNextImageKHR(Context->handle(), Swapchain, UINT64_MAX, RenderWait, VK_NULL_HANDLE, &FrameDrawIndex);
 	}
 
-	vk_present_info_khr system_window::present_frame() {
+	VkPresentInfoKHR system_window::present_frame() {
 		return this->PresentInfo;
 	}
 
 	// ------------------------------ private methods ------------------------------ //
 
-	vk_result system_window::create_system_window(gcl::context* aContext, system_display* aSystemDisplay, const char* aName, const property& aProperty, glm::ivec2 aPosition, glm::ivec2 aResolution) {
-		vk_result Result = VK_SUCCESS;
+	VkResult system_window::create_system_window(gcl::context* aContext, system_display* aSystemDisplay, const char* aName, const property& aProperty, glm::ivec2 aPosition, glm::ivec2 aResolution) {
+		VkResult Result = VK_SUCCESS;
 
 		this->FrameResolution	= glm::uvec3(aResolution.x, aResolution.y, 1u);
 		this->Title				= aProperty.Title;
@@ -330,11 +330,11 @@ namespace geodesuka::core::object {
 		}
 	}
 
-	vk_result system_window::create_vulkan_surface() {
+	VkResult system_window::create_vulkan_surface() {
 		device* Device = Context->parent_device();
-		vk_result Result = glfwCreateWindowSurface(Engine->handle(), Window, NULL, &this->Surface);
+		VkResult Result = glfwCreateWindowSurface(Engine->handle(), Window, NULL, &this->Surface);
 		if (Result == VK_SUCCESS) {
-			vk_bool_32 isSupported = VK_FALSE;
+			VkBool32 isSupported = VK_FALSE;
 			Result = vkGetPhysicalDeviceSurfaceSupportKHR(Device->handle(), Context->qfi(device::qfeo::PRESENT), this->Surface, &isSupported);
 			if (Result == VK_SUCCESS) {
 				if (isSupported == VK_TRUE) {
@@ -355,7 +355,7 @@ namespace geodesuka::core::object {
 		return Result;
 	}
 
-	vk_result system_window::create_semaphores() {
+	VkResult system_window::create_semaphores() {
 		this->PipelineStageFlags	= VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT;
 		this->PresentationResult	= VK_SUCCESS;
 		this->RenderWait			= Context->create_semaphore();
@@ -363,12 +363,12 @@ namespace geodesuka::core::object {
 		return VK_SUCCESS;
 	}
 
-	vk_result system_window::create_swapchain(property aProperty) {
-		vk_result Result = VK_SUCCESS;
+	VkResult system_window::create_swapchain(property aProperty) {
+		VkResult Result = VK_SUCCESS;
 		gcl::device* aDevice = Context->parent_device();
-		vk_surface_capabilities_khr SurfaceCapabilities		= aDevice->get_surface_capabilities(Surface);
-		std::vector<vk_surface_format_khr> SurfaceFormat	= aDevice->get_surface_format(Surface);
-		std::vector<vk_present_mode_khr> PresentMode		= aDevice->get_surface_present_mode(Surface);
+		VkSurfaceCapabilitiesKHR SurfaceCapabilities		= aDevice->get_surface_capabilities(Surface);
+		std::vector<VkSurfaceFormatKHR> SurfaceFormat	= aDevice->get_surface_format(Surface);
+		std::vector<VkPresentModeKHR> PresentMode		= aDevice->get_surface_present_mode(Surface);
 
 		bool SurfaceFormatSupported = false;
 		for (size_t i = 0; i < SurfaceFormat.size(); i++) {
@@ -398,7 +398,7 @@ namespace geodesuka::core::object {
 		// Check is options are supported by device and surface.
 		if ((!SurfaceFormatSupported) || (!PresentModeSupported) || (!TransformSupported) || (!CompositeAlphaSupported) || (!ImageUsageSupported)) return VK_ERROR_FEATURE_NOT_PRESENT;
 
-		// (vk_format aFormat, vk_color_space_khr aColorSpace, vk_image_usage_flags aFlags, vk_composite_alpha_flag_bits_khr aCompositeAlpha, vk_present_mode_khr aPresentMode, vk_bool_32 aClipped);
+		// (VkFormat aFormat, VkColorSpaceKHR aColorSpace, VkImageUsageFlags aFlags, VkCompositeAlphaFlagBitsKHR aCompositeAlpha, VkPresentModeKHR aPresentMode, VkBool32 aClipped);
 		
 		this->CreateInfo.sType					= VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR;
 		this->CreateInfo.pNext					= NULL;
@@ -406,7 +406,7 @@ namespace geodesuka::core::object {
 		this->CreateInfo.surface				= Surface;
 		this->CreateInfo.minImageCount			= aProperty.Swapchain.FrameCount; //std::clamp(aProperty.Swapchain.FrameCount, SurfaceCapabilities.minImageCount, SurfaceCapabilities.maxImageCount);
 		this->CreateInfo.imageFormat			= aProperty.PixelFormat;
-		this->CreateInfo.imageColorSpace		= (vk_color_space_khr)aProperty.Swapchain.ColorSpace;
+		this->CreateInfo.imageColorSpace		= (VkColorSpaceKHR)aProperty.Swapchain.ColorSpace;
 		this->CreateInfo.imageExtent 			= SurfaceCapabilities.currentExtent;
 		this->CreateInfo.imageArrayLayers		= std::clamp(1u, 1u, SurfaceCapabilities.maxImageArrayLayers);
 		this->CreateInfo.imageUsage				= aProperty.Swapchain.Usage;
@@ -414,22 +414,22 @@ namespace geodesuka::core::object {
 		this->CreateInfo.queueFamilyIndexCount	= 0;
 		this->CreateInfo.pQueueFamilyIndices	= NULL;
 		this->CreateInfo.preTransform			= SurfaceCapabilities.currentTransform; 
-		this->CreateInfo.compositeAlpha			= (vk_composite_alpha_flag_bits_khr)aProperty.Swapchain.CompositeAlpha;
-		this->CreateInfo.presentMode			= (vk_present_mode_khr)aProperty.Swapchain.PresentMode;
+		this->CreateInfo.compositeAlpha			= (VkCompositeAlphaFlagBitsKHR)aProperty.Swapchain.CompositeAlpha;
+		this->CreateInfo.presentMode			= (VkPresentModeKHR)aProperty.Swapchain.PresentMode;
 		this->CreateInfo.clipped				= aProperty.Swapchain.Clipped;
 		this->CreateInfo.oldSwapchain			= this->Swapchain;
 
 		return vkCreateSwapchainKHR(Context->handle(), &this->CreateInfo, NULL, &this->Swapchain);
 	}
 
-	vk_result system_window::create_images() {
-		vk_result Result = VK_SUCCESS;
+	VkResult system_window::create_images() {
+		VkResult Result = VK_SUCCESS;
 		uint32_t ImageCount = 0;
 
 		Result = vkGetSwapchainImagesKHR(Context->handle(), Swapchain, &ImageCount, NULL);
 		if (Result != VK_SUCCESS) return Result;
 
-		std::vector<vk_image> ImageHandle(ImageCount);
+		std::vector<VkImage> ImageHandle(ImageCount);
 		Result = vkGetSwapchainImagesKHR(Context->handle(), Swapchain, &ImageCount, ImageHandle.data());
 		if (Result != VK_SUCCESS) return Result;
 
@@ -439,9 +439,9 @@ namespace geodesuka::core::object {
 
 		// Transition to Default being PRESENT_SRC
 		{
-			vk_command_buffer_begin_info TransitionBeginInfo{};
-			vk_command_buffer TransitionCommandBuffer = CommandPool.allocate(VK_COMMAND_BUFFER_LEVEL_PRIMARY);
-			vk_fence TransitionFence = Context->create_fence();
+			VkCommandBufferBeginInfo TransitionBeginInfo{};
+			VkCommandBuffer TransitionCommandBuffer = CommandPool.allocate(VK_COMMAND_BUFFER_LEVEL_PRIMARY);
+			VkFence TransitionFence = Context->create_fence();
 
 			TransitionBeginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
 			TransitionBeginInfo.pNext = NULL;
@@ -492,8 +492,8 @@ namespace geodesuka::core::object {
 		return Result;
 	}
 
-	vk_result system_window::create_cscbs() {
-		vk_result Result = VK_SUCCESS;
+	VkResult system_window::create_cscbs() {
+		VkResult Result = VK_SUCCESS;
 
 		PreRenderOperations.resize(Frame.size());
 		PostRenderOperations.resize(Frame.size());
@@ -549,14 +549,14 @@ namespace geodesuka::core::object {
 		return Result;
 	}
 
-	vk_result system_window::create_render_pass() {
-		vk_result									Result = VK_SUCCESS;
+	VkResult system_window::create_render_pass() {
+		VkResult									Result = VK_SUCCESS;
 
 		// Custom Render Pass Creation
-		vk_render_pass_create_info					RenderPassCreateInfo;
-		vk_attachment_reference						AttachmentReference;
-		vk_subpass_description						SubpassDescription;
-		vk_subpass_dependency						SubpassDependency;
+		VkRenderPassCreateInfo					RenderPassCreateInfo;
+		VkAttachmentReference						AttachmentReference;
+		VkSubpassDescription						SubpassDescription;
+		VkSubpassDependency						SubpassDependency;
 
 		// The total number of attachments for the render pass.
 		RenderPassCreateInfo.sType						= VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO;
@@ -596,11 +596,11 @@ namespace geodesuka::core::object {
 		return vkCreateRenderPass(Context->handle(), &RenderPassCreateInfo, NULL, &RenderPass);
 	}
 
-	vk_result system_window::create_pipelines() {
-		vk_result Result = VK_SUCCESS;
+	VkResult system_window::create_pipelines() {
+		VkResult Result = VK_SUCCESS;
 
 		// Color Blending Info.
-		vk_pipeline_color_blend_attachment_state AttachmentBlending;
+		VkPipelineColorBlendAttachmentState AttachmentBlending;
 
 		// Load Shader Source, and compile to SPIRV. 
 		gcl::shader* VertexSource = (gcl::shader*)Engine->open("assets/shader/window.vert");
@@ -657,8 +657,8 @@ namespace geodesuka::core::object {
 		return Result;
 	}
 
-	vk_result system_window::recreate_swapchain(int aFrameSizeX, int aFrameSizeY) {
-		vk_result Result = VK_SUCCESS;
+	VkResult system_window::recreate_swapchain(int aFrameSizeX, int aFrameSizeY) {
+		VkResult Result = VK_SUCCESS;
 
 		// Wait for all resoure operations to finish.
 		Result = vkDeviceWaitIdle(Context->handle());
@@ -678,7 +678,7 @@ namespace geodesuka::core::object {
 			}
 		}
 
-		vk_surface_capabilities_khr SurfaceCapabilities = Context->parent_device()->get_surface_capabilities(Surface);
+		VkSurfaceCapabilitiesKHR SurfaceCapabilities = Context->parent_device()->get_surface_capabilities(Surface);
 
 		CreateInfo.imageExtent 		= SurfaceCapabilities.currentExtent;
 		CreateInfo.oldSwapchain		= Swapchain;

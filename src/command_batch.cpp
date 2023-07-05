@@ -10,13 +10,13 @@ namespace geodesuka::core::gcl {
 
 	command_batch::command_batch() {}
 
-	command_batch::command_batch(vk_submit_info aSubmission) {
+	command_batch::command_batch(VkSubmitInfo aSubmission) {
 		this->Submission.push_back(aSubmission);
 	}
 
-	command_batch::command_batch(uint32_t aSubmissionCount, const vk_submit_info* aSubmission) {
+	command_batch::command_batch(uint32_t aSubmissionCount, const VkSubmitInfo* aSubmission) {
 		this->Submission.resize(aSubmissionCount);
-		memcpy(this->Submission.data(), aSubmission, aSubmissionCount * sizeof(vk_submit_info));
+		memcpy(this->Submission.data(), aSubmission, aSubmissionCount * sizeof(VkSubmitInfo));
 	}
 
 	command_batch::command_batch(const std::vector<command_list>& aSubmission) {
@@ -26,24 +26,24 @@ namespace geodesuka::core::gcl {
 		}
 	}
 
-	command_batch::command_batch(vk_present_info_khr aPresentation) {
+	command_batch::command_batch(VkPresentInfoKHR aPresentation) {
 		this->Presentation.push_back(aPresentation);
 	}
 
-	command_batch::command_batch(uint32_t aPresentationCount, const vk_present_info_khr* aPresentation) {
+	command_batch::command_batch(uint32_t aPresentationCount, const VkPresentInfoKHR* aPresentation) {
 		this->Presentation.resize(aPresentationCount);
-		memcpy(this->Presentation.data(), aPresentation, aPresentationCount * sizeof(vk_present_info_khr));
+		memcpy(this->Presentation.data(), aPresentation, aPresentationCount * sizeof(VkPresentInfoKHR));
 	}
 
 	command_batch& command_batch::operator=(const std::vector<command_list>& aRhs) {
 		return (*this = command_batch(aRhs));
 	}
 
-	command_batch command_batch::operator+(vk_submit_info aRhs) {
+	command_batch command_batch::operator+(VkSubmitInfo aRhs) {
 		return (*this + command_batch(aRhs));
 	}
 
-	command_batch command_batch::operator+(vk_present_info_khr aRhs) {
+	command_batch command_batch::operator+(VkPresentInfoKHR aRhs) {
 		return (*this + command_batch(aRhs));
 	}
 
@@ -57,29 +57,29 @@ namespace geodesuka::core::gcl {
 		CommandBatch.Presentation.resize(this->Presentation.size() + aRhs.Presentation.size());
 
 		if (this->Submission.size() > 0) {
-			memcpy(&CommandBatch.Submission[0], this->Submission.data(), this->Submission.size() * sizeof(vk_submit_info));
+			memcpy(&CommandBatch.Submission[0], this->Submission.data(), this->Submission.size() * sizeof(VkSubmitInfo));
 		}
 
 		if (aRhs.Submission.size() > 0) {
-			memcpy(&CommandBatch.Submission[this->Submission.size()], aRhs.Submission.data(), aRhs.Submission.size() * sizeof(vk_submit_info));
+			memcpy(&CommandBatch.Submission[this->Submission.size()], aRhs.Submission.data(), aRhs.Submission.size() * sizeof(VkSubmitInfo));
 		}
 
 		if (this->Presentation.size() > 0) {
-			memcpy(&CommandBatch.Presentation[0], this->Presentation.data(), this->Presentation.size() * sizeof(vk_present_info_khr));
+			memcpy(&CommandBatch.Presentation[0], this->Presentation.data(), this->Presentation.size() * sizeof(VkPresentInfoKHR));
 		}
 
 		if (aRhs.Presentation.size() > 0) {
-			memcpy(&CommandBatch.Presentation[this->Presentation.size()], aRhs.Presentation.data(), aRhs.Presentation.size() * sizeof(vk_present_info_khr));
+			memcpy(&CommandBatch.Presentation[this->Presentation.size()], aRhs.Presentation.data(), aRhs.Presentation.size() * sizeof(VkPresentInfoKHR));
 		}
 
 		return CommandBatch;
 	}
 
-	command_batch& command_batch::operator+=(vk_submit_info aRhs) {
+	command_batch& command_batch::operator+=(VkSubmitInfo aRhs) {
 		return (*this += command_batch(aRhs));
 	}
 
-	command_batch& command_batch::operator+=(vk_present_info_khr aRhs) {
+	command_batch& command_batch::operator+=(VkPresentInfoKHR aRhs) {
 		return (*this += command_batch(aRhs));
 	}
 
@@ -107,8 +107,8 @@ namespace geodesuka::core::gcl {
 			}
 		}
 
-		std::vector<vk_submit_info> NewSubmission(NewSubmissionCount);
-		std::vector<vk_present_info_khr> NewPresentation(NewPresentationCount);
+		std::vector<VkSubmitInfo> NewSubmission(NewSubmissionCount);
+		std::vector<VkPresentInfoKHR> NewPresentation(NewPresentationCount);
 		size_t j = 0;
 		for (size_t i = 0; i < this->Submission.size(); i++) {
 			if (this->Submission[i].pCommandBuffers != NULL) {

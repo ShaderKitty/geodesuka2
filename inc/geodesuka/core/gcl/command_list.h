@@ -10,10 +10,10 @@ namespace geodesuka::core::gcl {
 
 	// ----- command_list ----- //
 	// command_list is just simply a container class with the ultimate
-	// goal of creating vk_submit_info structures. The nature of 
-	// vk_submit_info is that its members are unmodifiable. Therefore
+	// goal of creating VkSubmitInfo structures. The nature of 
+	// VkSubmitInfo is that its members are unmodifiable. Therefore
 	// this class has been created because it contains a set of methods
-	// for modifying the members of vk_submit_info before it is built.
+	// for modifying the members of VkSubmitInfo before it is built.
 	// This includes semaphore linking between lists. Since command_list
 	// is simply just a conatainer class, the user must bring his/her
 	// own vk_command_buffers and vk_semaphores. command_list will
@@ -27,9 +27,9 @@ namespace geodesuka::core::gcl {
 		friend class command_pool;
 
 		command_list();
-		command_list(vk_command_buffer aCommandBuffer);
+		command_list(VkCommandBuffer aCommandBuffer);
 		command_list(uint32_t aCommandBufferCount);
-		command_list(uint32_t aCommandBufferCount, vk_command_buffer* aCommandBufferList);
+		command_list(uint32_t aCommandBufferCount, VkCommandBuffer* aCommandBufferList);
 
 		// ---------- Command List Manipulation ---------- //
 		// These operations do not copy over depency semaphores.
@@ -39,8 +39,8 @@ namespace geodesuka::core::gcl {
 		
 		// []: Access operators.
 
-		vk_command_buffer operator[](uint32_t aIndex) const;
-		vk_command_buffer& operator[](uint32_t aIndex);
+		VkCommandBuffer operator[](uint32_t aIndex) const;
+		VkCommandBuffer& operator[](uint32_t aIndex);
 
 		// &: Intersection of two lists.
 		// |: Union of two lists.
@@ -50,22 +50,22 @@ namespace geodesuka::core::gcl {
 		command_list operator|(const command_list& aRhs) const;
 		command_list operator-(const command_list& aRhs) const;
 
-		command_list operator&(vk_command_buffer aRhs) const;
-		command_list operator|(vk_command_buffer aRhs) const;
-		command_list operator-(vk_command_buffer aRhs) const;
+		command_list operator&(VkCommandBuffer aRhs) const;
+		command_list operator|(VkCommandBuffer aRhs) const;
+		command_list operator-(VkCommandBuffer aRhs) const;
 
 		command_list& operator&=(const command_list& aRhs);
 		command_list& operator|=(const command_list& aRhs);
 		command_list& operator-=(const command_list& aRhs);
 
-		command_list& operator|=(vk_command_buffer aRhs);
-		command_list& operator-=(vk_command_buffer aRhs);
+		command_list& operator|=(VkCommandBuffer aRhs);
+		command_list& operator-=(VkCommandBuffer aRhs);
 
 		// Resizes size of command list.
 		void resize(uint32_t aCount);
 
 		// Checks if command buffer exists in list.
-		bool exists_in(vk_command_buffer aCommandBuffer) const;
+		bool exists_in(VkCommandBuffer aCommandBuffer) const;
 
 		size_t count() const;
 
@@ -82,25 +82,25 @@ namespace geodesuka::core::gcl {
 
 		// Create a dependency bewteen command lists. Must provide a valid semaphore.
 		// A.depends_on(S, B, VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT)
-		void depends_on(vk_semaphore aDependencyLink, command_list& aProducer, vk_pipeline_stage_flags aProducerStageFlag);
+		void depends_on(VkSemaphore aDependencyLink, command_list& aProducer, VkPipelineStageFlags aProducerStageFlag);
 
-		void wait_on(vk_semaphore aWaitSemaphore, vk_pipeline_stage_flags aProducerStageFlag);
+		void wait_on(VkSemaphore aWaitSemaphore, VkPipelineStageFlags aProducerStageFlag);
 
-		void signal_to(vk_semaphore aSignalSemaphore);
+		void signal_to(VkSemaphore aSignalSemaphore);
 
-		// A vk_submit_info object is created to reference the contents
+		// A VkSubmitInfo object is created to reference the contents
 		// within command_list.
-		vk_submit_info build() const;
+		VkSubmitInfo build() const;
 
 	private:
 
-		std::vector<vk_semaphore>				WaitSemaphore;
-		std::vector<vk_pipeline_stage_flags>	WaitStage;
-		std::vector<vk_command_buffer>			Handle;
-		std::vector<vk_semaphore>				SignalSemaphore;
+		std::vector<VkSemaphore>				WaitSemaphore;
+		std::vector<VkPipelineStageFlags>	WaitStage;
+		std::vector<VkCommandBuffer>			Handle;
+		std::vector<VkSemaphore>				SignalSemaphore;
 
-		bool is_waiting_on(vk_semaphore aSemaphore);
-		bool is_signalling(vk_semaphore aSemaphore);
+		bool is_waiting_on(VkSemaphore aSemaphore);
+		bool is_signalling(VkSemaphore aSemaphore);
 
 	};
 

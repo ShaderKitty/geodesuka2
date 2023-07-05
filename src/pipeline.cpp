@@ -184,8 +184,8 @@ namespace geodesuka::core::gcl {
 		this->VertexAttributeDescription[aLocation].offset					= aVertexOffset;
 	}
 
-	std::vector<vk_descriptor_pool_size> pipeline::rasterizer::descriptor_pool_size() {
-		std::vector<vk_descriptor_pool_size> PoolSize;
+	std::vector<VkDescriptorPoolSize> pipeline::rasterizer::descriptor_pool_size() {
+		std::vector<VkDescriptorPoolSize> PoolSize;
 		for (uint32_t i = 0; i < this->DescriptorSetBindingCount; i++) {
 			for (size_t j = 0; j < this->DescriptorSetBinding[i].size(); j++) {
 				// Check if Descriptor Type Exists in Pool
@@ -203,7 +203,7 @@ namespace geodesuka::core::gcl {
 					}
 				} else {
 					// Does not exist in set, add new type.
-					vk_descriptor_pool_size NewPoolSize;
+					VkDescriptorPoolSize NewPoolSize;
 					NewPoolSize.descriptorCount 	= DescriptorSetBinding[i][j].descriptorCount;
 					NewPoolSize.type 				= DescriptorSetBinding[i][j].descriptorType;
 					PoolSize.push_back(NewPoolSize);
@@ -355,7 +355,7 @@ namespace geodesuka::core::gcl {
 			variable NewVariable	= convert_to_variable(Type, Variable.name.c_str());
 
 			// Generate Bindings for Uniform Buffers.
-			vk_descriptor_set_layout_binding DSLB{};
+			VkDescriptorSetLayoutBinding DSLB{};
 			DSLB.binding				= Binding;
 			DSLB.descriptorType			= VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
 			DSLB.descriptorCount		= 1;
@@ -385,7 +385,7 @@ namespace geodesuka::core::gcl {
 				variable NewVariable					= convert_to_variable(Type, Variable.name.c_str());
 
 				// Generate Bindings for Samplers.
-				vk_descriptor_set_layout_binding DSLB{};
+				VkDescriptorSetLayoutBinding DSLB{};
 				DSLB.binding							= Binding;
 				DSLB.descriptorType						= VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
 				DSLB.descriptorCount					= 1;
@@ -427,7 +427,7 @@ namespace geodesuka::core::gcl {
 			this->VertexAttributeVariable[i]				= convert_to_variable(Type, Variable.name.c_str());
 			this->VertexAttributeDescription[i].location	= Location;
 			this->VertexAttributeDescription[i].binding		= 0;
-			this->VertexAttributeDescription[i].format		= (vk_format)image::t2f(this->VertexAttributeVariable[i].Type.ID);
+			this->VertexAttributeDescription[i].format		= (VkFormat)image::t2f(this->VertexAttributeVariable[i].Type.ID);
 			this->VertexAttributeDescription[i].offset		= 0;
 
 			std::cout << "layout (location = " << Location << ") in " << this->VertexAttributeVariable[i].Type.Name.ptr() << " " << this->VertexAttributeVariable[i].Name.ptr();
@@ -448,7 +448,7 @@ namespace geodesuka::core::gcl {
 
 			// TODO: Make sure that 
 			this->AttachmentVariable[Location]				= convert_to_variable(Type, Variable.name.c_str());
-			this->AttachmentDescription[Location].format	= (vk_format)image::t2f(this->AttachmentVariable[i].Type.ID);
+			this->AttachmentDescription[Location].format	= (VkFormat)image::t2f(this->AttachmentVariable[i].Type.ID);
 			this->AttachmentReference[Location].attachment	= 0;
 
 			std::cout << "layout (location = " << Location << ") out " << this->AttachmentVariable[i].Type.Name.ptr() << " " << this->AttachmentVariable[i].Name.ptr();
@@ -631,8 +631,8 @@ namespace geodesuka::core::gcl {
 		this->zero_out();
 	}
 
-	pipeline::pipeline(context* aContext, rasterizer& aRasterizer, vk_render_pass aRenderPass, uint32_t aSubpassIndex) {
-		vk_result Result = VK_SUCCESS;
+	pipeline::pipeline(context* aContext, rasterizer& aRasterizer, VkRenderPass aRenderPass, uint32_t aSubpassIndex) {
+		VkResult Result = VK_SUCCESS;
 		this->zero_out();
 
 		this->BindPoint							= VK_PIPELINE_BIND_POINT_GRAPHICS;
@@ -641,8 +641,8 @@ namespace geodesuka::core::gcl {
 
 		for (size_t i = 0; i < GCL_RASTERIZER_STAGE_COUNT; i++) {
 			if (this->Rasterizer->Shader[i] != nullptr) {
-				vk_shader_module_create_info ShaderModuleCreateInfo{};
-				vk_pipeline_shader_stage_create_info PipelineShaderStageCreateInfo{};
+				VkShaderModuleCreateInfo ShaderModuleCreateInfo{};
+				VkPipelineShaderStageCreateInfo PipelineShaderStageCreateInfo{};
 
 				ShaderModuleCreateInfo.sType							= VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
 				ShaderModuleCreateInfo.pNext							= NULL;
@@ -667,7 +667,7 @@ namespace geodesuka::core::gcl {
 		if (Result == VK_SUCCESS) {
 			this->DescriptorSetLayoutCount = this->Rasterizer->DescriptorSetBindingCount;
 			for (int i = 0; i < GCL_DESCRIPTOR_SET_COUNT; i++) {
-				vk_descriptor_set_layout_create_info CreateInfo {};
+				VkDescriptorSetLayoutCreateInfo CreateInfo {};
 				CreateInfo.sType			= VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO;
 				CreateInfo.pNext			= NULL;
 				CreateInfo.flags			= 0; // Update After Binding Bit?
@@ -685,7 +685,7 @@ namespace geodesuka::core::gcl {
 		// Create Pipeline Layout.
 		if (Result == VK_SUCCESS) {
 			// Create Pipeline Layout.
-			vk_pipeline_layout_create_info CreateInfo{};
+			VkPipelineLayoutCreateInfo CreateInfo{};
 			CreateInfo.sType						= VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
 			CreateInfo.pNext						= NULL;
 			CreateInfo.flags						= 0;
@@ -720,7 +720,7 @@ namespace geodesuka::core::gcl {
 	}
 
 	pipeline::pipeline(context* aContext, raytracer& aRaytracer) {
-		vk_result Result = VK_SUCCESS;
+		VkResult Result = VK_SUCCESS;
 		this->zero_out();
 
 		BindPoint	= VK_PIPELINE_BIND_POINT_RAY_TRACING_KHR;
@@ -731,7 +731,7 @@ namespace geodesuka::core::gcl {
 	}
 
 	pipeline::pipeline(context* aContext, compute& aCompute) {
-		vk_result Result = VK_SUCCESS;
+		VkResult Result = VK_SUCCESS;
 		this->zero_out();
 
 		BindPoint	= VK_PIPELINE_BIND_POINT_COMPUTE;
@@ -775,7 +775,7 @@ namespace geodesuka::core::gcl {
 	}
 
 	pipeline& pipeline::operator=(const pipeline& aRhs) {
-		vk_result Result = VK_SUCCESS;
+		VkResult Result = VK_SUCCESS;
 		if (this == &aRhs) return *this;
 
 		this->clear();
@@ -838,8 +838,8 @@ namespace geodesuka::core::gcl {
 		}
 	}
 
-	std::vector<vk_descriptor_pool_size> pipeline::descriptor_pool_size() const {
-		std::vector<vk_descriptor_pool_size> PoolSize;
+	std::vector<VkDescriptorPoolSize> pipeline::descriptor_pool_size() const {
+		std::vector<VkDescriptorPoolSize> PoolSize;
 		switch (this->BindPoint) {		
 		case VK_PIPELINE_BIND_POINT_GRAPHICS:
 			PoolSize = this->Rasterizer->descriptor_pool_size();
@@ -854,16 +854,16 @@ namespace geodesuka::core::gcl {
 		return PoolSize;
 	}
 
-	vk_result pipeline::create(context* aContext, rasterizer& aRasterizer, vk_render_pass aRenderPass, uint32_t aSubpassIndex) {
-		vk_result Result = VK_SUCCESS;
+	VkResult pipeline::create(context* aContext, rasterizer& aRasterizer, VkRenderPass aRenderPass, uint32_t aSubpassIndex) {
+		VkResult Result = VK_SUCCESS;
 		this->BindPoint = VK_PIPELINE_BIND_POINT_GRAPHICS;
 		this->Context = aContext;
 		this->Rasterizer = &aRasterizer;
 
 		for (size_t i = 0; i < GCL_RASTERIZER_STAGE_COUNT; i++) {
 			if (this->Rasterizer->Shader[i] != nullptr) {
-				vk_shader_module_create_info ShaderModuleCreateInfo{};
-				vk_pipeline_shader_stage_create_info PipelineShaderStageCreateInfo{};
+				VkShaderModuleCreateInfo ShaderModuleCreateInfo{};
+				VkPipelineShaderStageCreateInfo PipelineShaderStageCreateInfo{};
 
 				ShaderModuleCreateInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
 				ShaderModuleCreateInfo.pNext = NULL;
@@ -888,7 +888,7 @@ namespace geodesuka::core::gcl {
 		if (Result == VK_SUCCESS) {
 			this->DescriptorSetLayoutCount = this->Rasterizer->DescriptorSetBindingCount;
 			for (int i = 0; i < GCL_DESCRIPTOR_SET_COUNT; i++) {
-				vk_descriptor_set_layout_create_info CreateInfo{};
+				VkDescriptorSetLayoutCreateInfo CreateInfo{};
 				CreateInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO;
 				CreateInfo.pNext = NULL;
 				CreateInfo.flags = 0; // Update After Binding Bit?
@@ -909,7 +909,7 @@ namespace geodesuka::core::gcl {
 		// Create Pipeline Layout.
 		if (Result == VK_SUCCESS) {
 			// Create Pipeline Layout.
-			vk_pipeline_layout_create_info CreateInfo{};
+			VkPipelineLayoutCreateInfo CreateInfo{};
 			CreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
 			CreateInfo.pNext = NULL;
 			CreateInfo.flags = 0;
@@ -983,10 +983,10 @@ namespace geodesuka::core::gcl {
 		this->ComputeCreateInfo			= {};
 	}
 
-	//void pipeline::bind(vk_command_buffer aCommandBuffer, uint32_t aVertexBufferCount, buffer** aVertexBufferList, buffer& aIndexBuffer, descriptor::block& aDescriptorBlock) {
-	//	vk_result Result = VK_SUCCESS;
-	//	vk_buffer VertexBufferArray[16];
-	//	vk_buffer IndexBufferHandle = aIndexBuffer.handle();
+	//void pipeline::bind(VkCommandBuffer aCommandBuffer, uint32_t aVertexBufferCount, buffer** aVertexBufferList, buffer& aIndexBuffer, descriptor::block& aDescriptorBlock) {
+	//	VkResult Result = VK_SUCCESS;
+	//	VkBuffer VertexBufferArray[16];
+	//	VkBuffer IndexBufferHandle = aIndexBuffer.handle();
 	//	for (uint32_t i = 0; i < aVertexBufferCount; i++) {
 	//		VertexBufferArray[i] = aVertexBufferList[i]->handle();
 	//	}
@@ -1002,7 +1002,7 @@ namespace geodesuka::core::gcl {
 	//	}
 	//}
 
-	//void pipeline::bind(vk_command_buffer aCommandBuffer) {
+	//void pipeline::bind(VkCommandBuffer aCommandBuffer) {
 	//	switch (this->BindPoint) {
 	//	default:
 	//		break;

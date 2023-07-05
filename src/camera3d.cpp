@@ -89,7 +89,7 @@ namespace geodesuka::core::object {
 	camera3d::camera3d(gcl::context* aContext, stage::scene3d* aScene3D, const char* aName, glm::vec3 aPosition, glm::ivec2 aResolution, double aFrameRate, uint32_t aFrameCount) : 
 		camera(aContext, aScene3D, aName, glm::uvec3(aResolution.x, aResolution.y, 1u), aFrameRate, aFrameCount, 4) 
 	{
-		vk_result Result = VK_SUCCESS;
+		VkResult Result = VK_SUCCESS;
 
 		// ---------- camera3d ---------- //
 
@@ -164,8 +164,8 @@ namespace geodesuka::core::object {
 		this->State = READY;
 	}
 
-	vk_submit_info camera3d::update(double aDeltaTime) {
-		vk_submit_info UpdateInfo{};
+	VkSubmitInfo camera3d::update(double aDeltaTime) {
+		VkSubmitInfo UpdateInfo{};
 		this->FrameRateTimer.update(aDeltaTime);
 		return UpdateInfo;
 	}
@@ -195,7 +195,7 @@ namespace geodesuka::core::object {
 	}
 
 	camera3d::geometry_buffer::geometry_buffer(context* aContext, glm::uvec2 aResolution) {
-		vk_result Result = VK_SUCCESS;
+		VkResult Result = VK_SUCCESS;
 
 		// New API design?
 		image::create_info DepthCreateInfo;
@@ -216,9 +216,9 @@ namespace geodesuka::core::object {
 		this->PixelNormal		= image(aContext, ColorCreateInfo, type::id::FLOAT4, aResolution);
 		this->PixelSpecular		= image(aContext, ColorCreateInfo, type::id::FLOAT4, aResolution);
 
-		vk_fence Fence 							= aContext->create_fence();
-		vk_command_buffer CommandBuffer 		= aContext->create_command_buffer(device::GRAPHICS, VK_COMMAND_BUFFER_LEVEL_PRIMARY);
-		vk_command_buffer_begin_info BeginInfo;
+		VkFence Fence 							= aContext->create_fence();
+		VkCommandBuffer CommandBuffer 		= aContext->create_command_buffer(device::GRAPHICS, VK_COMMAND_BUFFER_LEVEL_PRIMARY);
+		VkCommandBufferBeginInfo BeginInfo;
 
 		BeginInfo.sType					= VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
 		BeginInfo.pNext					= NULL;
@@ -276,7 +276,7 @@ namespace geodesuka::core::object {
 		aContext->destroy_command_buffer(device::GRAPHICS, CommandBuffer);
 	}
 
-	vk_result camera3d::create_images() {
+	VkResult camera3d::create_images() {
 
 		// Create Images.
 		for (size_t i = 0; i < this->Frame.size(); i++) {
@@ -293,12 +293,12 @@ namespace geodesuka::core::object {
 		return VK_SUCCESS;
 	}
 
-	vk_result camera3d::create_render_pass() {
-		vk_subpass_description Subpass;
-		vk_subpass_dependency Dependency;
-		vk_attachment_reference ColorAttachment[4];
-		vk_attachment_reference DepthAttachment;
-		vk_render_pass_create_info RenderPassCreateInfo{};
+	VkResult camera3d::create_render_pass() {
+		VkSubpassDescription Subpass;
+		VkSubpassDependency Dependency;
+		VkAttachmentReference ColorAttachment[4];
+		VkAttachmentReference DepthAttachment;
+		VkRenderPassCreateInfo RenderPassCreateInfo{};
 
 		DepthAttachment.attachment				= 0;
 		DepthAttachment.layout					= VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
@@ -347,8 +347,8 @@ namespace geodesuka::core::object {
 		return vkCreateRenderPass(Context->handle(), &RenderPassCreateInfo, NULL, &RenderPass);
 	}
 
-	vk_result camera3d::create_pipelines() {
-		vk_result Result = VK_SUCCESS;
+	VkResult camera3d::create_pipelines() {
+		VkResult Result = VK_SUCCESS;
 
 		// Per Color Attachment Blending.
 		this->BlendingOperation.resize(4);

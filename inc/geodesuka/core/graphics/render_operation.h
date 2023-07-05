@@ -24,8 +24,8 @@ namespace geodesuka::core::graphics {
 
 		gcl::context*											Context;
 		object::render_target*									RenderTarget;
-		vk_descriptor_pool										DescriptorPool;
-		std::vector<std::vector<vk_descriptor_set>>				DescriptorSet;
+		VkDescriptorPool										DescriptorPool;
+		std::vector<std::vector<VkDescriptorSet>>				DescriptorSet;
 		std::vector<gcl::command_list>							DrawCommand;
 
 		~render_operation();

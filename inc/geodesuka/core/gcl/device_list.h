@@ -50,7 +50,7 @@ namespace geodesuka::core::gcl {
 
 		// Search for support options.
 		
-		device* get_device_type(vk_physical_device_type aType) const;
+		device* get_device_type(VkPhysicalDeviceType aType) const;
 
 	private:
 

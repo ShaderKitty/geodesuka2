@@ -135,9 +135,9 @@ namespace geodesuka::core {
 		blending					Blending;
 		graphics::model*			Model;
 
-		vk_descriptor_pool			DescriptorPool;
+		VkDescriptorPool			DescriptorPool;
 		gcl::buffer					ObjectUBO;
-		vk_descriptor_set			ObjectDS;
+		VkDescriptorSet			ObjectDS;
 
 		std::map<object::render_target*, graphics::render_operation*> RenderOperation;
 
@@ -152,10 +152,10 @@ namespace geodesuka::core {
 		// The implementation of this method will allow the object to internally time evolve
 		// itself with a provided time step. It will be the responsibility of the engine
 		// to insure that the time step remains stable.
-		virtual vk_submit_info update(double aDeltaTime);
+		virtual VkSubmitInfo update(double aDeltaTime);
 
 		// Will produce compute operation submissions.
-		virtual vk_submit_info compute();
+		virtual VkSubmitInfo compute();
 
 	};
 
