@@ -319,6 +319,10 @@
     <ClInclude Include="inc\geodesuka\core\math.h" />
     <ClInclude Include="inc\geodesuka\core\math\config.h" />
     <ClInclude Include="inc\geodesuka\core\math\field.h" />
+    <ClInclude Include="inc\geodesuka\core\math\field1d.h" />
+    <ClInclude Include="inc\geodesuka\core\math\field2d.h" />
+    <ClInclude Include="inc\geodesuka\core\math\field3d.h" />
+    <ClInclude Include="inc\geodesuka\core\math\field4d.h" />
     <ClInclude Include="inc\geodesuka\core\math\mat2.h" />
     <ClInclude Include="inc\geodesuka\core\math\mat2x3.h" />
     <ClInclude Include="inc\geodesuka\core\math\mat2x4.h" />

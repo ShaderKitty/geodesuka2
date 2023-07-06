@@ -5,19 +5,6 @@
 // Used for internal engine debugging.
 #include <geodesuka/builtin/app/unit_test.h>
 
-//#include <geodesuka/core/math/vec2.h>
-//#include <geodesuka/core/math/vec3.h>
-//#include <geodesuka/core/math/vec4.h>
-//#include <geodesuka/core/math/mat2.h>
-//#include <geodesuka/core/math/mat2x3.h>
-//#include <geodesuka/core/math/mat2x4.h>
-//#include <geodesuka/core/math/mat3x2.h>
-//#include <geodesuka/core/math/mat3.h>
-//#include <geodesuka/core/math/mat3x4.h>
-//#include <geodesuka/core/math/mat4x2.h>
-//#include <geodesuka/core/math/mat4x3.h>
-//#include <geodesuka/core/math/mat4.h>
-
 using namespace geodesuka::builtin::app;
 using namespace geodesuka::core;
 
@@ -27,7 +14,7 @@ int main(int aCmdArgCount, char* aCmdArgList[]) {
 
 	math::vec2<float> a = math::vec2<float>(1.0f, 2.0f);
 	size_t Size = sizeof(math::vec2<float>);
-	a = 3.0f;
+	a = 3.0f;	
 
 	// Instance Layers & Extensions.
 	std::vector<const char*> Layer = {

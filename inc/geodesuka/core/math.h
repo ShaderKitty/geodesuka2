@@ -25,5 +25,8 @@
 
 // Field
 #include "math/field.h"
+#include "math/field2d.h"
+#include "math/field3d.h"
+#include "math/field4d.h"
 
 #endif // !GEODESUKA_CORE_MATH_H

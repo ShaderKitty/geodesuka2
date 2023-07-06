@@ -8,6 +8,11 @@
 */
 
 
+#include <vector>
+
+#include "vec2.h"
+#include "vec3.h"
+#include "vec4.h"
 
 namespace geodesuka::core::math {
 
@@ -16,14 +21,16 @@ namespace geodesuka::core::math {
 	class field {
 	public:
 
-		T1 n;
-		T2 r1, r2;
-		T3* d;
+		// Element Count & Bounding Region
+		T1 ElementCount;
+		T2 LowerBound, UpperBound;
+
+		// Field Data
+		std::vector<T3> Data;
 
 	private:
 
 	};
-
 
 }
 

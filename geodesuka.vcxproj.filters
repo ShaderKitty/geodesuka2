@@ -644,5 +644,17 @@
     <ClInclude Include="inc\geodesuka\core\math\field.h">
       <Filter>inc\geodesuka\core\math</Filter>
     </ClInclude>
+    <ClInclude Include="inc\geodesuka\core\math\field2d.h">
+      <Filter>inc\geodesuka\core\math</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\geodesuka\core\math\field3d.h">
+      <Filter>inc\geodesuka\core\math</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\geodesuka\core\math\field4d.h">
+      <Filter>inc\geodesuka\core\math</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\geodesuka\core\math\field1d.h">
+      <Filter>inc\geodesuka\core\math</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
